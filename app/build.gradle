@@ -1,0 +1,27 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.openxcplatform.openxcstarter"
+        minSdkVersion 16
+        targetSdkVersion 22
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    /* Since we have custom files directly from Ford, we have to create an openxc project and build it ourselves */
+    //compile 'com.openxcplatform:library:6.1.6'
+    compile 'com.jjoe64:graphview:4.0.1'
+    compile 'com.getpebble:pebblekit:3.0.0'
+    compile project(':openxc')
+}

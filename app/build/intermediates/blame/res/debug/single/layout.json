@@ -1,0 +1,110 @@
+[
+    {
+        "merged": "D:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\res\\merged\\debug\\layout\\splash_screen.xml",
+        "source": "D:\\Android\\StudioProjects\\openxc-starter\\app\\src\\main\\res\\layout\\splash_screen.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\res\\merged\\debug\\layout\\coach_activity.xml",
+        "source": "D:\\Android\\StudioProjects\\openxc-starter\\app\\src\\main\\res\\layout\\coach_activity.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\coach_activity.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\src\\main\\res\\layout\\coach_activity.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
+        "source": "D:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\exploded-aar\\com.getpebble\\pebblekit\\3.0.0\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\graphviewlayout.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\src\\main\\res\\layout\\graphviewlayout.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\res\\merged\\debug\\layout\\summaryviewlayout.xml",
+        "source": "D:\\Android\\StudioProjects\\openxc-starter\\app\\src\\main\\res\\layout\\summaryviewlayout.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\breakdown_layout.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\src\\main\\res\\layout\\breakdown_layout.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\res\\merged\\debug\\layout\\userinterface.xml",
+        "source": "D:\\Android\\StudioProjects\\openxc-starter\\app\\src\\main\\res\\layout\\userinterface.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coach\\app\\build\\intermediates\\res\\merged\\debug\\layout\\summaryviewlayout.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coach\\app\\src\\main\\res\\layout\\summaryviewlayout.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\splash_screen.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\src\\main\\res\\layout\\splash_screen.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coach\\app\\build\\intermediates\\res\\merged\\debug\\layout\\coach_activity.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coach\\app\\src\\main\\res\\layout\\coach_activity.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coach\\app\\build\\intermediates\\res\\merged\\debug\\layout\\userinterface.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coach\\app\\src\\main\\res\\layout\\userinterface.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\summaryviewlayout.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\src\\main\\res\\layout\\summaryviewlayout.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_settings.xml",
+        "source": "D:\\Android\\StudioProjects\\openxc-starter\\app\\src\\main\\res\\layout\\activity_settings.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_settings.xml",
+        "source": "D:\\Android\\StudioProjects\\openxc-starter\\app\\src\\main\\res\\layout\\fragment_settings.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coach\\app\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coach\\app\\build\\intermediates\\exploded-aar\\com.getpebble\\pebblekit\\3.0.0\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coach\\app\\build\\intermediates\\res\\merged\\debug\\layout\\graphviewlayout.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coach\\app\\src\\main\\res\\layout\\graphviewlayout.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\res\\merged\\debug\\layout\\graphviewlayout.xml",
+        "source": "D:\\Android\\StudioProjects\\openxc-starter\\app\\src\\main\\res\\layout\\graphviewlayout.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coach\\app\\build\\intermediates\\res\\merged\\debug\\layout\\splash_screen.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coach\\app\\src\\main\\res\\layout\\splash_screen.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\userinterface.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\src\\main\\res\\layout\\userinterface.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_settings.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\src\\main\\res\\layout\\fragment_settings.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\build\\intermediates\\exploded-aar\\com.getpebble\\pebblekit\\3.0.0\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coach\\app\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_settings.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coach\\app\\src\\main\\res\\layout\\fragment_settings.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coach\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_settings.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coach\\app\\src\\main\\res\\layout\\activity_settings.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_settings.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\src\\main\\res\\layout\\activity_settings.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coach\\app\\build\\intermediates\\res\\merged\\debug\\layout\\breakdown_layout.xml",
+        "source": "D:\\Android\\StudioProjects\\EV_Coach\\app\\src\\main\\res\\layout\\breakdown_layout.xml"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\res\\merged\\debug\\layout\\breakdown_layout.xml",
+        "source": "D:\\Android\\StudioProjects\\openxc-starter\\app\\src\\main\\res\\layout\\breakdown_layout.xml"
+    }
+]

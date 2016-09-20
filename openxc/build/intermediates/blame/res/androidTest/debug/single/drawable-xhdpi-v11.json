@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coachv2\\openxc\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v11\\openxc_notification_icon_small_white.png",
+        "source": "D:\\Android\\StudioProjects\\EV_Coachv2\\openxc\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v11\\openxc_notification_icon_small_white.png"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coach\\openxc\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v11\\openxc_notification_icon_small_white.png",
+        "source": "D:\\Android\\StudioProjects\\EV_Coach\\openxc\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v11\\openxc_notification_icon_small_white.png"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\openxc-starter\\openxc\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v11\\openxc_notification_icon_small_white.png",
+        "source": "D:\\Android\\StudioProjects\\openxc-starter\\openxc\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v11\\openxc_notification_icon_small_white.png"
+    }
+]

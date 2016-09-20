@@ -1,0 +1,62 @@
+[
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coach\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\openxc_logo.png",
+        "source": "D:\\Android\\StudioProjects\\EV_Coach\\app\\src\\main\\res\\drawable-hdpi\\openxc_logo.png"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\openxc_logo.png",
+        "source": "D:\\Android\\StudioProjects\\openxc-starter\\app\\src\\main\\res\\drawable-hdpi\\openxc_logo.png"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ic_launcher.png",
+        "source": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ford_logo.png",
+        "source": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\src\\main\\res\\drawable-hdpi\\ford_logo.png"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coach\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\mtu_logo.png",
+        "source": "D:\\Android\\StudioProjects\\EV_Coach\\app\\src\\main\\res\\drawable-hdpi\\mtu_logo.png"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coach\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ford_logo.png",
+        "source": "D:\\Android\\StudioProjects\\EV_Coach\\app\\src\\main\\res\\drawable-hdpi\\ford_logo.png"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\mtu_logo.png",
+        "source": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\src\\main\\res\\drawable-hdpi\\mtu_logo.png"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ic_launcher.png",
+        "source": "D:\\Android\\StudioProjects\\openxc-starter\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ford_logo.png",
+        "source": "D:\\Android\\StudioProjects\\openxc-starter\\app\\src\\main\\res\\drawable-hdpi\\ford_logo.png"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\openxc_logo.png",
+        "source": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\src\\main\\res\\drawable-hdpi\\openxc_logo.png"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\mtu_logo.png",
+        "source": "D:\\Android\\StudioProjects\\openxc-starter\\app\\src\\main\\res\\drawable-hdpi\\mtu_logo.png"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ev_logo.png",
+        "source": "D:\\Android\\StudioProjects\\openxc-starter\\app\\src\\main\\res\\drawable-hdpi\\ev_logo.png"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ev_logo.png",
+        "source": "D:\\Android\\StudioProjects\\EV_Coachv2\\app\\src\\main\\res\\drawable-hdpi\\ev_logo.png"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coach\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ev_logo.png",
+        "source": "D:\\Android\\StudioProjects\\EV_Coach\\app\\src\\main\\res\\drawable-hdpi\\ev_logo.png"
+    },
+    {
+        "merged": "D:\\Android\\StudioProjects\\EV_Coach\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ic_launcher.png",
+        "source": "D:\\Android\\StudioProjects\\EV_Coach\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+    }
+]

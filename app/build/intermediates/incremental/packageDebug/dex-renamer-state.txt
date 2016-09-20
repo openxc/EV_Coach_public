@@ -1,0 +1,7 @@
+#Mon Sep 19 22:53:59 EDT 2016
+base.0=D\:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_c7801093c933c1f4a0f07cc496da3fede247ee8f
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=D\:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_89e9ba74e1855c82a7dc1ba5cdd72f907441e0e2\\classes.dex
+base.1=D\:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_89e9ba74e1855c82a7dc1ba5cdd72f907441e0e2
+file.0=D\:\\Android\\StudioProjects\\openxc-starter\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_c7801093c933c1f4a0f07cc496da3fede247ee8f\\classes.dex
