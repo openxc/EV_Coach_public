@@ -29,7 +29,7 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 
 	// TextViews on activity
 	private final int maxPoints = 10000;
-	private SharedPreferences sharedPreferences;
+
 	double totalScore = 0;
 	double RPMScore = 0;
 	double speedScore = 0;
@@ -56,7 +56,7 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 
 	double mpg;
 
-
+	private SharedPreferences sharedPreferences;
 
 	/**
 	 * Sets up the Arrays passed over from the starter activity in order to use them to graph.
@@ -84,10 +84,6 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 		double percentRPM = (double) getIntent().getSerializableExtra("percentRPM");
 		double percentSpeed = (double) getIntent().getSerializableExtra("percentSpeed");
 		double percentAcc = (double) getIntent().getSerializableExtra("percentAcc");
-
-		//Determine which type of driving we are doing
-		String dType = sharedPreferences.getString("road", "0");
-		int driveType = Integer.parseInt(dType);
 
 		fuelCon = fuelCon * 0.264172;
 		mpg = (dist * 0.621371) / fuelCon;
