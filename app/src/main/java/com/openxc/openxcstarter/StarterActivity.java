@@ -37,7 +37,7 @@ import java.util.UUID;
  *
  */
 public class StarterActivity extends Activity {
-    private static final String TAG = "StarterActivity"; /* Logging tag for this class/activity */
+	private static final String TAG = "StarterActivity"; /* Logging tag for this class/activity */
 
 	private VehicleManager mVehicleManager;              /* Vehicle manager object from OpenXC */
 	private final int moduloValue = 15;                  /* Number of datapoints to accept */
@@ -45,48 +45,47 @@ public class StarterActivity extends Activity {
 	                                                        feedback */
 	private TextView connection_status;                  /* Connection status TextView */
 
-    /* Watch settings - specific to pebble */
-    //TODO <BMV> - Implement following live feedback
+	/* Watch settings - specific to pebble */
+	//TODO <BMV> - Implement following live feedback
 	private static final int VIBE_KEY = 0;
 	private static final int LOGO_KEY = 1;
 	private final static UUID VIBE_UUID = UUID.fromString("7dd8789d-3bb2-4596-ac10-fbe15196419d");
 
-    /* Vibrate settings */
+	/* Vibrate settings */
 	private static final int SHORT_PULSE = 0;
 	private static final int LONG_PULSE = 1;
 	private static final int DOUBLE_PULSE = 2;
 
-    /* ArrayLists to store the values of each element */
+	/* ArrayLists to store the values of each element */
 	ArrayList<Double> listRPM = new ArrayList<>();
 	ArrayList<Double> listSpeed = new ArrayList<>();
 	ArrayList<Double> listBatStateCharge = new ArrayList<>();
 	ArrayList<Double> listAcc = new ArrayList<>();
 
-    //TODO <BMV> - Comment and delcare as private??
+	//TODO <BMV> - Comment and delcare as private??
 	double fuelCon = 0.0;
 	double startFuel = 0.0;
 	boolean firstFuel = true;
 	double startDist = 0.0;
 	double dist = 0.0;
 	boolean firstDist = true;
-
-    /**
-     * OnCreate Android Activity Lifecycle.  Sets up the connection status and screen information.
-     */
-    @Override
+	/**
+	 * OnCreate Android Activity Lifecycle.  Sets up the connection status and screen information.
+	 */
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash_screen);
 
         /* Displays the correct message for the connection status of the service */
-        //TODO - <BMV> Update so this fixes itself when it isn't connected correctly
+		//TODO - <BMV> Update so this fixes itself when it isn't connected correctly
 		connection_status = (TextView) findViewById(R.id.connection_status);
 		connection_status.setTextColor(Color.RED);
-        //TODO - <BMV> Use a string resource for this value.
+		//TODO - <BMV> Use a string resource for this value.
 		connection_status.setText("Not connected");
 
         /* Set up the TextToSpeech object for verbal feedback */
-        ttobj = new TextToSpeech(getApplicationContext(),
+		ttobj = new TextToSpeech(getApplicationContext(),
 				new TextToSpeech.OnInitListener() {
 					@Override
 					public void onInit(int status) {
@@ -97,11 +96,11 @@ public class StarterActivity extends Activity {
 				});
 	}
 
-    /**
-     * OnPause Android Activity Lifecycle.  Removes listeners and unbinds the OpenXC service
-     * on a pause activity.
-     * Runs when the application goes to the background or the screen shuts off.
-     */
+	/**
+	 * OnPause Android Activity Lifecycle.  Removes listeners and unbinds the OpenXC service
+	 * on a pause activity.
+	 * Runs when the application goes to the background or the screen shuts off.
+	 */
 	@Override
 	public void onPause() {
 		super.onPause();
@@ -129,12 +128,12 @@ public class StarterActivity extends Activity {
 		}
 	}
 
-    /**
-     * onResume android Activity LIfecycle.  Creates a new VehicleManager intent and binds
-     * the VehicleManager to this StarterActivity.
-     *
-     * Then connect all listener objects.
-     */
+	/**
+	 * onResume android Activity LIfecycle.  Creates a new VehicleManager intent and binds
+	 * the VehicleManager to this StarterActivity.
+	 * <p>
+	 * Then connect all listener objects.
+	 */
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -159,7 +158,7 @@ public class StarterActivity extends Activity {
 
 
 			//add every Xth data point to the ArrayList
-			if(++speedListenerCount % moduloValue != 0) {
+			if (++speedListenerCount % moduloValue != 0) {
 				Log.i(TAG, "Skipped Measurement Speed");
 			} else {
 				Log.i(TAG, "Received Measurement Engine Speed");
@@ -224,7 +223,7 @@ public class StarterActivity extends Activity {
 					fuelCon = fuel.getValue().doubleValue() - startFuel;
 				}
 			}
-        }
+		}
 	};
 
 	int batteryStateListenerCount = 0;
@@ -256,26 +255,24 @@ public class StarterActivity extends Activity {
 				listAcc.add(acc.getValue().doubleValue());
 			}
 
-        }
+		}
 	};
 
 	int DistCount = 0;
 	Odometer.Listener mDistListener = new Odometer.Listener() {
 		public void receive(Measurement measurement) {
 			final Odometer odo = (Odometer) measurement;
+			double MPGScore;
 
-			//add every 25th data point to the ArrayList
-			if (++DistCount % moduloValue != 0) {
-				Log.i(TAG, "Skipped odometer measurement");
+			Log.i(TAG, "Received Odometer Measurement");
+			if (firstDist) {
+				firstDist = false;
+				startDist = odo.getValue().doubleValue();
 			} else {
-				Log.i(TAG, "Received Odometer Measurement");
-				if (firstDist) {
-					firstDist = false;
-					startDist = odo.getValue().doubleValue();
-				} else {
-					dist = odo.getValue().doubleValue() - startDist;
+				dist = odo.getValue().doubleValue() - startDist;
+				MPGScore = calcMPG(dist, fuelCon, .25 );
 				}
-			}
+			//}
 		}
 	};
 
@@ -294,7 +291,7 @@ public class StarterActivity extends Activity {
 			setContentView(R.layout.splash_screen);
 			connection_status = (TextView) findViewById(R.id.connection_status);
 			connection_status.setTextColor(Color.GREEN);
-            //TODO <BMV> - Use a string resource for this value
+			//TODO <BMV> - Use a string resource for this value
 			connection_status.setText("Connected");
 
             /* Add all the listeners to the vehicle manager object when the service connects */
@@ -330,6 +327,42 @@ public class StarterActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public double calcMPG(double dist,double fuelCon, double weight) {
+		double score = 100;
+		double mpg;
+		//converts to gallons
+		fuelCon = fuelCon * 0.264172;
+		//give infinite if negative fuel consumed or zero
+		if (fuelCon <= 0){
+			mpg = 999;
+		}
+		else {
+			//kM to miles
+			mpg = (dist * 0.621371) / fuelCon;
+		}
+
+		if (mpg <= 5) {
+			score = 0;
+		} else if (mpg <= 10) {
+			score = 10;
+		} else if (mpg <= 15) {
+			score = 20;
+		} else if (mpg <= 20) {
+			score = 30;
+		} else if (mpg <= 25) {
+			score = 50;
+		} else if (mpg <= 30) {
+			score = 75;
+		} else if (mpg <= 35) {
+			score = 90;
+		}
+
+		score *= 10;
+
+		return score * weight;
+
 	}
 }
 /*
