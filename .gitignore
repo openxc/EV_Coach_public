@@ -15,6 +15,7 @@ out/
 
 # Gradle files
 .gradle/
+gradle/
 .idea/libraries
 build/
 

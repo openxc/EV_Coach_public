@@ -86,21 +86,18 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 		fuelCon = fuelCon * 0.264172;
 		mpg = (dist * 0.621371) / fuelCon;
 
-		//city driving
-		if(driveType == 0) {
+		if(driveType == 0) { /* City driving */
 			RPMScore = calcScore (500, listRPM, .25);
 			speedScore = calcScore(73, listSpeed, .25);
 			accelScore = calcScore(15, listAcc, .25);
 
-		} else if(driveType == 1) {
-			//rural driving
+		} else if(driveType == 1) { /* Rural driving */
 			//TODO: Not yet implemented - rural driving
 			RPMScore = calcScore(1500, listRPM, .25);
 			speedScore = calcScore(100, listSpeed, .25);
 			accelScore = calcScore(15, listAcc, .25);
 
-		} else {
-			//highway driving
+		} else { /* Highway driving */
 			RPMScore = calcScore(2000, listRPM, .25);
 			speedScore = calcScore(117, listSpeed, .25);
 			accelScore = calcScore(25, listAcc, .25);
@@ -204,7 +201,6 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 				newActivity.putExtra("speedScore", speedScore);
 				newActivity.putExtra("mpgScore", MPGScore);
 				newActivity.putExtra("accelScore", accelScore);
-				//newActivity.putExtra("accelScore", accelScore));
 				startActivity(newActivity);
 			}
 		});
