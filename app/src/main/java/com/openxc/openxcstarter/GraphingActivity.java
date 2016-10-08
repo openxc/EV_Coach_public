@@ -74,12 +74,16 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 		graph = (GraphView) findViewById(R.id.graph);
 		ArrayList<Double> listRPM = (ArrayList<Double>) getIntent().getSerializableExtra("listRPM");
 		ArrayList<Double> listSpeed = (ArrayList<Double>) getIntent().getSerializableExtra("listSpeed");
-		
 		ArrayList<Double> listBatStateCharge = (ArrayList<Double>) getIntent().getSerializableExtra("listBatStateCharge");
 		ArrayList<Double> listAcc = (ArrayList<Double>) getIntent().getSerializableExtra("listAcc");
 
 		double fuelCon = (double) getIntent().getSerializableExtra("fuelCon");
 		double dist = (double) getIntent().getSerializableExtra("dist");
+
+		//new doubles created for graphing
+		double percentRPM = (double) getIntent().getSerializableExtra("percentRPM");
+		double percentSpeed = (double) getIntent().getSerializableExtra("percentSpeed");
+		double percentAcc = (double) getIntent().getSerializableExtra("percentAcc");
 
 		//Determine which type of driving we are doing
 		String dType = sharedPreferences.getString("road", "0");
@@ -88,23 +92,10 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 		fuelCon = fuelCon * 0.264172;
 		mpg = (dist * 0.621371) / fuelCon;
 
-		if(driveType == 0) { /* City driving */
-			RPMScore = calcScore (500, listRPM, .25);
-			speedScore = calcScore(73, listSpeed, .25);
-			accelScore = calcScore(15, listAcc, .25);
+		RPMScore = 250 * percentRPM;
+		speedScore = 250 * percentSpeed;
+		accelScore = 250 * percentAcc;
 
-		} else if(driveType == 1) { /* Rural driving */
-			//TODO: Not yet implemented - rural driving
-			RPMScore = calcScore(1500, listRPM, .25);
-			speedScore = calcScore(100, listSpeed, .25);
-			accelScore = calcScore(15, listAcc, .25);
-
-		} else { /* Highway driving */
-			RPMScore = calcScore(2000, listRPM, .25);
-			speedScore = calcScore(117, listSpeed, .25);
-			accelScore = calcScore(25, listAcc, .25);
-
-		}
 		MPGScore = calcMPG(mpg, 0.25);
 
 		//Calculate score here and put it into the text box
@@ -262,37 +253,6 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 	 * @param weight - the weight of the score to base this off of
 	 * @return a double with the weighted score of this category
 	 */
-	private static double calcScore(int upperBase, ArrayList<Double> parameters, double weight){
-		double calcScore;
-		// normBaseCount = 0 , easyBaseCount = 0, normPct, easyPct,
-		int hardBaseCount = 0, zeroCount = 0;
-		double zeroPct, acceptPct;
-
-		for ( int i = 0; i < parameters.size(); i++ ) {
-			if ( parameters.get(i) > upperBase ) {
-				hardBaseCount++;
-			}
-			//else if (parameters.get(i) > midBase){
-			//	normBaseCount++;
-			//}
-			//else if (parameters.get(i) > lowerBase) {
-			//	easyBaseCount++;
-			//}
-			else {
-				zeroCount++;
-			}
-		}
-
-		//normPct = (double) normBaseCount / (double) parameters.size();
-		//easyPct = (double) easyBaseCount / (double) parameters.size();
-
-		Log.i("TAG", "Number over: " + hardBaseCount + " Number below: " + zeroCount);
-		//acceptPct = normPct + easyPct + zeroPct;
-		acceptPct = (double) zeroCount / parameters.size();
-		calcScore = acceptPct * weight * 1000;
-
-		return calcScore;
-	}
 
 
 	/**
