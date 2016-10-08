@@ -70,6 +70,14 @@ public class StarterActivity extends Activity {
 	double dist = 0.0;
 	boolean firstDist = true;
 
+	// Variables to find the average RPM, Speed, and Acceleration score
+	private int goodRPM = 0; // Number of good RPM points
+	private int goodAccel = 0; //Number of good Acceleration points
+	private int goodSpeed = 0; // Number of good Speed points
+	private int totalRPM = 0; // Total number of RPM points
+	private int totalAccel = 0; //Total number of Acceleration points
+	private int totalSpeed = 0; //Total number of Speed points
+
     /**
      * OnCreate Android Activity Lifecycle.  Sets up the connection status and screen information.
      */
@@ -156,7 +164,7 @@ public class StarterActivity extends Activity {
 		@Override
 		public void receive(Measurement measurement) {
 			final EngineSpeed speed = (EngineSpeed) measurement;
-
+			totalRPM++; //Add point to total RPM
 
 			//add every Xth data point to the ArrayList
 			if(++speedListenerCount % moduloValue != 0) {
@@ -183,6 +191,9 @@ public class StarterActivity extends Activity {
 				i.putExtra("listAcc", listAcc);
 				i.putExtra("fuelCon", fuelCon);
 				i.putExtra("dist", dist);
+				i.putExtra("percentAcc", ((double)goodAccel)/((double)totalAccel));
+				i.putExtra("percentSpeed", ((double)goodSpeed)/((double)totalSpeed));
+				i.putExtra("percentRPM", ((double)goodRPM)/((double)totalRPM));
 				firstDist = true;
 				firstFuel = true;
 
@@ -196,6 +207,7 @@ public class StarterActivity extends Activity {
 	VehicleSpeed.Listener mSpeedVehicleListener = new VehicleSpeed.Listener() {
 		public void receive(Measurement measurement) {
 			final VehicleSpeed speed = (VehicleSpeed) measurement;
+			totalSpeed++; //Add point to total Speed
 
 			//add every 25th data point to the ArrayList
 			if (++vehicleSpeedListenerCount % moduloValue != 0) {
@@ -247,6 +259,7 @@ public class StarterActivity extends Activity {
 	AcceleratorPedalPosition.Listener mAccListener = new AcceleratorPedalPosition.Listener() {
 		public void receive(Measurement measurement) {
 			final AcceleratorPedalPosition acc = (AcceleratorPedalPosition) measurement;
+			totalAccel++; //Add point to total Acceleration
 
 			//add every 25th data point to the ArrayList
 			if (++AccListenerCount % moduloValue != 0) {

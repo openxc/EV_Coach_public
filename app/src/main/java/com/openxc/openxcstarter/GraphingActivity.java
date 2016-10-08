@@ -56,6 +56,8 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 
 	double mpg;
 
+
+
 	/**
 	 * Sets up the Arrays passed over from the starter activity in order to use them to graph.
 	 *
