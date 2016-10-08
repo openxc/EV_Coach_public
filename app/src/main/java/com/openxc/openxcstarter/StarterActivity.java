@@ -5,11 +5,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
@@ -72,16 +70,6 @@ public class StarterActivity extends Activity {
 	double dist = 0.0;
 	boolean firstDist = true;
 
-	// Variables to find the average RPM, Speed, and Acceleration score
-	private int goodRPM = 0; // Number of good RPM points
-	private int goodAccel = 0; //Number of good Acceleration points
-	private int goodSpeed = 0; // Number of good Speed points
-	private int totalRPM = 0; // Total number of RPM points
-	private int totalAccel = 0; //Total number of Acceleration points
-	private int totalSpeed = 0; //Total number of Speed points
-
-	private SharedPreferences sharedPreferences;
-
     /**
      * OnCreate Android Activity Lifecycle.  Sets up the connection status and screen information.
      */
@@ -89,7 +77,6 @@ public class StarterActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash_screen);
-		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         /* Displays the correct message for the connection status of the service */
         //TODO - <BMV> Update so this fixes itself when it isn't connected correctly
@@ -169,18 +156,6 @@ public class StarterActivity extends Activity {
 		@Override
 		public void receive(Measurement measurement) {
 			final EngineSpeed speed = (EngineSpeed) measurement;
-			totalRPM++; //Add point to total RPM
-
-			int roadType = Integer.parseInt(sharedPreferences.getString("road", "0"));
-
-			//If the RPM value is less than the default RPM value, then it is a Good RPM
-			if ( roadType == 0 && speed.getValue().doubleValue() <= 500 ) { //For the City
-				goodRPM++; //Increase number of good RPMs
-			} else if ( roadType == 1 && speed.getValue().doubleValue() <= 1500 ) { //For Rural
-				goodRPM++; //Increase number of good RPMs
-			} else if ( roadType == 2 && speed.getValue().doubleValue() <= 2000 ) { //For Highway
-				goodRPM++; //Increase number of good RPMs
-			}
 
 
 			//add every Xth data point to the ArrayList
@@ -208,9 +183,6 @@ public class StarterActivity extends Activity {
 				i.putExtra("listAcc", listAcc);
 				i.putExtra("fuelCon", fuelCon);
 				i.putExtra("dist", dist);
-				i.putExtra("percentAcc", ((double)goodAccel)/((double)totalAccel));
-				i.putExtra("percentSpeed", ((double)goodSpeed)/((double)totalSpeed));
-				i.putExtra("percentRPM", ((double)goodRPM)/((double)totalRPM));
 				firstDist = true;
 				firstFuel = true;
 
@@ -224,18 +196,6 @@ public class StarterActivity extends Activity {
 	VehicleSpeed.Listener mSpeedVehicleListener = new VehicleSpeed.Listener() {
 		public void receive(Measurement measurement) {
 			final VehicleSpeed speed = (VehicleSpeed) measurement;
-			totalSpeed++; //Add point to total Speed
-
-			int roadType = Integer.parseInt(sharedPreferences.getString("road", "0"));
-
-			//If the Speed is less than the default Speed, then it is a Good Speed
-			if ( roadType == 0 && speed.getValue().doubleValue() <= 73 ) { //For the City
-				goodSpeed++; //Increase the number of good speeds
-			} else if ( roadType == 1 && speed.getValue().doubleValue() <= 100 ) { //For Rural
-				goodSpeed++; //Increase the number of good speeds
-			} else if ( roadType == 2 && speed.getValue().doubleValue() <= 117 ) { //For Highway
-				goodSpeed++; //Increase the number of good speeds
-			}
 
 			//add every 25th data point to the ArrayList
 			if (++vehicleSpeedListenerCount % moduloValue != 0) {
@@ -287,18 +247,6 @@ public class StarterActivity extends Activity {
 	AcceleratorPedalPosition.Listener mAccListener = new AcceleratorPedalPosition.Listener() {
 		public void receive(Measurement measurement) {
 			final AcceleratorPedalPosition acc = (AcceleratorPedalPosition) measurement;
-			totalAccel++; //Add point to total Acceleration
-
-			int roadType = Integer.parseInt(sharedPreferences.getString("road", "0"));
-
-			//If the acceleration value is less than the default acceleration value, then it is a Good Acceleration
-			if ( roadType == 0 && acc.getValue().doubleValue() <= 15 ) { //For the City
-				goodAccel++; //Increase the number of good Accelerations
-			} else if ( roadType == 1 && acc.getValue().doubleValue() <= 15 ) { //For Rural
-				goodAccel++; //Increase the number of good Accelerations
-			} else if ( roadType == 2 && acc.getValue().doubleValue() <= 25 ) { //For Highway
-				goodAccel++; //Increase the number of good Accelerations
-			}
 
 			//add every 25th data point to the ArrayList
 			if (++AccListenerCount % moduloValue != 0) {
@@ -315,19 +263,17 @@ public class StarterActivity extends Activity {
 	Odometer.Listener mDistListener = new Odometer.Listener() {
 		public void receive(Measurement measurement) {
 			final Odometer odo = (Odometer) measurement;
+			double MPGScore;
 
-			//add every 25th data point to the ArrayList
-			if (++DistCount % moduloValue != 0) {
-				Log.i(TAG, "Skipped odometer measurement");
+			Log.i(TAG, "Received Odometer Measurement");
+			if (firstDist) {
+				firstDist = false;
+				startDist = odo.getValue().doubleValue();
 			} else {
-				Log.i(TAG, "Received Odometer Measurement");
-				if (firstDist) {
-					firstDist = false;
-					startDist = odo.getValue().doubleValue();
-				} else {
-					dist = odo.getValue().doubleValue() - startDist;
+				dist = odo.getValue().doubleValue() - startDist;
+				MPGScore = calcMPG(dist, fuelCon, .25 );
 				}
-			}
+			//}
 		}
 	};
 
@@ -382,6 +328,42 @@ public class StarterActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public double calcMPG(double dist,double fuelCon, double weight) {
+		double score = 100;
+		double mpg;
+		//converts to gallons
+		fuelCon = fuelCon * 0.264172;
+		//give infinite if negative fuel consumed or zero
+		if (fuelCon <= 0){
+			mpg = 999;
+		}
+		else {
+			//kM to miles
+			mpg = (dist * 0.621371) / fuelCon;
+		}
+
+		if (mpg <= 5) {
+			score = 0;
+		} else if (mpg <= 10) {
+			score = 10;
+		} else if (mpg <= 15) {
+			score = 20;
+		} else if (mpg <= 20) {
+			score = 30;
+		} else if (mpg <= 25) {
+			score = 50;
+		} else if (mpg <= 30) {
+			score = 75;
+		} else if (mpg <= 35) {
+			score = 90;
+		}
+
+		score *= 10;
+
+		return score * weight;
+
 	}
 }
 /*
