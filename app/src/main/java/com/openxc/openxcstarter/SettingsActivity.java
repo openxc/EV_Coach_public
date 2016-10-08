@@ -5,6 +5,10 @@ import android.os.Bundle;
 
 import com.openxcplatform.openxcstarter.R;
 
+/**
+ * Settings Activity which uses the SettingsFragment through the FragmentManager to output it's
+ * layout.
+ */
 public class SettingsActivity extends Activity {
 
     @Override

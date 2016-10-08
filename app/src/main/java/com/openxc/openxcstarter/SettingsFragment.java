@@ -11,6 +11,9 @@ import android.preference.PreferenceGroup;
 import com.openxcplatform.openxcstarter.R;
 
 
+/**
+ * Uses the SharedPreference object to update scoring values/thresholds.
+ */
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
