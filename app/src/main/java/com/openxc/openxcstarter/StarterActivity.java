@@ -211,6 +211,13 @@ public class StarterActivity extends Activity {
 				i.putExtra("percentAcc", ((double)goodAccel)/((double)totalAccel));
 				i.putExtra("percentSpeed", ((double)goodSpeed)/((double)totalSpeed));
 				i.putExtra("percentRPM", ((double)goodRPM)/((double)totalRPM));
+
+				/* Log out percentage information */
+				Log.d(TAG, "Percentage of good acceleration: " + 100 * (((double)goodAccel) / totalAccel));
+				Log.d(TAG, "Percentage of good speed: " + 100 * (((double)goodSpeed) / totalSpeed));
+				Log.d(TAG, "Percentage of good RPM: " + 100 * (((double)goodRPM) / totalRPM));
+
+				/* Reentrant on the main appliaction screen */
 				firstDist = true;
 				firstFuel = true;
 
@@ -381,6 +388,7 @@ public class StarterActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+
 	public double calcMPG(double dist,double fuelCon, double weight) {
 		double score = 100;
 		double mpg;
@@ -391,7 +399,7 @@ public class StarterActivity extends Activity {
 			mpg = 999;
 		}
 		else {
-			//kM to miles
+			//km to miles
 			mpg = (dist * 0.621371) / fuelCon;
 		}
 
