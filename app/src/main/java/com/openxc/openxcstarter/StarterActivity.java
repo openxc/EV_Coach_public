@@ -64,13 +64,12 @@ public class StarterActivity extends Activity {
 	ArrayList<Double> listBatStateCharge = new ArrayList<>();
 	ArrayList<Double> listAcc = new ArrayList<>();
 
-    //TODO <BMV> - Comment and delcare as private??
-	double fuelCon = 0.0;
-	double startFuel = 0.0;
-	boolean firstFuel = true;
-	double startDist = 0.0;
-	double dist = 0.0;
-	boolean firstDist = true;
+    private double fuelCon = 0.0;       /* Keeps track of the total fuel consumed         */
+	private double startFuel = 0.0;     /* Keeps track of the initial fuel                */
+	private boolean firstFuel = true;
+	private double startDist = 0.0;     /* Keeps track of the starting odometer distance  */
+	private double dist = 0.0;          /* Keeps track of the distance travelled thus far */
+	private boolean firstDist = true;
 
 	// Variables to find the average RPM, Speed, and Acceleration score
 	private int goodRPM = 0; // Number of good RPM points
