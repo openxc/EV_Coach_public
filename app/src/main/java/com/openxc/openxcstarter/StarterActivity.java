@@ -5,7 +5,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -80,8 +79,6 @@ public class StarterActivity extends Activity {
 	private int totalAccel = 0; //Total number of Acceleration points
 	private int totalSpeed = 0; //Total number of Speed points
 
-	private SharedPreferences sharedPreferences;
-
     /**
      * OnCreate Android Activity Lifecycle.  Sets up the connection status and screen information.
      */
@@ -89,7 +86,6 @@ public class StarterActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash_screen);
-		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         /* Displays the correct message for the connection status of the service */
         //TODO - <BMV> Update so this fixes itself when it isn't connected correctly
@@ -171,14 +167,8 @@ public class StarterActivity extends Activity {
 			final EngineSpeed speed = (EngineSpeed) measurement;
 			totalRPM++; //Add point to total RPM
 
-			int roadType = Integer.parseInt(sharedPreferences.getString("road", "0"));
-
 			//If the RPM value is less than the default RPM value, then it is a Good RPM
-			if ( roadType == 0 && speed.getValue().doubleValue() <= 500 ) { //For the City
-				goodRPM++; //Increase number of good RPMs
-			} else if ( roadType == 1 && speed.getValue().doubleValue() <= 1500 ) { //For Rural
-				goodRPM++; //Increase number of good RPMs
-			} else if ( roadType == 2 && speed.getValue().doubleValue() <= 2000 ) { //For Highway
+			if ( speed.getValue().doubleValue() <= 500 ) { //For the City
 				goodRPM++; //Increase number of good RPMs
 			}
 
@@ -226,14 +216,10 @@ public class StarterActivity extends Activity {
 			final VehicleSpeed speed = (VehicleSpeed) measurement;
 			totalSpeed++; //Add point to total Speed
 
-			int roadType = Integer.parseInt(sharedPreferences.getString("road", "0"));
+
 
 			//If the Speed is less than the default Speed, then it is a Good Speed
-			if ( roadType == 0 && speed.getValue().doubleValue() <= 73 ) { //For the City
-				goodSpeed++; //Increase the number of good speeds
-			} else if ( roadType == 1 && speed.getValue().doubleValue() <= 100 ) { //For Rural
-				goodSpeed++; //Increase the number of good speeds
-			} else if ( roadType == 2 && speed.getValue().doubleValue() <= 117 ) { //For Highway
+			if ( speed.getValue().doubleValue() <= 73 ) { //For the City
 				goodSpeed++; //Increase the number of good speeds
 			}
 
@@ -289,14 +275,10 @@ public class StarterActivity extends Activity {
 			final AcceleratorPedalPosition acc = (AcceleratorPedalPosition) measurement;
 			totalAccel++; //Add point to total Acceleration
 
-			int roadType = Integer.parseInt(sharedPreferences.getString("road", "0"));
+
 
 			//If the acceleration value is less than the default acceleration value, then it is a Good Acceleration
-			if ( roadType == 0 && acc.getValue().doubleValue() <= 15 ) { //For the City
-				goodAccel++; //Increase the number of good Accelerations
-			} else if ( roadType == 1 && acc.getValue().doubleValue() <= 15 ) { //For Rural
-				goodAccel++; //Increase the number of good Accelerations
-			} else if ( roadType == 2 && acc.getValue().doubleValue() <= 25 ) { //For Highway
+			if ( acc.getValue().doubleValue() <= 15 ) { //For the City
 				goodAccel++; //Increase the number of good Accelerations
 			}
 
