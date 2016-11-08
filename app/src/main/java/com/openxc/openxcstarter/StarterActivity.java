@@ -63,13 +63,12 @@ public class StarterActivity extends Activity {
 	ArrayList<Double> listBatStateCharge = new ArrayList<>();
 	ArrayList<Double> listAcc = new ArrayList<>();
 
-    //TODO <BMV> - Comment and delcare as private??
-	double fuelCon = 0.0;
-	double startFuel = 0.0;
-	boolean firstFuel = true;
-	double startDist = 0.0;
-	double dist = 0.0;
-	boolean firstDist = true;
+    private double fuelCon = 0.0;       /* Keeps track of the total fuel consumed         */
+	private double startFuel = 0.0;     /* Keeps track of the initial fuel                */
+	private boolean firstFuel = true;
+	private double startDist = 0.0;     /* Keeps track of the starting odometer distance  */
+	private double dist = 0.0;          /* Keeps track of the distance travelled thus far */
+	private boolean firstDist = true;
 
 	// Variables to find the average RPM, Speed, and Acceleration score
 	private int goodRPM = 0; // Number of good RPM points
@@ -201,6 +200,13 @@ public class StarterActivity extends Activity {
 				i.putExtra("percentAcc", ((double)goodAccel)/((double)totalAccel));
 				i.putExtra("percentSpeed", ((double)goodSpeed)/((double)totalSpeed));
 				i.putExtra("percentRPM", ((double)goodRPM)/((double)totalRPM));
+
+				/* Log out percentage information */
+				Log.d(TAG, "Percentage of good acceleration: " + 100 * (((double)goodAccel) / totalAccel));
+				Log.d(TAG, "Percentage of good speed: " + 100 * (((double)goodSpeed) / totalSpeed));
+				Log.d(TAG, "Percentage of good RPM: " + 100 * (((double)goodRPM) / totalRPM));
+
+				/* Reentrant on the main appliaction screen */
 				firstDist = true;
 				firstFuel = true;
 
@@ -363,6 +369,7 @@ public class StarterActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+
 	public double calcMPG(double dist,double fuelCon, double weight) {
 		double score = 100;
 		double mpg;
@@ -373,7 +380,7 @@ public class StarterActivity extends Activity {
 			mpg = 999;
 		}
 		else {
-			//kM to miles
+			//km to miles
 			mpg = (dist * 0.621371) / fuelCon;
 		}
 

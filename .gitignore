@@ -16,7 +16,6 @@ out/
 # Gradle files
 .gradle/
 gradle/
-.idea/libraries
 build/
 
 # Local configuration file (sdk path, etc)
@@ -40,3 +39,12 @@ captures/
 
 # Keystore files
 *.jks
+
+# Other stuffs
+/.idea/
+/app/build/
+/openxc/
+
+# Unversioned files
+app/src/main/res/drawable-xhdpi/
+app/src/main/res/drawable-xxhdpi/
