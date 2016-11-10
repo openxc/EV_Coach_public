@@ -230,9 +230,41 @@ def doStatistics(final) :
 # Groups the points and then graphs them
 def graphPoints(final) :
     # TODO <BMV> Add in code to group for barchart
-	print("Graphing todo")
+	
+	# Graph the _all lists
+	if( final ) :
+		layout = go.Layout(
+			title="All vehicle speed"
+		)
+		
+		
+		layout = go.Layout(
+			title="All engine speed"
+		)
+		
+		
+		
+		layout = go.Layout(
+			title ="All accel. pedal pos."
+		)
+		
+	# Graph normally
+	else :
+		print("Every other graph")
+		
     
-		
-		
+# Counts and partitions the points of an array based on the position
+def countPoints(idx_num) :
+	
+	# Vehicle speed
+	if( idx_num == 0 ) :
+	
+	# Engine speed
+	elif( idx_num == 1 ) :
+	
+	# Accl pedal pos 
+	elif( idx_num == 2 ) :
+	
+	return list	
 if __name__ == "__main__":
 	main()
