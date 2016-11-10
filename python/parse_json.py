@@ -49,8 +49,8 @@ vehicle_speed_all = []
 engine_speed_all = []
 accelerator_pedal_position_all = []
 
-# Configuration settings
-OnlyNonZero = True 
+# Configuration settings (initialized)
+AllowZeroValues = False 
 VehicleSpeedGrouping = 0
 EngineSpeedGrouping = 0
 AcceleratorPedalPositionGrouping = 0
@@ -80,8 +80,6 @@ def main() :
 	
 	# Reads the configuration file
 	readConfig()
-	
-	print(str(OnlyNonZero) + " " + str(VehicleSpeedGrouping) + " " + str(EngineSpeedGrouping) + " " + str(AcceleratorPedalPositionGrouping))
 
 	# Get the files&directories in the current directory
 	files = os.listdir(os.curdir)
@@ -102,11 +100,23 @@ def readConfig() :
 	config = configparser.ConfigParser()
 	config.read('config.ini')
 	
+	# Make sure we are updating the global variables
+	global AllowZeroValues
+	global VehicleSpeedGrouping
+	global EngineSpeedGrouping
+	global AcceleratorPedalPositionGrouping
+	
 	# Read the configuration settings and set global variables
-	OnlyNonZero                      = config['boolean']['UseNonZeroValues'] == 'True'
+	AllowZeroValues                  = config['boolean']['AllowZeroValues'] == 'True'
 	VehicleSpeedGrouping             = int(config['integer']['VehicleSpeedGrouping'])
 	EngineSpeedGrouping              = int(config['integer']['EngineSpeedGrouping'])
 	AcceleratorPedalPositionGrouping = int(config['integer']['AcceleratorPedalPositionGrouping'])
+	
+	# Print out the configuration for the user to see
+	print(Fore.GREEN + "Configuration: \n\tAllowZeroValues: " + str(AllowZeroValues) \
+		+ "\n\tVehicleSpeedGrouping: " + str(VehicleSpeedGrouping) \
+		+ "\n\tEngineSpeedGrouping: " + str(EngineSpeedGrouping) \
+		+ "\n\tAcceleratorPedalPositionGrouping: " + str(AcceleratorPedalPositionGrouping) + Fore.RESET)
 	
 	
 # Opens and parses json in each file
@@ -129,6 +139,14 @@ def openJson(fileName) :
 # Parse a single json portion (e.g. a line)
 def parseJsonLine(line) :
 	
+	# Grab the global variables to make sure we are using them instead of local variables
+	global vehicle_speed
+	global engine_speed
+	global engine_speed
+	global vehicle_speed_all
+	global engine_speed_all
+	global accelerator_pedal_position_all	
+	
 	try :
 		# Load the line as JSon
 		data = json.loads(line)
@@ -139,15 +157,24 @@ def parseJsonLine(line) :
 			
 			# Add the corresponding value to the array
 			if(data['name'].lower() == "vehicle_speed") :
-				if( float(data['value']) != 0 and OnlyNonZero ) :
+				if( float(data['value']) != 0 and not AllowZeroValues ) :
+					vehicle_speed.append(float(data['value']))
+					vehicle_speed_all.append(float(data['value']))
+				elif( AllowZeroValues ) :
 					vehicle_speed.append(float(data['value']))
 					vehicle_speed_all.append(float(data['value']))
 			elif(data['name'].lower() == "engine_speed") :
-				if( float(data['value']) != 0 and OnlyNonZero ) :
+				if( float(data['value']) != 0 ) :
+					engine_speed.append(float(data['value']))
+					engine_speed_all.append(float(data['value']))
+				elif( AllowZeroValues ) :
 					engine_speed.append(float(data['value']))
 					engine_speed_all.append(float(data['value']))
 			elif(data['name'].lower() == "accelerator_pedal_position") :
-				if( float(data['value']) != 0 and OnlyNonZero ) :
+				if( float(data['value']) != 0 and not AllowZeroValues ) :
+					accelerator_pedal_position.append(float(data['value']))
+					accelerator_pedal_position_all.append(float(data['value']))
+				elif( AllowZeroValues ) :
 					accelerator_pedal_position.append(float(data['value']))
 					accelerator_pedal_position_all.append(float(data['value']))
 					
