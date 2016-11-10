@@ -167,7 +167,7 @@ def doStatistics(final) :
 			print(Fore.GREEN + "\tMedian accelerator pedal position average: " + str(statistics.median(accelerator_pedal_position_all)) + Fore.RESET)
 		
         # Do graph calculations
-        graphPoints(final)
+		graphPoints(final)
 
 	except statistics.StatisticsError :
 		print(Fore.RED + "\t[Error] Not enough datapoints (probably)" + Fore.RESET)
