@@ -47,7 +47,7 @@ accelerator_pedal_position = []
 vehicle_speed_all = []
 engine_speed_all = []
 accelerator_pedal_position_all = []
-nonZero = False
+onlyNonZero = True #TODO <BMV> add this in configuration file
 
 def main() :
 	
@@ -135,6 +135,10 @@ def doStatistics(final) :
 
 	try :
 		if(not final) :
+			print(Fore.RED + "\tLen vehicle_speed " + str(len(vehicle_speed)) + Fore.RESET);
+			print(Fore.RED + "\tLen engine speed " + str(len(engine_speed)) + Fore.RESET);
+			print(Fore.RED + "\tLen accelerator " + str(len(accelerator_pedal_position)) + Fore.RESET);
+			print(Fore.RED + "\tLen vehicle_speed_all " + str(len(vehicle_speed_all)) + Fore.RESET);
 			print(Fore.GREEN + "\tVehicle speed average: " + str(statistics.mean(vehicle_speed)) + Fore.RESET)
 			print(Fore.GREEN + "\tMedian vehicle speed: " + str(statistics.median(vehicle_speed)) + Fore.RESET)
 			print(Fore.GREEN + "\tHighest vehicle speed: " + str(max(vehicle_speed)) + Fore.RESET)
@@ -174,8 +178,8 @@ def doStatistics(final) :
 
 # Groups the points and then graphs them
 def graphPoints(final) :
-    
-	printf("Graphing todo")
+    # TODO <BMV> Add in code to group for barchart
+	print("Graphing todo")
     
 		
 		
