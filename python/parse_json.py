@@ -1,7 +1,7 @@
 import json
 import math
 import os
-
+import configparser
 import sys
 
 #Import statistics module
@@ -38,16 +38,22 @@ except ImportError:
 		print("Please install colorama by using the command: 'pip install colorama'")
 	sys.exit()
 
-# Create a set of all the attributes stored
+# Attributes stored across a single file run
 attributes = set()
 vehicle_speed = []
 engine_speed = []
 accelerator_pedal_position = []
 
+# Attributes stored across all file runs
 vehicle_speed_all = []
 engine_speed_all = []
 accelerator_pedal_position_all = []
-onlyNonZero = True #TODO <BMV> add this in configuration file
+
+# Configuration settings
+OnlyNonZero = True 
+VehicleSpeedGrouping = 0
+EngineSpeedGrouping = 0
+AcceleratorPedalPositionGrouping = 0
 
 def main() :
 	
@@ -72,6 +78,11 @@ def main() :
 	else :
 		print("Ignoring files: " + str(ignoredFiles))
 	
+	# Reads the configuration file
+	readConfig()
+	
+	print(str(OnlyNonZero) + " " + str(VehicleSpeedGrouping) + " " + str(EngineSpeedGrouping) + " " + str(AcceleratorPedalPositionGrouping))
+
 	# Get the files&directories in the current directory
 	files = os.listdir(os.curdir)
 	
@@ -84,7 +95,20 @@ def main() :
 
 	# Final run for combined statistics
 	doStatistics(True)
-			
+		
+# Sets up and reads the configuration
+def readConfig() :
+	# Configuration file setup
+	config = configparser.ConfigParser()
+	config.read('config.ini')
+	
+	# Read the configuration settings and set global variables
+	OnlyNonZero                      = config['boolean']['UseNonZeroValues'] == 'True'
+	VehicleSpeedGrouping             = int(config['integer']['VehicleSpeedGrouping'])
+	EngineSpeedGrouping              = int(config['integer']['EngineSpeedGrouping'])
+	AcceleratorPedalPositionGrouping = int(config['integer']['AcceleratorPedalPositionGrouping'])
+	
+	
 # Opens and parses json in each file
 def openJson(fileName) :
 	print ("Going through file: " + fileName)
@@ -115,15 +139,15 @@ def parseJsonLine(line) :
 			
 			# Add the corresponding value to the array
 			if(data['name'].lower() == "vehicle_speed") :
-				if( float(data['value']) != 0 and onlyNonZero ) :
+				if( float(data['value']) != 0 and OnlyNonZero ) :
 					vehicle_speed.append(float(data['value']))
 					vehicle_speed_all.append(float(data['value']))
 			elif(data['name'].lower() == "engine_speed") :
-				if( float(data['value']) != 0 and onlyNonZero ) :
+				if( float(data['value']) != 0 and OnlyNonZero ) :
 					engine_speed.append(float(data['value']))
 					engine_speed_all.append(float(data['value']))
 			elif(data['name'].lower() == "accelerator_pedal_position") :
-				if( float(data['value']) != 0 and onlyNonZero ) :
+				if( float(data['value']) != 0 and OnlyNonZero ) :
 					accelerator_pedal_position.append(float(data['value']))
 					accelerator_pedal_position_all.append(float(data['value']))
 					
