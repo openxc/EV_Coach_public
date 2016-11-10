@@ -175,11 +175,7 @@ def doStatistics(final) :
 # Groups the points and then graphs them
 def graphPoints(final) :
     
-    
-    if(final) :
-
-    else :
-
+	printf("Graphing todo")
     
 		
 		
