@@ -5,6 +5,17 @@ import configparser
 import sys
 from collections import OrderedDict
 
+# Import numpy
+try :
+	import matplotlib.pyplot as plt
+except ImportError:
+	if( os.name is "posix") :
+		print("Please install matplotlib by using the command: 'sudo pip install matplotlib'")
+	else :
+		print("Please install matplotlib by using the command: 'pip install matplotlib'")
+	sys.exit()
+	
+	
 #Import statistics module
 try :
 	import statistics
@@ -15,16 +26,6 @@ except ImportError:
 		print("Please install statistics by using the command: 'pip install statistics'")
 	sys.exit()
 
-#Import plotly module
-try :
-	import plotly.plotly as py
-	import plotly.graph_objs as go
-except ImportError:
-	if( os.name is "posix") :
-		print("Please install plotly by using the command: 'sudo pip install plotly'")
-	else :
-		print("Please install plotly by using the command: 'pip install plotly'")
-	sys.exit()
 	
 # Import colorama module
 try:
@@ -232,25 +233,16 @@ def doStatistics(final) :
 def graphPoints(final) :
     # TODO <BMV> Add in code to group for barchart
 	
-	
-	layout = go.Layout(
-		title="All vehicle speed"
-	)
-	print("FINAL")
-	
-	
-	layout = go.Layout(
-		title="All engine speed"
-	)
-	
-	
-	layout = go.Layout(
-		title ="All accel. pedal pos."
-	)
-	print("Every other graph")
 	dict = countPoints(0, final)
+	n, bins, patches = plt.hist(list(dict.keys()), list(dict.values()))
+	
 	dict = countPoints(1, final)
+		
 	dict = countPoints(2, final)
+	
+
+
+	
 	print(str(dict))
 		
     
@@ -277,7 +269,7 @@ def countPoints(idx_num, final) :
 						count += 1
 						
 				# Set the dictionary key/value pair
-				dict[str(temp)] = count
+				dict[temp] = count
 				temp += VehicleSpeedGrouping
 		else :
 			# Grab the start and ending values (rounding up/down)
@@ -292,7 +284,7 @@ def countPoints(idx_num, final) :
 						count += 1
 						
 				# Set the dictionary key/value pair
-				dict[str(temp)] = count
+				dict[temp] = count
 				temp += VehicleSpeedGrouping
 		
 	# Engine speed
@@ -312,7 +304,7 @@ def countPoints(idx_num, final) :
 						count += 1
 						
 				# Set the dictionary key/value pair
-				dict[str(temp)] = count
+				dict[temp] = count
 				temp += EngineSpeedGrouping
 		else :
 			# Grab the start and ending values (rounding up/down)
@@ -327,7 +319,7 @@ def countPoints(idx_num, final) :
 						count += 1
 						
 				# Set the dictionary key/value pair
-				dict[str(temp)] = count
+				dict[temp] = count
 				temp += EngineSpeedGrouping
 			
 	# Accl pedal pos 
@@ -347,7 +339,7 @@ def countPoints(idx_num, final) :
 						count += 1
 						
 				# Set the dictionary key/value pair
-				dict[str(temp)] = count
+				dict[temp] = count
 				temp += AcceleratorPedalPositionGrouping
 		else :
 			# Grab the start and ending values (rounding up/down)
@@ -362,7 +354,7 @@ def countPoints(idx_num, final) :
 						count += 1
 						
 				# Set the dictionary key/value pair
-				dict[str(temp)] = count
+				dict[temp] = count
 				temp += AcceleratorPedalPositionGrouping
 				
 	return dict	
