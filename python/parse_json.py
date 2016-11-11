@@ -233,7 +233,7 @@ def doStatistics(final) :
 
 # Groups the points and then graphs them
 def graphPoints(final) :
-    # TODO <BMV> Add in code to group for histogram
+
 	if( final ) :
 		plt.figure(num=None, figsize=(8,6))
 		plt.subplot(311)
