@@ -96,6 +96,7 @@ def main() :
 
 	# Final run for combined statistics
 	doStatistics(True)
+	plt.show()
 		
 # Sets up and reads the configuration
 def readConfig() :
@@ -232,8 +233,9 @@ def doStatistics(final) :
 
 # Groups the points and then graphs them
 def graphPoints(final) :
-    # TODO <BMV> Add in code to group for barchart
+    # TODO <BMV> Add in code to group for histogram
 	if( final ) :
+		plt.figure()
 		plt.subplot(311)
 		plt.hist(np.asarray(vehicle_speed_all))
 		plt.subplot(312)
@@ -241,6 +243,7 @@ def graphPoints(final) :
 		plt.subplot(313)
 		plt.hist(np.asarray(accelerator_pedal_position_all))
 	else :
+		plt.figure()
 		plt.subplot(311)
 		plt.hist(np.asarray(vehicle_speed))
 		plt.subplot(312)
@@ -248,7 +251,122 @@ def graphPoints(final) :
 		plt.subplot(313)
 		plt.hist(np.asarray(accelerator_pedal_position))
 	
-	plt.show()
+	plt.show(block=False)
+		
+    
+# Counts and partitions the points of an array based on the position
+def countPoints(idx_num, final) :
+	
+	# Dictionary for storing keys/values
+	dict = OrderedDict()
+		
+	# Vehicle speed
+	if( idx_num == 0 ) :
+		print("Vehicle speed counting")
+		
+		if( final ) :
+			# Grab the start and ending values (rounding up/down)
+			start = int(int(min(vehicle_speed_all)) / 10) * 10
+			end = int((int(max(vehicle_speed_all)) + 9) / 10) * 10
+			
+			temp = start
+			while( temp < end + VehicleSpeedGrouping ) :
+				count = 0
+				for point in vehicle_speed_all :
+					if( point >= temp and point < (temp + VehicleSpeedGrouping) ) :
+						count += 1
+						
+				# Set the dictionary key/value pair
+				dict[temp] = count
+				temp += VehicleSpeedGrouping
+		else :
+			# Grab the start and ending values (rounding up/down)
+			start = int(int(min(vehicle_speed)) / 10) * 10
+			end = int((int(max(vehicle_speed)) + 9) / 10) * 10
+			
+			temp = start
+			while( temp < end + VehicleSpeedGrouping ) :
+				count = 0
+				for point in vehicle_speed :
+					if( point >= temp and point < (temp + VehicleSpeedGrouping) ) :
+						count += 1
+						
+				# Set the dictionary key/value pair
+				dict[temp] = count
+				temp += VehicleSpeedGrouping
+		
+	# Engine speed
+	elif( idx_num == 1 ) :
+		print("Engine speed counting")
+		
+		if( final ) :
+			# Grab the start and ending values (rounding up/down)
+			start = int(int(min(engine_speed_all)) / 10) * 10
+			end = int((int(max(engine_speed_all)) + 9) / 10) * 10
+			
+			temp = start
+			while( temp < end + EngineSpeedGrouping ) :
+				count = 0
+				for point in engine_speed_all :
+					if( point >= temp and point < (temp + EngineSpeedGrouping) ) :
+						count += 1
+						
+				# Set the dictionary key/value pair
+				dict[temp] = count
+				temp += EngineSpeedGrouping
+		else :
+			# Grab the start and ending values (rounding up/down)
+			start = int(int(min(engine_speed)) / 10) * 10
+			end = int((int(max(engine_speed)) + 9) / 10) * 10
+			
+			temp = start
+			while( temp < end + EngineSpeedGrouping ) :
+				count = 0
+				for point in engine_speed :
+					if( point >= temp and point < (temp + EngineSpeedGrouping) ) :
+						count += 1
+						
+				# Set the dictionary key/value pair
+				dict[temp] = count
+				temp += EngineSpeedGrouping
+			
+	# Accl pedal pos 
+	elif( idx_num == 2 ) :
+		print("Accel pedal position counting")
+		
+		if( final ) :
+			# Grab the start and ending values (rounding up/down)
+			start = int(int(min(accelerator_pedal_position_all)) / 10) * 10
+			end = int((int(max(accelerator_pedal_position_all)) + 9) / 10) * 10
+			
+			temp = start
+			while( temp < end + AcceleratorPedalPositionGrouping ) :
+				count = 0
+				for point in accelerator_pedal_position_all :
+					if( point >= temp and point < (temp + AcceleratorPedalPositionGrouping) ) :
+						count += 1
+						
+				# Set the dictionary key/value pair
+				dict[temp] = count
+				temp += AcceleratorPedalPositionGrouping
+		else :
+			# Grab the start and ending values (rounding up/down)
+			start = int(int(min(accelerator_pedal_position)) / 10) * 10
+			end = int((int(max(accelerator_pedal_position)) + 9) / 10) * 10
+			
+			temp = start
+			while( temp < end + AcceleratorPedalPositionGrouping ) :
+				count = 0
+				for point in accelerator_pedal_position :
+					if( point >= temp and point < (temp + AcceleratorPedalPositionGrouping) ) :
+						count += 1
+						
+				# Set the dictionary key/value pair
+				dict[temp] = count
+				temp += AcceleratorPedalPositionGrouping
+				
+	return dict	
+	
 	
 if __name__ == "__main__":
 	main()
