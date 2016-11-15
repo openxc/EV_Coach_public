@@ -54,9 +54,6 @@ accelerator_pedal_position_all = []
 
 # Configuration settings (initialized)
 AllowZeroValues = False 
-VehicleSpeedGrouping = 0
-EngineSpeedGrouping = 0
-AcceleratorPedalPositionGrouping = 0
 
 def main() :
 	
@@ -106,21 +103,13 @@ def readConfig() :
 	
 	# Make sure we are updating the global variables
 	global AllowZeroValues
-	global VehicleSpeedGrouping
-	global EngineSpeedGrouping
-	global AcceleratorPedalPositionGrouping
 	
 	# Read the configuration settings and set global variables
 	AllowZeroValues                  = config['boolean']['AllowZeroValues'] == 'True'
-	VehicleSpeedGrouping             = int(config['integer']['VehicleSpeedGrouping'])
-	EngineSpeedGrouping              = int(config['integer']['EngineSpeedGrouping'])
-	AcceleratorPedalPositionGrouping = int(config['integer']['AcceleratorPedalPositionGrouping'])
+
 	
 	# Print out the configuration for the user to see
-	print(Fore.GREEN + "Configuration: \n\tAllowZeroValues: " + str(AllowZeroValues) \
-		+ "\n\tVehicleSpeedGrouping: " + str(VehicleSpeedGrouping) \
-		+ "\n\tEngineSpeedGrouping: " + str(EngineSpeedGrouping) \
-		+ "\n\tAcceleratorPedalPositionGrouping: " + str(AcceleratorPedalPositionGrouping) + Fore.RESET)
+	print(Fore.GREEN + "Configuration: \n\tAllowZeroValues: " + str(AllowZeroValues) + Fore.RESET)
 	
 	
 # Opens and parses json in each file
