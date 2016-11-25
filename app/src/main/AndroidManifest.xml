@@ -44,6 +44,10 @@
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar"/>
 
         <service android:name="com.openxc.VehicleManager" />
+        <service
+            android:name="com.openxc.openxcstarter.DBSyncService"
+            android:exported="false"/>
+
 
 
     </application>

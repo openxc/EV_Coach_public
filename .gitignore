@@ -48,3 +48,4 @@ captures/
 # Unversioned files
 app/src/main/res/drawable-xhdpi/
 app/src/main/res/drawable-xxhdpi/
+/.gradle/
