@@ -44,6 +44,8 @@ captures/
 /.idea/
 /app/build/
 /openxc/
+openxc/openxc.iml
+
 
 # Unversioned files
 app/src/main/res/drawable-xhdpi/
