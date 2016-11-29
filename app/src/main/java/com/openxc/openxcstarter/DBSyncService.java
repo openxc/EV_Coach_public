@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,6 +14,8 @@ import java.util.Date;
  * to the local database.
  */
 public class DBSyncService extends IntentService {
+
+    private static final String TAG = "DBSyncService";
 
     public DBSyncService() {
         super("DBSyncService");
@@ -52,8 +55,9 @@ public class DBSyncService extends IntentService {
         values.put(DBTableContract.OverviewTableEntry.COLUMN_VEHICLE_SPEED_SCORE, speedScore);
 
         /* Insert the values within the database */
+        Log.d(TAG, "Inserting values vehicle_speed = " + speedScore + "  mpge = " + mpgeScore +  " engine = " + engineScore + " accel = " + accelScore);
         long newRowId = db.insert(DBTableContract.OverviewTableEntry.TABLE_NAME, null, values);
 
-        
+
     }
 }
