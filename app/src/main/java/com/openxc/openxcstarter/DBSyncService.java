@@ -1,7 +1,12 @@
 package com.openxc.openxcstarter;
 
 import android.app.IntentService;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * A intent service launched by the StarterActivity and then saves all the data processed
@@ -22,7 +27,33 @@ public class DBSyncService extends IntentService {
     protected void onHandleIntent(Intent workIntent) {
 
 
-        // Do work here based on contents of dataString
+        /* Grab the extra doubles for scores put in the intent */
+        double speedScore = workIntent.getDoubleExtra(DBTableContract.OverviewTableEntry.COLUMN_VEHICLE_SPEED_SCORE, 0);
+        double engineScore = workIntent.getDoubleExtra(DBTableContract.OverviewTableEntry.COLUMN_ENGINE_SPEED_SCORE, 0);
+        double mpgeScore = workIntent.getDoubleExtra(DBTableContract.OverviewTableEntry.COLUMN_MPGE_SCORE, 0);;
+        double accelScore = workIntent.getDoubleExtra(DBTableContract.OverviewTableEntry.COLUMN_ACCELERATOR_SCORE, 0);
+        double totalScore = speedScore + engineScore + mpgeScore + accelScore;
 
+        /* Grab the date and put it in a nice format */
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        String date = simpleDateFormat.format(new Date());
+
+        /* Get the database reference */
+        EVCoachDBHelper dbHelper = new EVCoachDBHelper(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        /* Put the values within an object to be sent tot he database */
+        ContentValues values = new ContentValues();
+        values.put(DBTableContract.OverviewTableEntry.COLUMN_ACCELERATOR_SCORE, accelScore);
+        values.put(DBTableContract.OverviewTableEntry.COLUMN_ENGINE_SPEED_SCORE, engineScore);
+        values.put(DBTableContract.OverviewTableEntry.COLUMN_MPGE_SCORE, mpgeScore);
+        values.put(DBTableContract.OverviewTableEntry.COLUMN_TIMESTAMP, date);
+        values.put(DBTableContract.OverviewTableEntry.COLUMN_TOTAL_SCORE, totalScore);
+        values.put(DBTableContract.OverviewTableEntry.COLUMN_VEHICLE_SPEED_SCORE, speedScore);
+
+        /* Insert the values within the database */
+        long newRowId = db.insert(DBTableContract.OverviewTableEntry.TABLE_NAME, null, values);
+
+        
     }
 }

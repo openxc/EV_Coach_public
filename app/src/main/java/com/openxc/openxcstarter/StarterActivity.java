@@ -1,6 +1,7 @@
 package com.openxc.openxcstarter;
 
 import android.app.Activity;
+import android.app.IntentService;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -189,6 +190,8 @@ public class StarterActivity extends Activity {
 			final IgnitionStatus status = (IgnitionStatus) measurement;
 			Log.i(TAG, "Received measurement IgnitionStatus");
 			if (status.getValue().toString().equals("OFF")) {
+
+				// Graphing activity intent
 				Log.i(TAG, "IS RUNNING");
 				Intent i = new Intent(getApplicationContext(), GraphingActivity.class);
 				i.putExtra("listRPM", listRPM);
@@ -201,6 +204,13 @@ public class StarterActivity extends Activity {
 				i.putExtra("percentSpeed", ((double)goodSpeed)/((double)totalSpeed));
 				i.putExtra("percentRPM", ((double)goodRPM)/((double)totalRPM));
 
+				// Service to launch for the local database sync
+				Intent intent = new Intent(getApplicationContext(), DBSyncService.class);
+				intent.putExtra(DBTableContract.OverviewTableEntry.COLUMN_ACCELERATOR_SCORE, ((double)goodAccel / (double)totalAccel) * 250);
+				intent.putExtra(DBTableContract.OverviewTableEntry.COLUMN_ENGINE_SPEED_SCORE, ((double)goodRPM / (double)totalRPM) * 250);
+				intent.putExtra(DBTableContract.OverviewTableEntry.COLUMN_MPGE_SCORE, calcMPG(dist, fuelCon, .25));
+				intent.putExtra(DBTableContract.OverviewTableEntry.COLUMN_VEHICLE_SPEED_SCORE, ((double)goodSpeed / (double)totalSpeed) * 250);
+
 				/* Log out percentage information */
 				Log.d(TAG, "Percentage of good acceleration: " + 100 * (((double)goodAccel) / totalAccel));
 				Log.d(TAG, "Percentage of good speed: " + 100 * (((double)goodSpeed) / totalSpeed));
@@ -210,6 +220,8 @@ public class StarterActivity extends Activity {
 				firstDist = true;
 				firstFuel = true;
 
+				/* Start the corresponding local database sync and the GraphingActivity */
+				startService(intent);
 				startActivity(i);
 			}
 		}
@@ -370,18 +382,18 @@ public class StarterActivity extends Activity {
 	}
 
 
-	public double calcMPG(double dist,double fuelCon, double weight) {
+	public static double calcMPG(double dist,double fuelConsumption, double weight) {
 		double score = 100;
 		double mpg;
 		//converts to gallons
-		fuelCon = fuelCon * 0.264172;
+		fuelConsumption = fuelConsumption * 0.264172;
 		//give infinite if negative fuel consumed or zero
-		if (fuelCon <= 0){
+		if (fuelConsumption <= 0){
 			mpg = 999;
 		}
 		else {
 			//km to miles
-			mpg = (dist * 0.621371) / fuelCon;
+			mpg = (dist * 0.621371) / fuelConsumption;
 		}
 
 		if (mpg <= 5) {

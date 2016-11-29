@@ -24,7 +24,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -35,9 +34,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.openxc.openxcstarter.BreakdownActivity"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
-            android:label="OpenXC EV Coach"
-            android:screenOrientation="portrait"/>
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"/>
         <activity android:name="com.openxc.openxcstarter.CoachActivity"
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
         <activity android:name="com.openxc.openxcstarter.SettingsActivity"

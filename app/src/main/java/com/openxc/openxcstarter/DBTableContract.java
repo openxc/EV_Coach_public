@@ -24,6 +24,6 @@ public final class DBTableContract {
         public static final String COLUMN_ENGINE_SPEED_SCORE = "engine_speed_score"; // Datatype REAL
         public static final String COLUMN_ACCELERATOR_SCORE = "accelerator_score"; // Datatype REAL
         public static final String COLUMN_MPGE_SCORE = "mpge_score"; // Datatype REAL
-        public static final String COLUMN_TIMESTAMP = "timestamp"; // Datatype STRING stored according to ISO 8601 format: YYYY-MM-DD
+        public static final String COLUMN_TIMESTAMP = "timestamp"; // Datatype STRING stored as DD-MM-YYYY HH:MM:SS
     }
 }
