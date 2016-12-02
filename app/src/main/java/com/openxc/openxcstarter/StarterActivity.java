@@ -1,7 +1,6 @@
 package com.openxc.openxcstarter;
 
 import android.app.Activity;
-import android.app.IntentService;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -28,7 +27,6 @@ import com.openxcplatform.openxcstarter.R;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.UUID;
 
 /**
  * StarterActivity class.
@@ -46,16 +44,17 @@ public class StarterActivity extends Activity {
 	                                                        feedback */
 	private TextView connection_status;                  /* Connection status TextView */
 
-    /* Watch settings - specific to pebble */
-    //TODO <BMV> - Implement following live feedback
+    /* TODO <BMV> - Add in with live feedback
+    // Watch settings - specific to pebble
 	private static final int VIBE_KEY = 0;
 	private static final int LOGO_KEY = 1;
 	private final static UUID VIBE_UUID = UUID.fromString("7dd8789d-3bb2-4596-ac10-fbe15196419d");
 
-    /* Vibrate settings */
+    //Vibrate settings
 	private static final int SHORT_PULSE = 0;
 	private static final int LONG_PULSE = 1;
 	private static final int DOUBLE_PULSE = 2;
+    */
 
     /* ArrayLists to store the values of each element */
 	ArrayList<Double> listRPM = new ArrayList<>();
@@ -154,12 +153,7 @@ public class StarterActivity extends Activity {
 		}
 	}
 
-	/* This is an OpenXC measurement listener object - the type is recognized
-	 * by the VehicleManager as something that can receive measurement updates.
-	 * Later in the file, we'll ask the VehicleManager to call the receive()
-	 * function here whenever a new EngineSpeed value arrives.
-	 */
-	int speedListenerCount = 0;
+
 	EngineSpeed.Listener mSpeedListener = new EngineSpeed.Listener() {
 		@Override
 		public void receive(Measurement measurement) {
@@ -170,15 +164,7 @@ public class StarterActivity extends Activity {
 			if ( speed.getValue().doubleValue() <= 500 ) { //For the City
 				goodRPM++; //Increase number of good RPMs
 			}
-
-			//MODULO
-			//add every Xth data point to the ArrayList
-			/*if(++speedListenerCount % moduloValue != 0) {
-				Log.i(TAG, "Skipped Measurement Speed");
-			} else { */
-				Log.i(TAG, "Received Measurement Engine Speed");
-				listRPM.add(speed.getValue().doubleValue());
-			//}
+			listRPM.add(speed.getValue().doubleValue());
 		}
 	};
 
@@ -215,7 +201,7 @@ public class StarterActivity extends Activity {
 				Log.d(TAG, "Percentage of good speed: " + 100 * (((double)goodSpeed) / totalSpeed));
 				Log.d(TAG, "Percentage of good RPM: " + 100 * (((double)goodRPM) / totalRPM));
 
-				/* Reentrant on the main appliaction screen */
+				/* Reentrant on the main application screen */
 				firstDist = true;
 				firstFuel = true;
 
@@ -227,93 +213,56 @@ public class StarterActivity extends Activity {
 
 	};
 
-	int vehicleSpeedListenerCount = 0;
 	VehicleSpeed.Listener mSpeedVehicleListener = new VehicleSpeed.Listener() {
 		public void receive(Measurement measurement) {
 			final VehicleSpeed speed = (VehicleSpeed) measurement;
 			totalSpeed++; //Add point to total Speed
 
-
-
-			//If the Speed is less than the default Speed, then it is a Good Speed
+            //If the Speed is less than the default Speed, then it is a Good Speed
 			if ( speed.getValue().doubleValue() <= 73 ) { //For the City
 				goodSpeed++; //Increase the number of good speeds
 			}
 
-			/*MODULO
-			//add every 25th data point to the ArrayList
-			if (++vehicleSpeedListenerCount % moduloValue != 0) {
-				Log.i(TAG, "Skipped vehicle speed measurement");
-			} else { */
-				Log.i(TAG, "Received Vehicle Speed Measurement");
-				listSpeed.add(speed.getValue().doubleValue());
-			//}
+            listSpeed.add(speed.getValue().doubleValue());
+
 
 		}
 	};
 
-	int fuelConsumedListenerCount = 0;
 	FuelConsumed.Listener mFuelListener = new FuelConsumed.Listener() {
 		public void receive(Measurement measurement) {
 			final FuelConsumed fuel = (FuelConsumed) measurement;
-			/* Modulo
-			if (++fuelConsumedListenerCount % moduloValue != 0) {
-				Log.i(TAG, "Skipped fuel level measurement");
-			} else { */
-				Log.i(TAG, "Received Fuel Measurement");
-				if (firstFuel) {
-					firstFuel = false;
-					startFuel = fuel.getValue().doubleValue();
-				} else {
-					fuelCon = fuel.getValue().doubleValue() - startFuel;
-				}
-			//}
+
+			if (firstFuel) {
+				firstFuel = false;
+				startFuel = fuel.getValue().doubleValue();
+			} else {
+				fuelCon = fuel.getValue().doubleValue() - startFuel;
+			}
         }
 	};
 
-	int batteryStateListenerCount = 0;
 	BatteryStateOfCharge.Listener mBatteryStateOfChargeListener = new BatteryStateOfCharge.Listener() {
 		public void receive(Measurement measurement) {
 			final BatteryStateOfCharge charge = (BatteryStateOfCharge) measurement;
-
-			//add every 25th data point to the ArrayList
-			/* Modulo
-			if (++batteryStateListenerCount % moduloValue != 0) {
-				Log.i(TAG, "Skipped battery charge measurement");
-			} else { */
-				Log.i(TAG, "Received Battery Charge Measurement");
-				listBatStateCharge.add(charge.getValue().doubleValue());
-			//}
-
+  	    	listBatStateCharge.add(charge.getValue().doubleValue());
 		}
 	};
 
-	int AccListenerCount = 0;
 	AcceleratorPedalPosition.Listener mAccListener = new AcceleratorPedalPosition.Listener() {
 		public void receive(Measurement measurement) {
 			final AcceleratorPedalPosition acc = (AcceleratorPedalPosition) measurement;
 			totalAccel++; //Add point to total Acceleration
-
-
 
 			//If the acceleration value is less than the default acceleration value, then it is a Good Acceleration
 			if ( acc.getValue().doubleValue() <= 15 ) { //For the City
 				goodAccel++; //Increase the number of good Accelerations
 			}
 
-			//add every 25th data point to the ArrayList
-			/* Modulo
-			if (++AccListenerCount % moduloValue != 0) {
-				Log.i(TAG, "Skipped acceleration measurement");
-			} else { */
-				Log.i(TAG, "Received Acceleration Measurement");
-				listAcc.add(acc.getValue().doubleValue());
-			//}
-
+			listAcc.add(acc.getValue().doubleValue());
         }
 	};
 
-	int DistCount = 0;
 	Odometer.Listener mDistListener = new Odometer.Listener() {
 		public void receive(Measurement measurement) {
 			final Odometer odo = (Odometer) measurement;

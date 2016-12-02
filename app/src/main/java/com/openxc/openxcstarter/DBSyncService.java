@@ -45,7 +45,7 @@ public class DBSyncService extends IntentService {
         EVCoachDBHelper dbHelper = new EVCoachDBHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        /* Put the values within an object to be sent tot he database */
+        /* Put the values within an object to be sent to the database */
         ContentValues values = new ContentValues();
         values.put(DBTableContract.OverviewTableEntry.COLUMN_ACCELERATOR_SCORE, accelScore);
         values.put(DBTableContract.OverviewTableEntry.COLUMN_ENGINE_SPEED_SCORE, engineScore);
@@ -56,7 +56,7 @@ public class DBSyncService extends IntentService {
 
         /* Insert the values within the database */
         Log.d(TAG, "Inserting values vehicle_speed = " + speedScore + "  mpge = " + mpgeScore +  " engine = " + engineScore + " accel = " + accelScore);
-        long newRowId = db.insert(DBTableContract.OverviewTableEntry.TABLE_NAME, null, values);
+        db.insert(DBTableContract.OverviewTableEntry.TABLE_NAME, null, values);
 
 
     }
