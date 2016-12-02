@@ -8,7 +8,6 @@ import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
@@ -41,7 +40,7 @@ public class StarterActivity extends Activity {
     private static final String TAG = "StarterActivity"; /* Logging tag for this class/activity */
 
 	private VehicleManager mVehicleManager;              /* Vehicle manager object from OpenXC */
-	private final int moduloValue = 15;                  /* Number of datapoints to accept */
+	//private final int moduloValue = 15;                  /* Number of datapoints to accept */
 	private TextToSpeech ttobj;                          /* Text to speech object for verbal
 	                                                        feedback */
 	private TextView connection_status;                  /* Connection status TextView */
@@ -171,14 +170,14 @@ public class StarterActivity extends Activity {
 				goodRPM++; //Increase number of good RPMs
 			}
 
-
+			//MODULO
 			//add every Xth data point to the ArrayList
-			if(++speedListenerCount % moduloValue != 0) {
+			/*if(++speedListenerCount % moduloValue != 0) {
 				Log.i(TAG, "Skipped Measurement Speed");
-			} else {
+			} else { */
 				Log.i(TAG, "Received Measurement Engine Speed");
 				listRPM.add(speed.getValue().doubleValue());
-			}
+			//}
 		}
 	};
 
@@ -229,13 +228,14 @@ public class StarterActivity extends Activity {
 				goodSpeed++; //Increase the number of good speeds
 			}
 
+			/*MODULO
 			//add every 25th data point to the ArrayList
 			if (++vehicleSpeedListenerCount % moduloValue != 0) {
 				Log.i(TAG, "Skipped vehicle speed measurement");
-			} else {
+			} else { */
 				Log.i(TAG, "Received Vehicle Speed Measurement");
 				listSpeed.add(speed.getValue().doubleValue());
-			}
+			//}
 
 		}
 	};
@@ -244,10 +244,10 @@ public class StarterActivity extends Activity {
 	FuelConsumed.Listener mFuelListener = new FuelConsumed.Listener() {
 		public void receive(Measurement measurement) {
 			final FuelConsumed fuel = (FuelConsumed) measurement;
-
+			/* Modulo
 			if (++fuelConsumedListenerCount % moduloValue != 0) {
 				Log.i(TAG, "Skipped fuel level measurement");
-			} else {
+			} else { */
 				Log.i(TAG, "Received Fuel Measurement");
 				if (firstFuel) {
 					firstFuel = false;
@@ -255,7 +255,7 @@ public class StarterActivity extends Activity {
 				} else {
 					fuelCon = fuel.getValue().doubleValue() - startFuel;
 				}
-			}
+			//}
         }
 	};
 
@@ -265,12 +265,13 @@ public class StarterActivity extends Activity {
 			final BatteryStateOfCharge charge = (BatteryStateOfCharge) measurement;
 
 			//add every 25th data point to the ArrayList
+			/* Modulo
 			if (++batteryStateListenerCount % moduloValue != 0) {
 				Log.i(TAG, "Skipped battery charge measurement");
-			} else {
+			} else { */
 				Log.i(TAG, "Received Battery Charge Measurement");
 				listBatStateCharge.add(charge.getValue().doubleValue());
-			}
+			//}
 
 		}
 	};
@@ -289,12 +290,13 @@ public class StarterActivity extends Activity {
 			}
 
 			//add every 25th data point to the ArrayList
+			/* Modulo
 			if (++AccListenerCount % moduloValue != 0) {
 				Log.i(TAG, "Skipped acceleration measurement");
-			} else {
+			} else { */
 				Log.i(TAG, "Received Acceleration Measurement");
 				listAcc.add(acc.getValue().doubleValue());
-			}
+			//}
 
         }
 	};
