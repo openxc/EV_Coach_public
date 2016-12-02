@@ -173,7 +173,6 @@ public class StarterActivity extends Activity {
 		@Override
 		public void receive(Measurement measurement) {
 			final IgnitionStatus status = (IgnitionStatus) measurement;
-			Log.i(TAG, "Received measurement IgnitionStatus");
 			if (status.getValue().toString().equals("OFF")) {
 
 				// Graphing activity intent
@@ -267,15 +266,13 @@ public class StarterActivity extends Activity {
 		public void receive(Measurement measurement) {
 			final Odometer odo = (Odometer) measurement;
 			double MPGScore;
-			Log.i(TAG, "Received Odometer Measurement");
 			if (firstDist) {
 				firstDist = false;
 				startDist = odo.getValue().doubleValue();
 			} else {
 				dist = odo.getValue().doubleValue() - startDist;
 				MPGScore = calcMPG(dist, fuelCon, .25 );
-				}
-			//}
+            }
 		}
 	};
 
