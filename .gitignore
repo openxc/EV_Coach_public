@@ -44,7 +44,10 @@ captures/
 /.idea/
 /app/build/
 /openxc/
+openxc/openxc.iml
+.gradle/2.14.1/taskArtifacts/cache.properties.lock
 
 # Unversioned files
 app/src/main/res/drawable-xhdpi/
 app/src/main/res/drawable-xxhdpi/
+/.gradle/

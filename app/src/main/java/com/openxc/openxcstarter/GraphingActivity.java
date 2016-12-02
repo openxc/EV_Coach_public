@@ -92,7 +92,8 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 		speedScore = 250 * percentSpeed;
 		accelScore = 250 * percentAcc;
 
-		MPGScore = calcMPG(mpg, 0.25);
+		MPGScore = StarterActivity.calcMPG(dist, fuelCon, .25);
+
 
 		//Calculate score here and put it into the text box
 		Log.i("GraphingActivity", "Speed Score: " + speedScore);
@@ -321,31 +322,6 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 			//Toast.makeText(getApplicationContext(), "Acceleration", Toast.LENGTH_SHORT).show();
 
 		}
-	}
-
-	//TODO COMMENT
-	private double calcMPG(double mpg, double weight) {
-		double score = 100;
-		if(mpg <= 5) {
-			score = 0;
-		} else if(mpg <= 10) {
-			score = 10;
-		} else if(mpg <= 15) {
-			score = 20;
-		} else if(mpg <= 20) {
-			score = 30;
-		} else if(mpg <= 25) {
-			score = 50;
-		} else if(mpg <= 30) {
-			score = 75;
-		} else if(mpg <= 35) {
-			score = 90;
-		}
-
-		score *= 10;
-
-		return score * weight;
-
 	}
 
 	@Override
