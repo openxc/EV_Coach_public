@@ -7,15 +7,15 @@ package com.openxc.openxcstarter;
 import android.provider.BaseColumns;
 
 /**
- * Defines table contraints for the local database stored for this application
+ * Defines table constraints for the local database stored for this application
  */
 public final class DBTableContract {
 
-    //Prevent someone from accidentally instantiating the contract class
+    //Prevent someone from instantiating the contract class
     private DBTableContract() {}
 
     /**
-     * A static class which provides the "contract" or column names between the sqllite table
+     * A static class which provides the "contract" or column names between the SQLite table
      */
     public static class OverviewTableEntry implements BaseColumns {
         public static final String TABLE_NAME = "score_overview";

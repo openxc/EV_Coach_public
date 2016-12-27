@@ -13,7 +13,7 @@ import android.util.Log;
  */
 public class EVCoachDBHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "ev_coach.db";
     private static final String TAG = "EVCoachDBHelper";
 

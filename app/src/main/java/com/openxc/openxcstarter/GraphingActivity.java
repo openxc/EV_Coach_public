@@ -29,19 +29,11 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 
 	// TextViews on activity
 	private final int maxPoints = 10000;
-
-	double totalScore = 0;
-	double RPMScore = 0;
-	double speedScore = 0;
-	double accelScore = 0;
-	double MPGScore = 0;
-
-	private DecimalFormat formatter;
-
-	boolean EngineSpeed;
-	boolean VehicleSpeed;
-	boolean BSChargeBool;
-	boolean AccBool;
+	private double totalScore = 0;
+	private double RPMScore = 0;
+	private double speedScore = 0;
+	private double accelScore = 0;
+	private double MPGScore = 0;
 
 	//Spinner Variable
 	private Spinner canSelect;
@@ -52,11 +44,7 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 	private LineGraphSeries<DataPoint> bSCSeries = new LineGraphSeries<>();
 	private LineGraphSeries<DataPoint> accSeries = new LineGraphSeries<>();
 
-	private String text;
-
-	double mpg;
-
-	private SharedPreferences sharedPreferences;
+	private double mpg;
 
 	/**
 	 * Sets up the Arrays passed over from the starter activity in order to use them to graph.
@@ -67,15 +55,27 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 		super.onCreate(savedInstanceState);
 		final Dialog dialog = new Dialog(GraphingActivity.this);
 
-		formatter = new DecimalFormat("#0.00");
-		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+		final DecimalFormat formatter = new DecimalFormat("#0.00");
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 		setContentView(R.layout.graphviewlayout);
 		graph = (GraphView) findViewById(R.id.graph);
-		ArrayList<Double> listRPM = (ArrayList<Double>) getIntent().getSerializableExtra("listRPM");
-		ArrayList<Double> listSpeed = (ArrayList<Double>) getIntent().getSerializableExtra("listSpeed");
-		ArrayList<Double> listBatStateCharge = (ArrayList<Double>) getIntent().getSerializableExtra("listBatStateCharge");
-		ArrayList<Double> listAcc = (ArrayList<Double>) getIntent().getSerializableExtra("listAcc");
+
+		/* Check type casting for data passed */
+		ArrayList<Double> listRPM = null, listSpeed = null, listBatStateCharge = null, listAcc = null;
+		if( getIntent().getSerializableExtra("listRPM") instanceof ArrayList<?> ) {
+			listRPM = (ArrayList<Double>) getIntent().getSerializableExtra("listRPM");
+		}
+		if( getIntent().getSerializableExtra("listSpeed") instanceof ArrayList<?> ) {
+			listSpeed = (ArrayList<Double>) getIntent().getSerializableExtra("listSpeed");
+		}
+		if( getIntent().getSerializableExtra("listBatStateCharge") instanceof ArrayList<?> ) {
+			listBatStateCharge = (ArrayList<Double>) getIntent().getSerializableExtra("listBatStateCharge");
+		}
+		if( getIntent().getSerializableExtra("listAcc") instanceof ArrayList<?> ) {
+			listAcc = (ArrayList<Double>) getIntent().getSerializableExtra("listAcc");
+		}
+
 
 		double fuelCon = (double) getIntent().getSerializableExtra("fuelCon");
 		double dist = (double) getIntent().getSerializableExtra("dist");
@@ -195,7 +195,7 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 			}
 		});
 		
-		text = "Start Charge: " + listBatStateCharge.get(0) + "%\nEnd Charge: " + listBatStateCharge.get(listBatStateCharge.size() - 1) + " %\nFuel Consumed: " + formatter.format(fuelCon) + "gal\nMPGe: " + formatter.format(mpg) + " mpg";
+		String text = "Start Charge: " + listBatStateCharge.get(0) + "%\nEnd Charge: " + listBatStateCharge.get(listBatStateCharge.size() - 1) + " %\nFuel Consumed: " + formatter.format(fuelCon) + "gal\nMPGe: " + formatter.format(mpg) + " mpg";
 		TextView battery;
 		battery = (TextView)findViewById(R.id.battery);
 		battery.setText(text);
@@ -252,11 +252,6 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 							   long id) {
 
 		graph.removeAllSeries();
-		EngineSpeed = false;
-		VehicleSpeed = false;
-		BSChargeBool = false;
-		AccBool = false;
-
 
 		//TODO Set the max x value by looking at the last point in each array list
 		if(canSelect.getSelectedItem().toString().equals("Vehicle Speed")){
@@ -268,8 +263,6 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 			graph.getViewport().setMaxY(110.0);
 			graph.addSeries(speedSeries);
 			graph.setTitle("Vehicle Speed");
-			VehicleSpeed = true;
-			//Toast.makeText(getApplicationContext(), "vehicle speed selected", Toast.LENGTH_SHORT).show();
 		}
 		else if(canSelect.getSelectedItem().toString().equals("Engine Speed")){
 			graph.getViewport().setXAxisBoundsManual(true);
@@ -280,8 +273,6 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 			graph.getViewport().setMaxY(6000.0);
 			graph.addSeries(rpmSeries);
 			graph.setTitle("Engine Speed");
-			EngineSpeed = true;
-			//Toast.makeText(getApplicationContext(), "engine speed selected", Toast.LENGTH_SHORT).show();
 		}
 		else if(canSelect.getSelectedItem().toString().equals("Battery State of Charge")){
 			graph.getViewport().setXAxisBoundsManual(true);
@@ -292,9 +283,6 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 			graph.getViewport().setMaxY(100.0);
 			graph.addSeries(bSCSeries);
 			graph.setTitle("Battery Charge");
-			BSChargeBool = true;
-			//Toast.makeText(getApplicationContext(), "Battery State of Charge", Toast.LENGTH_SHORT).show();
-
 		}
 		else if(canSelect.getSelectedItem().toString().equals("Acceleration")){
 			graph.getViewport().setXAxisBoundsManual(true);
@@ -305,9 +293,6 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 			graph.getViewport().setMaxY(100.0);
 			graph.addSeries(accSeries);
 			graph.setTitle("Accelerator Pedal Position");
-			AccBool = true;
-			//Toast.makeText(getApplicationContext(), "Acceleration", Toast.LENGTH_SHORT).show();
-
 		}
 	}
 

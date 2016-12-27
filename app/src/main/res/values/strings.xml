@@ -24,19 +24,4 @@
         <item>1</item>
     </string-array>
 
-    <!-- Road Type Settings -->
-    <string name="pref_road_key">road</string>
-    <string name="pref_road_info">Road Type</string>
-    <string-array name="pref_road_titles">
-        <item>City</item>
-        <item>Rural</item>
-        <item>Highway</item>
-    </string-array>
-    <string-array name="pref_road_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
-
-
 </resources>
