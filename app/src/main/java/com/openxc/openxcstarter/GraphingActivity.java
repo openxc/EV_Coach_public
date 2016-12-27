@@ -201,8 +201,7 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 		battery.setText(text);
 
 		canSelect = (Spinner) findViewById(R.id.canSelect);
-		//JSONObject obj = new JSONObject(loadJSONFromAssets());
-		
+
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.can_signals, android.R.layout.simple_spinner_item);
 		// Specify the layout to use when the list of choices appears
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -239,18 +238,6 @@ public class GraphingActivity extends Activity implements OnItemSelectedListener
 			}
 		}
 	}
-
-
-	/**
-	 * Calculates a portion of the score given an upper threshold, and arraylist of parameters, and
-	 * how much weight is provided to this portion of the score.
-	 *
-	 * @param upperBase - an upper threshold
-	 * @param parameters - the arraylist of measurements
-	 * @param weight - the weight of the score to base this off of
-	 * @return a double with the weighted score of this category
-	 */
-
 
 	/**
 	 * Selects the correct graph based on a selection of tiles by the user.
