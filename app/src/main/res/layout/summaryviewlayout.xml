@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
+    tools:context=".StarterActivity" >
     
     <View android:id="@+id/fakeView"
        android:layout_width="0dp"
@@ -50,8 +50,7 @@
         	android:layout_height="40dp"
         	android:layout_centerVertical="true"
         	android:layout_centerHorizontal="true"
-        	android:layout_alignLeft="@id/fakeView"
-        	android:background="@drawable/customborder"
+        	android:background="@mipmap/customborder"
         	android:gravity="center"
         	android:text="A"
         	android:textColor="@android:color/black"
