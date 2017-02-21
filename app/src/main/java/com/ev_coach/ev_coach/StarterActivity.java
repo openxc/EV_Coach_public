@@ -43,18 +43,6 @@ public class StarterActivity extends Activity {
 	                                                        feedback */
 	private TextView connection_status;                  /* Connection status TextView */
 
-    /* TODO <BMV> - Add in with live feedback
-    // Watch settings - specific to pebble
-	private static final int VIBE_KEY = 0;
-	private static final int LOGO_KEY = 1;
-	private final static UUID VIBE_UUID = UUID.fromString("7dd8789d-3bb2-4596-ac10-fbe15196419d");
-
-    //Vibrate settings
-	private static final int SHORT_PULSE = 0;
-	private static final int LONG_PULSE = 1;
-	private static final int DOUBLE_PULSE = 2;
-    */
-
     /* ArrayLists to store the values of each element */
 	ArrayList<Double> listRPM = new ArrayList<>();
 	ArrayList<Double> listSpeed = new ArrayList<>();
@@ -83,13 +71,6 @@ public class StarterActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash_screen);
-
-        /* Displays the correct message for the connection status of the service */
-        //TODO - <BMV> Update so this fixes itself when it isn't connected correctly
-		connection_status = (TextView) findViewById(R.id.connection_status);
-		connection_status.setTextColor(Color.RED);
-        //TODO - <BMV> Use a string resource for this value.
-		connection_status.setText("Not connected");
 
         /* Set up the TextToSpeech object for verbal feedback */
         ttobj = new TextToSpeech(getApplicationContext(),
