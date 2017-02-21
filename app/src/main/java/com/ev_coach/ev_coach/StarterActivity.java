@@ -38,7 +38,6 @@ public class StarterActivity extends Activity {
     private static final String TAG = "StarterActivity"; /* Logging tag for this class/activity */
 
 	private VehicleManager mVehicleManager;              /* Vehicle manager object from OpenXC */
-	//private final int moduloValue = 15;                  /* Number of datapoints to accept */
 	private TextToSpeech ttobj;                          /* Text to speech object for verbal
 	                                                        feedback */
 	private TextView connection_status;                  /* Connection status TextView */
@@ -71,17 +70,6 @@ public class StarterActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash_screen);
-
-        /* Set up the TextToSpeech object for verbal feedback */
-        ttobj = new TextToSpeech(getApplicationContext(),
-				new TextToSpeech.OnInitListener() {
-					@Override
-					public void onInit(int status) {
-						if (status != TextToSpeech.ERROR) {
-							ttobj.setLanguage(Locale.UK);
-						}
-					}
-				});
 	}
 
     /**
@@ -107,12 +95,6 @@ public class StarterActivity extends Activity {
 			mVehicleManager.removeListener(Odometer.class, mDistListener);
 			unbindService(mConnection);
 			mVehicleManager = null;
-		}
-
-        /* Stop the TextToSpeech object */
-		if (ttobj != null) {
-			ttobj.stop();
-			ttobj.shutdown();
 		}
 	}
 
@@ -153,7 +135,7 @@ public class StarterActivity extends Activity {
 		@Override
 		public void receive(Measurement measurement) {
 			final IgnitionStatus status = (IgnitionStatus) measurement;
-			if (status.getValue().toString().equals("OFF")) {
+			if (status.getValue().toString().toUpperCase().equals("OFF")) {
 
 				// Graphing activity intent
 				Log.i(TAG, "IS RUNNING");
@@ -346,24 +328,3 @@ public class StarterActivity extends Activity {
 
 	}
 }
-/*
-	public boolean isPebbleConnected() {
-		boolean connected = PebbleKit.isWatchConnected(getApplicationContext());
-		Log.i(getLocalClassName(), "Pebble is " + (connected ? "connected" : "not connected"));
-		return connected;
-	}
-
-	public void sendDataToWatch() {
-
-		// Build dictionary with vibration data
-		PebbleDictionary data = new PebbleDictionary();
-
-		// replace tempVibeVar with SHORT_PULSE, LONG_PULSE, DOUBLE_PULSE, CUSTOM_PULSE
-		data.addUint8(VIBE_KEY, (byte) tempVibeVar);
-		data.addString(1, "A string");
-
-		//send the dictionary
-		PebbleKit.sendDataToPebble(getApplicationContext(), VIBE_UUID, data);
-	}
-}
-*/
