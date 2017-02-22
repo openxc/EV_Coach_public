@@ -1,4 +1,4 @@
-package com.example.ev_coach;
+package com.ev_coach.ev_coach;
 
 import android.os.Bundle;
 import android.support.wearable.activity.WearableActivity;
@@ -34,7 +34,5 @@ public class MainActivity extends WearableActivity {
     }
 
     private void updateDisplay() {
-        if (isAmbient()) {
-        }
     }
 }

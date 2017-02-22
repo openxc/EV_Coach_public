@@ -9,11 +9,19 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.wearable.MessageApi;
+import com.google.android.gms.wearable.Node;
+import com.google.android.gms.wearable.NodeApi;
+import com.google.android.gms.wearable.Wearable;
 import com.openxc.VehicleManager;
 import com.openxc.measurements.AcceleratorPedalPosition;
 import com.openxc.measurements.BatteryStateOfCharge;
@@ -26,6 +34,7 @@ import com.openxc.measurements.VehicleSpeed;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 /**
  * StarterActivity class.
@@ -60,6 +69,14 @@ public class StarterActivity extends Activity {
 	private int totalRPM = 0; // Total number of RPM points
 	private int totalAccel = 0; //Total number of Acceleration points
 	private int totalSpeed = 0; //Total number of Speed points
+
+	private final int ACCELERATION_THRESHOLD = 15;
+	private final int SPEED_THRESHOLD = 73;
+	private final int RPM_THRESHOLD = 500;
+
+	private GoogleApiClient googleApiClient;
+	private Node watchNode;
+	private final String WEAR_VIBRATE_PATH = "/ev-vibrate";
 
     /**
      * OnCreate Android Activity Lifecycle.  Sets up the connection status and screen information.
@@ -121,7 +138,7 @@ public class StarterActivity extends Activity {
 			totalRPM++; //Add point to total RPM
 
 			//If the RPM value is less than the default RPM value, then it is a Good RPM
-			if ( speed.getValue().doubleValue() <= 500 ) { //For the City
+			if ( speed.getValue().doubleValue() <= RPM_THRESHOLD ) { //For the City
 				goodRPM++; //Increase number of good RPMs
 			}
 			listRPM.add(speed.getValue().doubleValue());
@@ -178,7 +195,7 @@ public class StarterActivity extends Activity {
 			totalSpeed++; //Add point to total Speed
 
             //If the Speed is less than the default Speed, then it is a Good Speed
-			if ( speed.getValue().doubleValue() <= 73 ) { //For the City
+			if ( speed.getValue().doubleValue() <= SPEED_THRESHOLD ) { //For the City
 				goodSpeed++; //Increase the number of good speeds
 			}
 
@@ -214,11 +231,12 @@ public class StarterActivity extends Activity {
 			totalAccel++; //Add point to total Acceleration
 
 			//If the acceleration value is less than the default acceleration value, then it is a Good Acceleration
-			if ( acc.getValue().doubleValue() <= 15 ) { //For the City
+			if ( acc.getValue().doubleValue() <= ACCELERATION_THRESHOLD ) { //For the City
 				goodAccel++; //Increase the number of good Accelerations
 			}
 
 			listAcc.add(acc.getValue().doubleValue());
+			sendMessageToDevice("hi", WEAR_VIBRATE_PATH);
         }
 	};
 
@@ -324,5 +342,45 @@ public class StarterActivity extends Activity {
 
 		return score * weight;
 
+	}
+
+    private void sendMessageToDevice(final String message, final String path) {
+        Log.d(TAG, "sending message to watch");
+		if(googleApiClient == null) {
+			googleApiClient = new GoogleApiClient.Builder(this)
+					.addApi(Wearable.API)
+					.build();
+		}
+
+		if(!googleApiClient.isConnected()) {
+			ConnectionResult connectionResult = googleApiClient.blockingConnect(30, TimeUnit.SECONDS);
+			if(!connectionResult.isSuccess() ) {
+				Log.d(TAG, "Failed to connect to GoogleApiClient");
+			}
+		}
+
+		/* Get the connected nodes */
+		Wearable.NodeApi.getConnectedNodes(googleApiClient).setResultCallback(new ResultCallback<NodeApi.GetConnectedNodesResult>() {
+			@Override
+			public void onResult(@NonNull NodeApi.GetConnectedNodesResult getConnectedNodesResult) {
+				int temp = getConnectedNodesResult.getNodes().size();
+				for(Node node : getConnectedNodesResult.getNodes()) {
+					watchNode = node;
+				}
+			}
+		});
+
+		/* Send the message */
+		boolean temp = googleApiClient.isConnected();
+		if(googleApiClient.isConnected() && watchNode != null && watchNode.isNearby()) {
+			Wearable.MessageApi.sendMessage(googleApiClient, watchNode.getId(), WEAR_VIBRATE_PATH, null).setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
+				@Override
+				public void onResult(@NonNull MessageApi.SendMessageResult sendMessageResult) {
+					if(!sendMessageResult.getStatus().isSuccess()) {
+						Log.d(TAG, "Failed to send message with status code: " + sendMessageResult.getStatus().getStatusCode());
+					}
+				}
+			});
+		}
 	}
 }
