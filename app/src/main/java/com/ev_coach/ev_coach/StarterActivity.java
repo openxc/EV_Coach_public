@@ -73,9 +73,9 @@ public class StarterActivity extends Activity {
 	private int totalAccel = 0; //Total number of Acceleration points
 	private int totalSpeed = 0; //Total number of Speed points
 
-	private final int ACCELERATION_THRESHOLD = 15;
-	private final int SPEED_THRESHOLD = 73;
-	private final int RPM_THRESHOLD = 500;
+	private final int ACCELERATION_THRESHOLD = 23;
+	private final int SPEED_THRESHOLD = 50;
+	private final int RPM_THRESHOLD = 1600;
 
 	private GoogleApiClient googleApiClient;
 	private Node watchNode;
@@ -141,7 +141,10 @@ public class StarterActivity extends Activity {
 			totalRPM++; //Add point to total RPM
 
 			//If the RPM value is less than the default RPM value, then it is a Good RPM
-			if ( speed.getValue().doubleValue() <= RPM_THRESHOLD ) { //For the City
+			if(speed.getValue().doubleValue() == 0.) {
+				return;
+			}
+			else if ( speed.getValue().doubleValue() <= RPM_THRESHOLD ) { //For the City
 				goodRPM++; //Increase number of good RPMs
 			}
 			listRPM.add(speed.getValue().doubleValue());
@@ -198,7 +201,10 @@ public class StarterActivity extends Activity {
 			totalSpeed++; //Add point to total Speed
 
             //If the Speed is less than the default Speed, then it is a Good Speed
-			if ( speed.getValue().doubleValue() <= SPEED_THRESHOLD ) { //For the City
+			if(speed.getValue().doubleValue() == 0.) {
+				return;
+			}
+			else if ( speed.getValue().doubleValue() <= SPEED_THRESHOLD ) { //For the City
 				goodSpeed++; //Increase the number of good speeds
 			}
 
@@ -234,7 +240,10 @@ public class StarterActivity extends Activity {
 			totalAccel++; //Add point to total Acceleration
 
 			//If the acceleration value is less than the default acceleration value, then it is a Good Acceleration
-			if ( acc.getValue().doubleValue() <= ACCELERATION_THRESHOLD ) { //For the City
+			if(acc.getValue().doubleValue() == 0.) {
+				return;
+			}
+			else if ( acc.getValue().doubleValue() <= ACCELERATION_THRESHOLD ) {
 				goodAccel++; //Increase the number of good Accelerations
 			}
 
@@ -348,7 +357,6 @@ public class StarterActivity extends Activity {
 	}
 
     private void sendMessageToDevice(final String message, final String path) {
-        Log.d(TAG, "sending message to watch");
 		if(googleApiClient == null) {
 			googleApiClient = new GoogleApiClient.Builder(this)
 					.addApi(Wearable.API)
@@ -380,6 +388,8 @@ public class StarterActivity extends Activity {
 					public void onResult(@NonNull MessageApi.SendMessageResult sendMessageResult) {
 						if (!sendMessageResult.getStatus().isSuccess()) {
 							Log.e(TAG, "Failed to send message with status code: " + sendMessageResult.getStatus().getStatusCode());
+						} else {
+							Log.d(TAG, "Successfully sent message");
 						}
 					}
 				});

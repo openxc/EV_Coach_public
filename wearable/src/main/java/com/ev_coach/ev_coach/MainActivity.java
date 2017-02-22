@@ -80,7 +80,7 @@ public class MainActivity extends WearableActivity implements MessageApi.Message
             temp = "hi";
         }
         Log.d(TAG, "Message received " + temp);
-        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        Vibrator vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
         if(!vibrator.hasVibrator()) {
             Log.d(TAG, "NO VIBRATOR ON THIS");
