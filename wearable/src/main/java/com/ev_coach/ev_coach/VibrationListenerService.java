@@ -6,8 +6,6 @@ import android.util.Log;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
 
-import java.util.concurrent.TimeUnit;
-
 
 public class VibrationListenerService extends WearableListenerService {
 
