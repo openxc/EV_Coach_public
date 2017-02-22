@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.wearable.CapabilityApi;
 import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
@@ -363,24 +364,24 @@ public class StarterActivity extends Activity {
 		Wearable.NodeApi.getConnectedNodes(googleApiClient).setResultCallback(new ResultCallback<NodeApi.GetConnectedNodesResult>() {
 			@Override
 			public void onResult(@NonNull NodeApi.GetConnectedNodesResult getConnectedNodesResult) {
-				int temp = getConnectedNodesResult.getNodes().size();
 				for(Node node : getConnectedNodesResult.getNodes()) {
 					watchNode = node;
 				}
 			}
 		});
 
-		/* Send the message */
-		boolean temp = googleApiClient.isConnected();
-		if(googleApiClient.isConnected() && watchNode != null && watchNode.isNearby()) {
-			Wearable.MessageApi.sendMessage(googleApiClient, watchNode.getId(), WEAR_VIBRATE_PATH, null).setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
-				@Override
-				public void onResult(@NonNull MessageApi.SendMessageResult sendMessageResult) {
-					if(!sendMessageResult.getStatus().isSuccess()) {
-						Log.d(TAG, "Failed to send message with status code: " + sendMessageResult.getStatus().getStatusCode());
+		/* Send the message if the node is nearby */
+		if(googleApiClient.isConnected() && watchNode != null) {
+			if(watchNode.isNearby()) {
+				Wearable.MessageApi.sendMessage(googleApiClient, watchNode.getId(), WEAR_VIBRATE_PATH, message.getBytes()).setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
+					@Override
+					public void onResult(@NonNull MessageApi.SendMessageResult sendMessageResult) {
+						if (!sendMessageResult.getStatus().isSuccess()) {
+							Log.e(TAG, "Failed to send message with status code: " + sendMessageResult.getStatus().getStatusCode());
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 	}
 }

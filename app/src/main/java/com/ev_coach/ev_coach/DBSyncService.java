@@ -57,7 +57,7 @@ public class DBSyncService extends IntentService {
         /* Insert the values within the database */
         Log.d(TAG, "Inserting values vehicle_speed = " + speedScore + "  mpge = " + mpgeScore +  " engine = " + engineScore + " accel = " + accelScore);
         db.insert(DBTableContract.OverviewTableEntry.TABLE_NAME, null, values);
-
+        db.close();
 
     }
 }
