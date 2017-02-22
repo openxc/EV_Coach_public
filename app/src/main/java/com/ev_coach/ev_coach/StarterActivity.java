@@ -38,8 +38,6 @@ public class StarterActivity extends Activity {
     private static final String TAG = "StarterActivity"; /* Logging tag for this class/activity */
 
 	private VehicleManager mVehicleManager;              /* Vehicle manager object from OpenXC */
-	private TextToSpeech ttobj;                          /* Text to speech object for verbal
-	                                                        feedback */
 	private TextView connection_status;                  /* Connection status TextView */
 
     /* ArrayLists to store the values of each element */
@@ -200,7 +198,7 @@ public class StarterActivity extends Activity {
 			} else {
 				fuelCon = fuel.getValue().doubleValue() - startFuel;
 			}
-        }
+ 	       }
 	};
 
 	BatteryStateOfCharge.Listener mBatteryStateOfChargeListener = new BatteryStateOfCharge.Listener() {
