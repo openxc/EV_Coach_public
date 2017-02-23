@@ -84,7 +84,7 @@ public class MainActivity extends WearableActivity implements MessageApi.Message
 
         if(!vibrator.hasVibrator()) {
             Log.d(TAG, "NO VIBRATOR ON THIS");
-            vibrator.vibrate(1000);
         }
+        vibrator.vibrate(1000);
     }
 }
