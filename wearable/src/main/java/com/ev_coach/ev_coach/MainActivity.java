@@ -77,7 +77,7 @@ public class MainActivity extends WearableActivity implements MessageApi.Message
         try {
             temp = new String(messageEvent.getData(), "UTF-8");
         } catch(UnsupportedEncodingException ex) {
-            temp = "hi";
+            temp = "unsupported exception";
         }
         Log.d(TAG, "Message received " + temp);
         Vibrator vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);

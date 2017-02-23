@@ -381,6 +381,7 @@ public class StarterActivity extends Activity {
 		});
 
 		/* Send the message if the node is nearby */
+		//TODO <BMV> Make the command send to every node
 		if(googleApiClient.isConnected() && watchNode != null) {
 			if(watchNode.isNearby()) {
 				Wearable.MessageApi.sendMessage(googleApiClient, watchNode.getId(), WEAR_VIBRATE_PATH, message.getBytes()).setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
