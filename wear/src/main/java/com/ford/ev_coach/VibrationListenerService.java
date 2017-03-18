@@ -6,9 +6,6 @@ import android.util.Log;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
 
-/**
- * Created by Ben on 3/16/2017.
- */
 
 public class VibrationListenerService extends WearableListenerService {
 
@@ -20,12 +17,25 @@ public class VibrationListenerService extends WearableListenerService {
         Log.d(TAG, "Message received " + messageEvent.getSourceNodeId());
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
+        String message = new String(messageEvent.getData());
 
-        if(!vibrator.hasVibrator()) {
+        if(vibrator.hasVibrator()) {
             Log.d(TAG, "NO VIBRATOR ON THIS");
 
-        } else {
-            vibrator.vibrate(1000);
+            // Different vibration pattern depending on the message contents
+            switch(message) {
+                case "RPM":
+                    vibrator.vibrate(new long[] {200, 500}, -1);
+                    break;
+                case "SPEED":
+                    vibrator.vibrate(new long[] {200, 100}, -1);
+                    break;
+                case "ACCELERATION":
+                    vibrator.vibrate(new long[] {200, 250}, -1);
+                    break;
+                default:
+                    break;
+            }
         }
         super.onMessageReceived(messageEvent);
     }
