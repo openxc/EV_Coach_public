@@ -1,13 +1,13 @@
 package com.ford.ev_coach;
 
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,7 +24,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class GraphingActivity extends Activity implements OnItemSelectedListener {
+public class GraphingActivity extends AppCompatActivity implements OnItemSelectedListener {
 
 	// TextViews on activity
 	private final int MAX_POINTS = 10000;

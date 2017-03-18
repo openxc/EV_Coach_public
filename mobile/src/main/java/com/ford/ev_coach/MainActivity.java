@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
     private final int RPM_THRESHOLD = 1600;
 
     private GoogleApiClient googleApiClient;
-    private Node watchNode;
     private final String WEAR_VIBRATE_PATH = "/test";
 
     /**
@@ -136,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             }
             listRPM.add(speed.getValue().doubleValue());
             if(speed.getValue().doubleValue() > RPM_THRESHOLD) {
-                sendMessageToDevice("RPM", WEAR_VIBRATE_PATH);
+                sendMessageToDevice(new byte[]{0}, WEAR_VIBRATE_PATH);
             }
         }
     };
@@ -200,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
 
             listSpeed.add(speed.getValue().doubleValue());
             if(speed.getValue().doubleValue() > SPEED_THRESHOLD) {
-                sendMessageToDevice("SPEED", WEAR_VIBRATE_PATH);
+                sendMessageToDevice(new byte[]{1}, WEAR_VIBRATE_PATH);
             }
 
 
@@ -242,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
 
             listAcc.add(acc.getValue().doubleValue());
             if(acc.getValue().doubleValue() > ACCELERATION_THRESHOLD) {
-                sendMessageToDevice("ACCELERATION", WEAR_VIBRATE_PATH);
+                sendMessageToDevice(new byte[]{2}, WEAR_VIBRATE_PATH);
             }
         }
     };
@@ -250,13 +249,11 @@ public class MainActivity extends AppCompatActivity {
     Odometer.Listener mDistListener = new Odometer.Listener() {
         public void receive(Measurement measurement) {
             final Odometer odo = (Odometer) measurement;
-            double MPGScore;
             if (firstDist) {
                 firstDist = false;
                 startDist = odo.getValue().doubleValue();
             } else {
                 dist = odo.getValue().doubleValue() - startDist;
-                MPGScore = calcMPG(dist, fuelCon, .25 );
             }
         }
     };
@@ -333,9 +330,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void sendMessageToDevice(final String message, final String path) {
+    private synchronized void sendMessageToDevice(final byte[] message, final String path) {
 
-        final ArrayList<Node> nodes = new ArrayList<Node>();
+        final ArrayList<Node> nodes = new ArrayList<>();
 
         if(googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(this)
@@ -362,8 +359,8 @@ public class MainActivity extends AppCompatActivity {
 
 		/* Send the message if the node is nearby */
         for(Node node : nodes) {
-            if(googleApiClient.isConnected() && watchNode.isNearby()) {
-                Wearable.MessageApi.sendMessage(googleApiClient, node.getId(), WEAR_VIBRATE_PATH, message.getBytes()).setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
+            if(googleApiClient.isConnected() && node.isNearby()) {
+                Wearable.MessageApi.sendMessage(googleApiClient, node.getId(), WEAR_VIBRATE_PATH, message).setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
                     @Override
                     public void onResult(@NonNull MessageApi.SendMessageResult sendMessageResult) {
                         if (!sendMessageResult.getStatus().isSuccess()) {
