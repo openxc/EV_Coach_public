@@ -1,0 +1,69 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    tools:context=".MainActivity" >
+    
+    <View android:id="@+id/fakeView"
+       android:layout_width="0dp"
+       android:layout_height="0dp" 
+       android:layout_centerInParent="true"/>
+    
+    <ScrollView
+    	android:id="@+id/scroll"
+    	android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/fakeView"
+        android:layout_alignParentLeft="true" >
+        
+    <TextView
+    	android:id="@+id/text"
+    	android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="14dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text = "Trip information\nDistance:\nCharge Used:\n\nTravel Time:\nEnergy Recovered\nby Regenerative\nBrakes:\nEnergy Used by\naccessories:\nECT."
+        android:layout_alignRight="@id/fakeView"
+        android:layout_alignParentLeft="true" >
+    </TextView>
+
+   	</ScrollView>
+    
+    <RelativeLayout
+    	android:layout_width="wrap_content"
+    	android:layout_height="match_parent"
+    	android:layout_alignLeft="@id/fakeView"
+    	android:layout_alignParentRight="true" >
+    
+    	<TextView
+        	android:id="@+id/grade"
+        	android:layout_width="40dp"
+        	android:layout_height="40dp"
+        	android:layout_centerVertical="true"
+        	android:layout_centerHorizontal="true"
+        	android:gravity="center"
+        	android:text="A"
+        	android:textColor="@android:color/black"
+        	android:textSize="32dp"
+        	android:layout_centerInParent="true" >
+
+	    </TextView>
+    
+    </RelativeLayout>
+    
+    	<Button
+        	android:id="@+id/button1"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentRight="true"
+        	android:layout_alignParentBottom="true"
+        	android:layout_marginTop="64dp"
+        	android:text="Save Data" />
+
+</RelativeLayout>

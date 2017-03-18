@@ -1,1 +1,1 @@
-include ':app', ':library:openxc', ':wearable'
+include ':mobile', ':wear', ':library'

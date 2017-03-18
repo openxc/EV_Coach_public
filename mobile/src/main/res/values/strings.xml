@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">OpenXC EV Coach</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="can_signals">
+        <item>Engine Speed</item>
+        <item>Vehicle Speed</item>
+        <item>Battery State of Charge</item>
+        <item>Acceleration</item>
+    </string-array>
+
+
+    <!-- Units Settings -->
+    <string name="pref_unit_key">unit</string>
+    <string name="pref_unit_info">Units</string>
+    <string-array name="pref_unit_titles">
+        <item>MPH</item>
+        <item>Km/Hr</item>
+    </string-array>
+    <string-array name="pref_unit_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+</resources>

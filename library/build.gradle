@@ -1,21 +1,18 @@
 apply plugin: 'com.android.library'
 
-group = "com.openxcplatform"
-
 android {
-    compileSdkVersion 22
-    buildToolsVersion "23.0.3"
-    lintOptions {
-        abortOnError false
-    }
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    useLibrary 'org.apache.http.legacy'
 }
 
+
 dependencies {
-    compile 'com.google.code.gson:gson:2.3'
-    compile 'com.google.guava:guava:18.0'
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.google.guava:guava:20.0'
     compile 'com.google.protobuf:protobuf-java:2.6.1'
     compile 'commons-io:commons-io:2.4'
-    compile 'com.android.support:support-v4:22.1.0'
+    compile 'com.android.support:appcompat-v7:25.3.0'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
