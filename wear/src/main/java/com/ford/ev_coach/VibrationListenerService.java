@@ -69,7 +69,13 @@ public class VibrationListenerService extends WearableListenerService {
     public void onMessageReceived(MessageEvent messageEvent) {
 
         // Wait at least 10 seconds before running this after a prior message throwing out older messages
-        while(!reentrant);
+        while(!reentrant) {
+            int num = messageEvent.getData().length > 0 ? messageEvent.getData()[0] : -1;
+            if(num == 0 && rpmDelay) return;
+            else if(num == 1 && speedDelay) return;
+            else if(num == 3 && accelDelay) return;
+        }
+
         mRunnable.run();
 
         Log.d(TAG, "Message received from " + messageEvent.getSourceNodeId());
