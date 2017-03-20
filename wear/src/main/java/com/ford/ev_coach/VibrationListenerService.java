@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
@@ -93,18 +94,21 @@ public class VibrationListenerService extends WearableListenerService {
                     mRpmRunnable.run();
                     Log.d(TAG, "RPM Message");
                     vibrator.vibrate(new long[] {0, 750, 500, 750}, -1);  // long[] {how long to wait before starting, how long to vibrate for, ...}
+                    Toast.makeText(getApplicationContext(), "RPM", Toast.LENGTH_LONG).show();
                     break;
                 case 1:
                     if(speedDelay) return;
                     mSpeedRunnable.run();
                     Log.d(TAG, "Speed Message");
                     vibrator.vibrate(new long[] {0, 2000}, -1);
+                    Toast.makeText(getApplicationContext(), "Speed", Toast.LENGTH_LONG).show();
                     break;
                 case 2:
                     if(accelDelay) return;
                     mAccelRunnable.run();
                     Log.d(TAG, "Accel Message");
                     vibrator.vibrate(new long[] {0, 750, 500, 750, 500, 750}, -1);
+                    Toast.makeText(getApplicationContext(), "Accel", Toast.LENGTH_LONG).show();
                     break;
                 default:
                     //vibrator.vibrate(100);
