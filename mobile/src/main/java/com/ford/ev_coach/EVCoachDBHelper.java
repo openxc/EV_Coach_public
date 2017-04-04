@@ -36,6 +36,7 @@ public class EVCoachDBHelper extends SQLiteOpenHelper {
                     + DBTableContract.SyncingTableEntry.COLUMN_TRIP_NUMBER + " INT AUTOINCREMENT,"
                     + DBTableContract.SyncingTableEntry.COLUMN_SYNC_FLAG + " CHARACTER(1),"
                     + DBTableContract.SyncingTableEntry.COLUMN_VARIABLE + " VARCHAR(40),"
+                    + DBTableContract.SyncingTableEntry.COLUMN_VALUE + " REAL,"
                     + DBTableContract.SyncingTableEntry.COLUMN_FREQUENCY + " INT);";
 
     /* Drop overview SQL table statement */
