@@ -1,8 +1,7 @@
 package com.ford.ev_coach;
 
-import android.icu.util.TimeUnit;
+
 import android.os.Handler;
-import android.os.Message;
 import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Toast;

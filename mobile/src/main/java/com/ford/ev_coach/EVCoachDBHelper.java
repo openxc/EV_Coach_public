@@ -13,24 +13,38 @@ import android.util.Log;
  */
 public class EVCoachDBHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "ev_coach.db";
     private static final String TAG = "EVCoachDBHelper";
 
     /* Create overview table SQL statement */
     private static final String SQL_CREATE_OVERVIEW_TABLE =
             "CREATE TABLE IF NOT EXISTS " + DBTableContract.OverviewTableEntry.TABLE_NAME + " ("
-            + DBTableContract.OverviewTableEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + DBTableContract.OverviewTableEntry.COLUMN_TOTAL_SCORE + " REAL,"
-            + DBTableContract.OverviewTableEntry.COLUMN_ACCELERATOR_SCORE + " REAL,"
-            + DBTableContract.OverviewTableEntry.COLUMN_ENGINE_SPEED_SCORE + " REAL,"
-            + DBTableContract.OverviewTableEntry.COLUMN_MPGE_SCORE + " REAL,"
-            + DBTableContract.OverviewTableEntry.COLUMN_VEHICLE_SPEED_SCORE + " REAL,"
-            + DBTableContract.OverviewTableEntry.COLUMN_TIMESTAMP + " TEXT);";
+                    + DBTableContract.OverviewTableEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + DBTableContract.OverviewTableEntry.COLUMN_TRIP_NUMBER + " INT AUTOINCREMENT,"
+                    + DBTableContract.OverviewTableEntry.COLUMN_TOTAL_SCORE + " REAL,"
+                    + DBTableContract.OverviewTableEntry.COLUMN_ACCELERATOR_SCORE + " REAL,"
+                    + DBTableContract.OverviewTableEntry.COLUMN_ENGINE_SPEED_SCORE + " REAL,"
+                    + DBTableContract.OverviewTableEntry.COLUMN_MPGE_SCORE + " REAL,"
+                    + DBTableContract.OverviewTableEntry.COLUMN_VEHICLE_SPEED_SCORE + " REAL,"
+                    + DBTableContract.OverviewTableEntry.COLUMN_TIMESTAMP + " TEXT);";
 
-    /* Drop SQL table statement */
+    /* Create remote syncing table SQL statement */
+    public static final String SQL_CREATE_SYNC_TABLE =
+            "CREATE TABLE IF NOT EXISTS " + DBTableContract.SyncingTableEntry.TABLE_NAME + " ("
+                    + DBTableContract.SyncingTableEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + DBTableContract.SyncingTableEntry.COLUMN_TRIP_NUMBER + " INT AUTOINCREMENT,"
+                    + DBTableContract.SyncingTableEntry.COLUMN_SYNC_FLAG + " CHARACTER(1),"
+                    + DBTableContract.SyncingTableEntry.COLUMN_VARIABLE + " VARCHAR(40),"
+                    + DBTableContract.SyncingTableEntry.COLUMN_FREQUENCY + " INT);";
+
+    /* Drop overview SQL table statement */
     private static final String SQL_DROP_OVERVIEW_TABLE =
             "DROP TABLE IF EXISTS " + DBTableContract.OverviewTableEntry.TABLE_NAME;
+
+    /* Drop sync SQL table statement */
+    private static final String SQL_DROP_SYNC_TABLE =
+            "DROP TABLE IF EXISTS " + DBTableContract.SyncingTableEntry.TABLE_NAME;
 
     /**
      * Initializes the database with a name and the database version
@@ -50,6 +64,7 @@ public class EVCoachDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_OVERVIEW_TABLE);
+        db.execSQL(SQL_CREATE_SYNC_TABLE);
     }
 
     /**
@@ -63,6 +78,7 @@ public class EVCoachDBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DROP_OVERVIEW_TABLE);
+        db.execSQL(SQL_DROP_SYNC_TABLE);
         Log.i(TAG, "Upgrading database version");
         onCreate(db);
     }
@@ -78,6 +94,7 @@ public class EVCoachDBHelper extends SQLiteOpenHelper {
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DROP_OVERVIEW_TABLE);
+        db.execSQL(SQL_DROP_SYNC_TABLE);
         Log.i(TAG, "Downgrading database version");
         onCreate(db);
     }

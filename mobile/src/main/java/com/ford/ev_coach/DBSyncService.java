@@ -8,6 +8,7 @@ import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * A intent service launched by the StarterActivity and then saves all the data processed
@@ -15,7 +16,7 @@ import java.util.Date;
  */
 public class DBSyncService extends IntentService {
 
-    private static final String TAG = "DBSyncService";
+    private static final String TAG = DBSyncService.class.getSimpleName();
 
     public DBSyncService() {
         super("DBSyncService");
@@ -33,12 +34,12 @@ public class DBSyncService extends IntentService {
         /* Grab the extra doubles for scores put in the intent */
         double speedScore = workIntent.getDoubleExtra(DBTableContract.OverviewTableEntry.COLUMN_VEHICLE_SPEED_SCORE, 0);
         double engineScore = workIntent.getDoubleExtra(DBTableContract.OverviewTableEntry.COLUMN_ENGINE_SPEED_SCORE, 0);
-        double mpgeScore = workIntent.getDoubleExtra(DBTableContract.OverviewTableEntry.COLUMN_MPGE_SCORE, 0);;
+        double mpgeScore = workIntent.getDoubleExtra(DBTableContract.OverviewTableEntry.COLUMN_MPGE_SCORE, 0);
         double accelScore = workIntent.getDoubleExtra(DBTableContract.OverviewTableEntry.COLUMN_ACCELERATOR_SCORE, 0);
         double totalScore = speedScore + engineScore + mpgeScore + accelScore;
 
         /* Grab the date and put it in a nice format */
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.US);
         String date = simpleDateFormat.format(new Date());
 
         /* Get the database reference */
