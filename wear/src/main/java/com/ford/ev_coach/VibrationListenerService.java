@@ -28,6 +28,8 @@ public class VibrationListenerService extends WearableListenerService {
     private Handler mRpmHandler = new Handler();
     private Handler mAccelHandler = new Handler();
 
+    private String mToastMessage = "";
+
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
 
@@ -58,6 +60,7 @@ public class VibrationListenerService extends WearableListenerService {
             @Override
             public void run() {
                 mReentrant = !mReentrant;
+                Log.d(TAG, "Can I reenter? " + mReentrant);
 
                 // If we can reenter after 10 seconds, return otherwise we want to delay 10 seconds
                 if(!mReentrant) {
@@ -74,6 +77,7 @@ public class VibrationListenerService extends WearableListenerService {
 
             // Different vibration pattern depending on the message contents
             switch(num) {
+
                 case 0:
                     Log.d(TAG, "RPM Message");
                     vibrator.vibrate(new long[] {0, 750, 500, 750}, -1);  // long[] {how long to wait before starting, how long to vibrate for, ...}
@@ -81,13 +85,15 @@ public class VibrationListenerService extends WearableListenerService {
                         @Override
                         public void run() {
                             mRpmDelay = !mRpmDelay;
-                            Toast.makeText(getApplicationContext(), "RPM Warning", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Rpm delayed: " + mRpmDelay);
+                            mToastMessage = "RPM Warning";
                             if(mRpmDelay) {
                                 mRpmHandler.postDelayed(this, MINUTE_DELAY_TIME * 60000);
                             }
                         }
                     }.run();
                     break;
+
                 case 1:
                     Log.d(TAG, "Speed Message");
                     vibrator.vibrate(new long[] {0, 2000}, -1);
@@ -95,14 +101,15 @@ public class VibrationListenerService extends WearableListenerService {
                         @Override
                         public void run() {
                             mSpeedDelay = !mSpeedDelay;
-                            Toast.makeText(getApplicationContext(), "Speed Warning", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Speed delayed: " + mSpeedDelay);
+                            mToastMessage = "Speed Warning";
                             if(mSpeedDelay) {
                                 mSpeedHandler.postDelayed(this, MINUTE_DELAY_TIME * 60000);
                             }
                         }
                     }.run();
-
                     break;
+
                 case 2:
                     Log.d(TAG, "Accel Message");
                     vibrator.vibrate(new long[] {0, 750, 500, 750, 500, 750}, -1);
@@ -110,18 +117,28 @@ public class VibrationListenerService extends WearableListenerService {
                         @Override
                         public void run() {
                             mAccelDelay = !mAccelDelay;
-                            Toast.makeText(getApplicationContext(), "Accel Warning", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Accel delayed: " + mAccelDelay);
+                            mToastMessage = "RPM Warning";
                             if(mAccelDelay) {
                                 mAccelHandler.postDelayed(this, MINUTE_DELAY_TIME * 60000);
                             }
                         }
                     }.run();
-
                     break;
+
                 default:
                     Log.d(TAG, "Invalid message id");
                     break;
             }
+
+            // Send a toast message to the main ui thread
+            Handler h = new Handler(getApplicationContext().getMainLooper());
+            h.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), mToastMessage, Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 }
