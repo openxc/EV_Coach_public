@@ -1,9 +1,10 @@
 package com.ford.ev_coach;
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-public class BreakdownActivity extends Activity {
+public class BreakdownActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

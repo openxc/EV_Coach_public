@@ -108,7 +108,7 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
 		dialog.show();
 
 		if(dialog.getWindow() != null) {
-			dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+			dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		}
 
 		final TextView textView = (TextView) dialog.findViewById(R.id.Score_Field);

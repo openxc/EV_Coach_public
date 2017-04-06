@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
             mVehicleManager.addListener(IgnitionStatus.class, mIgnitionListener);
             mVehicleManager.addListener(VehicleSpeed.class, mSpeedVehicleListener);
             mVehicleManager.addListener(FuelConsumed.class, mFuelListener);
-            //mVehicleManager.addListener(BatteryStateOfCharge.class, mBatteryStateOfChargeListener);
+            mVehicleManager.addListener(BatteryStateOfCharge.class, mBatteryStateOfChargeListener);
             mVehicleManager.addListener(AcceleratorPedalPosition.class, mAccListener);
             mVehicleManager.addListener(Odometer.class, mDistListener);
         }
