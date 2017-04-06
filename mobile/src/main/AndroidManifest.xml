@@ -20,6 +20,12 @@
         <activity android:name=".GraphingActivity" />
         <activity android:name=".BreakdownActivity" />
         <activity android:name=".CoachActivity" />
+        <activity android:name=".SettingsActivity"/>
+        <activity android:name=".ScoreHistoryActivity"/>
+
+        <provider
+            android:authorities="com.ford.ev_coach"
+            android:name=".DatabaseProvider"/>
 
         <service android:name="com.openxc.VehicleManager" />
         <service

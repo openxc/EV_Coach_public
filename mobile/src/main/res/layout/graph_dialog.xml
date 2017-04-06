@@ -54,13 +54,26 @@
             android:text="Breakdown"
             android:layout_weight="1"
             android:id="@+id/Break_button" />
+    </TableRow>
 
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Graphs"
             android:layout_weight="1"
             android:id="@+id/Graph_Button"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="History"
+            android:layout_weight="1"
+            android:id="@+id/history_button"
             android:layout_gravity="center_horizontal" />
     </TableRow>
 

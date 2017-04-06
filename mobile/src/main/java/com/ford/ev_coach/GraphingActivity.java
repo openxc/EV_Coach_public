@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.common.graph.Graph;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 
 public class GraphingActivity extends AppCompatActivity implements OnItemSelectedListener {
 
+    private static final String TAG = GraphingActivity.class.getSimpleName();
 	// TextViews on activity
 	private final int MAX_POINTS = 10000;
 	private double totalScore = 0;
@@ -58,7 +60,7 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
 		final DecimalFormat formatter = new DecimalFormat("#0.00");
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-		setContentView(R.layout.graphviewlayout);
+		setContentView(R.layout.graphing_activity);
 		graph = (GraphView) findViewById(R.id.graph);
 
 		/* Check type casting for data passed */
@@ -104,7 +106,7 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
 		
 		totalScore = RPMScore + speedScore + accelScore + MPGScore;
 		dialog.setTitle("Score Screen");
-		dialog.setContentView(R.layout.userinterface);
+		dialog.setContentView(R.layout.graph_dialog);
 		dialog.show();
 
 		if(dialog.getWindow() != null) {
@@ -118,7 +120,10 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
 		Button graphButton = (Button) dialog.findViewById(R.id.Graph_Button);
 		Button breakDownButton = (Button) dialog.findViewById(R.id.Break_button);
 		Button coachButton = (Button) dialog.findViewById(R.id.Coach_button);
+        Button historyButton = (Button) dialog.findViewById(R.id.history_button);
 		Button dialogButton = (Button) findViewById(R.id.dialog_button);
+
+
 
 		// Shows the dialog
 		dialogButton.setOnClickListener(new View.OnClickListener() {
@@ -179,7 +184,6 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
 				startNewActivityOpen.putExtra("totalScore", formatter.format(totalScore));
 				startNewActivityOpen.putExtra("MPGScore", formatter.format(MPGScore));
 				startNewActivityOpen.putExtra("grade", gradeView.getText().toString());
-				dialog.cancel();
 				startActivity(startNewActivityOpen);
 			}
 		});
@@ -197,6 +201,15 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
 				startActivity(newActivity);
 			}
 		});
+
+        historyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ScoreHistoryActivity.class);
+                dialog.cancel();
+                startActivity(intent);
+            }
+        });
 		
 		String text = "";//"Start Charge: " + listBatStateCharge.get(0) + "%\nEnd Charge: " + listBatStateCharge.get(listBatStateCharge.size() - 1) + " %\nFuel Consumed: " + formatter.format(fuelCon) + "gal\nMPGe: " + formatter.format(mpg) + " mpg";
 		TextView battery;

@@ -10,6 +10,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -34,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity"; /* Logging tag for this class/activity */
+    private static final String TAG = MainActivity.class.getSimpleName(); /* Logging tag for this class/activity */
 
     private VehicleManager mVehicleManager;              /* Vehicle manager object from OpenXC */
     private TextView connection_status;                  /* Connection status TextView */
@@ -73,7 +75,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash_screen);
+        setContentView(R.layout.main_activity);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.action_settings) {
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -270,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
                     .getService();
 
 
-            setContentView(R.layout.splash_screen);
+            setContentView(R.layout.main_activity);
             connection_status = (TextView) findViewById(R.id.connection_status);
             connection_status.setTextColor(Color.GREEN);
             //TODO <BMV> - Use a string resource for this value

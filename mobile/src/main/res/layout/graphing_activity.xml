@@ -46,15 +46,6 @@
         android:layout_height="225dp"
         android:layout_below="@+id/fuel_level" />
 
-    <!--
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="400dp"
-        android:layout_below="@+id/graph1_layout"
-        android:orientation="vertical"
-        android:id="@+id/graph2_layout" />
-    -->
-
     <Spinner
         android:id="@+id/canSelect"
         android:layout_width="wrap_content"

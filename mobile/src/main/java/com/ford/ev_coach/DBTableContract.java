@@ -19,7 +19,6 @@ public final class DBTableContract {
      */
     protected static class OverviewTableEntry implements BaseColumns {
         protected static final String TABLE_NAME = "score_overview";
-        protected static final String COLUMN_TRIP_NUMBER = "trip_number"; //Datatype INT
         protected static final String COLUMN_TOTAL_SCORE = "total_score"; // Datatype REAL
         protected static final String COLUMN_VEHICLE_SPEED_SCORE = "vehicle_speed_score"; // Datatype REAL
         protected static final String COLUMN_ENGINE_SPEED_SCORE = "engine_speed_score"; // Datatype REAL
@@ -33,7 +32,6 @@ public final class DBTableContract {
       */
     protected static class SyncingTableEntry implements BaseColumns {
         protected static final String TABLE_NAME = "sync_table";
-        protected static final String COLUMN_TRIP_NUMBER = "trip_number"; //Datatype INT
         protected static final String COLUMN_SYNC_FLAG = "sync_flag"; //Datatype CHARACTER(1)
         protected static final String COLUMN_VARIABLE = "variable"; //Datatype VARCHAR(30)
         protected static final String COLUMN_VALUE = "value"; //Datatype REAL

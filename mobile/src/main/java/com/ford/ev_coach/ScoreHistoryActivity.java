@@ -1,16 +1,15 @@
 package com.ford.ev_coach;
 
-import android.app.Fragment;
 import android.app.LoaderManager;
+import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -19,9 +18,9 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-public class ScoreHistoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemSelectedListener {
+public class ScoreHistoryActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemSelectedListener {
 
-    private static final String TAG = ScoreHistoryFragment.class.getSimpleName();
+    private static final String TAG = ScoreHistoryActivity.class.getSimpleName();
     private Cursor mCursor = null;
 
     private Spinner mScoreSelectSpinner = null;
@@ -37,21 +36,17 @@ public class ScoreHistoryFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.history_activity);
 
         getLoaderManager().initLoader(0, null, this);
-        graph = (GraphView) getActivity().findViewById(R.id.history_graph);
-        mScoreSelectSpinner = (Spinner) getActivity().findViewById(R.id.history_spinner);
+        graph = (GraphView) findViewById(R.id.history_graph);
+        mScoreSelectSpinner = (Spinner) this.findViewById(R.id.history_spinner);
 
         // Setup the spinner with the default values
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(), R.array.history_graphs, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.history_graphs, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mScoreSelectSpinner.setAdapter(adapter);
         mScoreSelectSpinner.setOnItemSelectedListener(this);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.score_history_fragment, container, false);
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
@@ -78,8 +73,9 @@ public class ScoreHistoryFragment extends Fragment implements LoaderManager.Load
 
 
     public Loader<Cursor> onCreateLoader(int i, Bundle savedInstanceState) {
-        Uri baseUri = Uri.fromFile(getActivity().getApplicationContext().getDatabasePath(getString(R.string.database_name)));
-        String projections[] = {DBTableContract.OverviewTableEntry.COLUMN_TRIP_NUMBER,
+        Uri baseUri = Uri.parse("content://com.ford.ev_coach/ev_coach");
+        Log.d(TAG, baseUri.toString());
+        String projections[] = {
                 DBTableContract.OverviewTableEntry.COLUMN_TOTAL_SCORE,
                 DBTableContract.OverviewTableEntry.COLUMN_VEHICLE_SPEED_SCORE,
                 DBTableContract.OverviewTableEntry.COLUMN_ENGINE_SPEED_SCORE,
@@ -87,7 +83,7 @@ public class ScoreHistoryFragment extends Fragment implements LoaderManager.Load
                 DBTableContract.OverviewTableEntry.COLUMN_MPGE_SCORE };
 
         // Argument Order: Context, URI, Projection/columns to return, selection (where clause), ? argument fill ins, order by
-        return new CursorLoader(getActivity().getApplicationContext(), baseUri, projections, null, null, DBTableContract.OverviewTableEntry._ID);
+        return new CursorLoader(getApplicationContext(), baseUri, projections, null, null, DBTableContract.OverviewTableEntry._ID);
     }
 
     public void onItemSelected(AdapterView<?> parentView, View v, int position, long id) {
