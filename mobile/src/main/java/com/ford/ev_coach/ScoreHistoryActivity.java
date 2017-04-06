@@ -24,6 +24,7 @@ public class ScoreHistoryActivity extends AppCompatActivity implements LoaderMan
     private Cursor mCursor = null;
 
     private Spinner mScoreSelectSpinner = null;
+    private static final int MAX_POINTS = 10000;
 
     private LineGraphSeries<DataPoint> mTotalScoreSeries = new LineGraphSeries<>();
     private LineGraphSeries<DataPoint> mRpmScoreSeries = new LineGraphSeries<>();
@@ -56,14 +57,18 @@ public class ScoreHistoryActivity extends AppCompatActivity implements LoaderMan
         if(mCursor.isClosed()) {
             return;
         }
-
         // Go through all the cursor data
+        int i = 0;
+        mCursor.moveToFirst();
         while(!mCursor.isAfterLast()) {
 
-            for(int i = 0; i < mCursor.getColumnCount(); i++) {
-                Log.d(TAG, mCursor.getColumnName(i));
-            }
+            mTotalScoreSeries.appendData(new DataPoint(i, mCursor.getFloat(mCursor.getColumnIndex(DBTableContract.OverviewTableEntry.COLUMN_TOTAL_SCORE))), true, MAX_POINTS);
+            mVehicleSpeedScoreSeries.appendData(new DataPoint(i, mCursor.getFloat(mCursor.getColumnIndex(DBTableContract.OverviewTableEntry.COLUMN_VEHICLE_SPEED_SCORE))), true, MAX_POINTS);
+            mRpmScoreSeries.appendData(new DataPoint(i, mCursor.getFloat(mCursor.getColumnIndex(DBTableContract.OverviewTableEntry.COLUMN_ENGINE_SPEED_SCORE))), true, MAX_POINTS);
+            mAccelScoreSeries.appendData(new DataPoint(i, mCursor.getFloat(mCursor.getColumnIndex(DBTableContract.OverviewTableEntry.COLUMN_ACCELERATOR_SCORE))), true, MAX_POINTS);
+            mMpgScoreSeries.appendData(new DataPoint(i, mCursor.getFloat(mCursor.getColumnIndex(DBTableContract.OverviewTableEntry.COLUMN_MPGE_SCORE))), true, MAX_POINTS);
             mCursor.moveToNext();
+            i++;
         }
     }
 
@@ -89,17 +94,25 @@ public class ScoreHistoryActivity extends AppCompatActivity implements LoaderMan
     public void onItemSelected(AdapterView<?> parentView, View v, int position, long id) {
         graph.removeAllSeries();
         String spinnerSelect = mScoreSelectSpinner.getSelectedItem().toString();
+        graph.getViewport().setXAxisBoundsManual(false);
+        graph.getViewport().setYAxisBoundsManual(false);
+
 
         if(spinnerSelect.equals("Total Score")) {
-
+            graph.addSeries(mTotalScoreSeries);
+            graph.setTitle("Total Score Over Time");
         } else if(spinnerSelect.equals("Vehicle Speed Score")) {
-
+            graph.addSeries(mVehicleSpeedScoreSeries);
+            graph.setTitle("Vehicle Speed Score Over Time");
         } else if(spinnerSelect.equals("Engine Speed Score")) {
-
+            graph.addSeries(mRpmScoreSeries);
+            graph.setTitle("RPM Score Over Time");
         } else if(spinnerSelect.equals("Acceleration Score")) {
-
+            graph.addSeries(mAccelScoreSeries);
+            graph.setTitle("Accel Score Over Time");
         } else { // MPGe score
-
+            graph.addSeries(mMpgScoreSeries);
+            graph.setTitle("MPGe Score Over Time");
         }
 
     }

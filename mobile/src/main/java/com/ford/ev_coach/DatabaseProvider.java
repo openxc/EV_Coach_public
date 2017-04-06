@@ -38,7 +38,6 @@ public class DatabaseProvider extends ContentProvider {
 
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 
-        Log.d(TAG, "I'm hERE");
         int uriType = sURIMatcher.match(uri);
 
         //TODO <BMV> http://www.vogella.com/tutorials/AndroidSQLite/article.html
