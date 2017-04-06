@@ -6,15 +6,12 @@
     <Spinner
         android:id="@+id/history_spinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alightParentEnd="true"
-        android:layout_alignParentTop="true" />
+        android:layout_height="wrap_content" />
 
     <com.jjoe64.graphview.GraphView
         android:id="@+id/history_graph"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/fuel_level" />
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

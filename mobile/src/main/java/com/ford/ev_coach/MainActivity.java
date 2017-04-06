@@ -40,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView connection_status;                  /* Connection status TextView */
 
     /* ArrayLists to store the values of each element */
-    ArrayList<Double> listRPM = new ArrayList<>();
-    ArrayList<Double> listSpeed = new ArrayList<>();
-    ArrayList<Double> listBatStateCharge = new ArrayList<>();
-    ArrayList<Double> listAcc = new ArrayList<>();
+    private ArrayList<Double> listRPM = new ArrayList<>();
+    private ArrayList<Double> listSpeed = new ArrayList<>();
+    private ArrayList<Double> listBatStateCharge = new ArrayList<>();
+    private ArrayList<Double> listAcc = new ArrayList<>();
 
     private double fuelCon = 0.0;       /* Keeps track of the total fuel consumed         */
     private double startFuel = 0.0;     /* Keeps track of the initial fuel                */

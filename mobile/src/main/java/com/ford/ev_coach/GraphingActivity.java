@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -105,6 +106,10 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
 		dialog.setTitle("Score Screen");
 		dialog.setContentView(R.layout.userinterface);
 		dialog.show();
+
+		if(dialog.getWindow() != null) {
+			dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+		}
 
 		final TextView textView = (TextView) dialog.findViewById(R.id.Score_Field);
 		final TextView gradeView = (TextView) dialog.findViewById(R.id.Grade);

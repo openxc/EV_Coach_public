@@ -20,7 +20,6 @@
         <activity android:name=".GraphingActivity" />
         <activity android:name=".BreakdownActivity" />
         <activity android:name=".CoachActivity" />
-        <activity android:name=".SettingsActivity" />
 
         <service android:name="com.openxc.VehicleManager" />
         <service
