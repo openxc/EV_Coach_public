@@ -115,8 +115,7 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
 		Button coachButton = (Button) dialog.findViewById(R.id.Coach_button);
 		Button dialogButton = (Button) findViewById(R.id.dialog_button);
 
-
-		//TODO Make the dialog button do something
+		// Shows the dialog
 		dialogButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -185,7 +184,7 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
 			public void onClick(View view) {
 				Intent newActivity = new Intent(getApplicationContext(), CoachActivity.class);
 				dialog.cancel();
-				//TODO FUEL SCORE, ACCEL SCORE
+
 				newActivity.putExtra("rpmScore", RPMScore);
 				newActivity.putExtra("speedScore", speedScore);
 				newActivity.putExtra("mpgScore", MPGScore);
@@ -252,7 +251,6 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
 
 		graph.removeAllSeries();
 
-		//TODO Set the max x value by looking at the last point in each array list
 		if(canSelect.getSelectedItem().toString().equals("Vehicle Speed")){
 			graph.getViewport().setXAxisBoundsManual(true);
 			graph.getViewport().setMinX(0.0);

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="database_name">ev_coach.db</string>
+
     <string name="app_name">OpenXC EV Coach</string>
     <string name="action_settings">Settings</string>
 
@@ -9,6 +11,14 @@
         <item>Vehicle Speed</item>
         <item>Battery State of Charge</item>
         <item>Acceleration</item>
+    </string-array>
+
+    <string-array name="history_graphs">
+        <item>Total Score</item>
+        <item>Vehicle Speed Score</item>
+        <item>Engine Speed Score</item>
+        <item>Acceleration Score</item>
+        <item>MPGe Score</item>
     </string-array>
 
 

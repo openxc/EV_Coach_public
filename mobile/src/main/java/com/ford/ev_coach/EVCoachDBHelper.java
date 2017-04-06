@@ -14,14 +14,13 @@ import android.util.Log;
 public class EVCoachDBHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 2;
-    private static final String DATABASE_NAME = "ev_coach.db";
+    private static String DATABASE_NAME = null;
     private static final String TAG = "EVCoachDBHelper";
 
     /* Create overview table SQL statement */
     private static final String SQL_CREATE_OVERVIEW_TABLE =
             "CREATE TABLE IF NOT EXISTS " + DBTableContract.OverviewTableEntry.TABLE_NAME + " ("
                     + DBTableContract.OverviewTableEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + DBTableContract.OverviewTableEntry.COLUMN_TRIP_NUMBER + " INT AUTOINCREMENT,"
                     + DBTableContract.OverviewTableEntry.COLUMN_TOTAL_SCORE + " REAL,"
                     + DBTableContract.OverviewTableEntry.COLUMN_ACCELERATOR_SCORE + " REAL,"
                     + DBTableContract.OverviewTableEntry.COLUMN_ENGINE_SPEED_SCORE + " REAL,"
@@ -33,11 +32,10 @@ public class EVCoachDBHelper extends SQLiteOpenHelper {
     public static final String SQL_CREATE_SYNC_TABLE =
             "CREATE TABLE IF NOT EXISTS " + DBTableContract.SyncingTableEntry.TABLE_NAME + " ("
                     + DBTableContract.SyncingTableEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + DBTableContract.SyncingTableEntry.COLUMN_TRIP_NUMBER + " INT AUTOINCREMENT,"
                     + DBTableContract.SyncingTableEntry.COLUMN_SYNC_FLAG + " CHARACTER(1),"
                     + DBTableContract.SyncingTableEntry.COLUMN_VARIABLE + " VARCHAR(40),"
                     + DBTableContract.SyncingTableEntry.COLUMN_VALUE + " REAL,"
-                    + DBTableContract.SyncingTableEntry.COLUMN_FREQUENCY + " INT);";
+                    + DBTableContract.SyncingTableEntry.COLUMN_FREQUENCY + " INTEGER);";
 
     /* Drop overview SQL table statement */
     private static final String SQL_DROP_OVERVIEW_TABLE =
@@ -53,7 +51,8 @@ public class EVCoachDBHelper extends SQLiteOpenHelper {
      * @param context - Context passed in by the caller
      */
     public EVCoachDBHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, context.getString(R.string.database_name), null, DATABASE_VERSION);
+        DATABASE_NAME = context.getString(R.string.database_name);
     }
 
     /**
