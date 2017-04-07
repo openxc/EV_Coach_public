@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
     private int totalAccel = 0; //Total number of Acceleration points
     private int totalSpeed = 0; //Total number of Speed points
 
-    private final int ACCELERATION_THRESHOLD = 23;
-    private final int SPEED_THRESHOLD = 50;
+    private final int ACCELERATION_THRESHOLD = 23; // percent pedal position
+    private final int SPEED_THRESHOLD = 50; //KM/hr ~31.06mph
     private final int RPM_THRESHOLD = 1600;
 
     private GoogleApiClient googleApiClient;

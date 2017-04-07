@@ -1,9 +1,18 @@
 import json
 import math
 import os
-import configparser
 import sys
 from collections import OrderedDict
+
+# Import numpy
+try :
+	import configparser
+except ImportError:
+	if( os.name is "posix") :
+		print("Please install configparser by using the command: 'sudo pip install configparser'")
+	else :
+		print("Please install configparser by using the command: 'pip install configparser'")
+	sys.exit()
 
 # Import numpy
 try :
@@ -105,7 +114,7 @@ def readConfig() :
 	global AllowZeroValues
 	
 	# Read the configuration settings and set global variables
-	AllowZeroValues                  = config['boolean']['AllowZeroValues'] == 'True'
+	AllowZeroValues = config['boolean']['AllowZeroValues'] == 'True'
 
 	
 	# Print out the configuration for the user to see
@@ -182,7 +191,6 @@ def doStatistics(final) :
 			print(Fore.RED + "\tLen vehicle_speed " + str(len(vehicle_speed)) + Fore.RESET);
 			print(Fore.RED + "\tLen engine speed " + str(len(engine_speed)) + Fore.RESET);
 			print(Fore.RED + "\tLen accelerator " + str(len(accelerator_pedal_position)) + Fore.RESET);
-			print(Fore.RED + "\tLen vehicle_speed_all " + str(len(vehicle_speed_all)) + Fore.RESET);
 			print(Fore.GREEN + "\tVehicle speed average: " + str(statistics.mean(vehicle_speed)) + Fore.RESET)
 			print(Fore.GREEN + "\tMedian vehicle speed: " + str(statistics.median(vehicle_speed)) + Fore.RESET)
 			print(Fore.GREEN + "\tHighest vehicle speed: " + str(max(vehicle_speed)) + Fore.RESET)
@@ -202,17 +210,24 @@ def doStatistics(final) :
 		
 		else :
 			print(Fore.YELLOW + "\nCombined Statistics: " + Fore.RESET)
+
+			print(Fore.RED + "\tLen vehicle speed all " + str(len(vehicle_speed_all)) + Fore.RESET);
+			print(Fore.RED + "\tLen engine speed all " + str(len(engine_speed_all)) + Fore.RESET);
+			print(Fore.RED + "\tLen accel_pedal_position all " + str(len(accelerator_pedal_position_all)) + Fore.RESET);
 			
 			print(Fore.GREEN + "\tVehicle speed average: " + str(statistics.mean(vehicle_speed_all)) + Fore.RESET)
 			print(Fore.GREEN + "\tMedian vehicle speed: " + str(statistics.median(vehicle_speed_all)) + Fore.RESET)
+			print(Fore.GREEN + "\tStd deviation vehicle speed: " + str(statistics.stdev(vehicle_speed_all)) + Fore.RESET)
 			print()
 			
 			print(Fore.GREEN + "\tEngine speed average: " + str(statistics.mean(engine_speed_all)) + Fore.RESET)
 			print(Fore.GREEN + "\tMedian engine speed: " + str(statistics.median(engine_speed_all)) + Fore.RESET)
+			print(Fore.GREEN + "\tStd deviation engine speed: " + str(statistics.stdev(engine_speed_all)) + Fore.RESET)
 			print()
 			
 			print(Fore.GREEN + "\tAccelerator pedal position average: " + str(statistics.mean(accelerator_pedal_position_all)) + Fore.RESET)
 			print(Fore.GREEN + "\tMedian accelerator pedal position average: " + str(statistics.median(accelerator_pedal_position_all)) + Fore.RESET)
+			print(Fore.GREEN + "\tStd dev accelerator pedal position: " + str(statistics.stdev(accelerator_pedal_position_all)) + Fore.RESET)
 		
         # Do graph calculations
 		graphPoints(final)
