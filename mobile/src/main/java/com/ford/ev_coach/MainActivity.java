@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
     private GoogleApiClient googleApiClient;
     private final String WEAR_VIBRATE_PATH = "/test";
 
+    private ArrayList<Node> mNodes = new ArrayList<Node>();
+
     /**
      * OnCreate Android Activity Lifecycle.  Sets up the connection status and screen information.
      */
@@ -76,6 +78,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        if(googleApiClient == null) {
+            googleApiClient = new GoogleApiClient.Builder(this)
+                    .addApi(Wearable.API)
+                    .build();
+        }
+
+        if(!googleApiClient.isConnected()) {
+            googleApiClient.connect();
+        }
+
+        /* Get the connected nodes */
+        Wearable.NodeApi.getConnectedNodes(googleApiClient).setResultCallback(new ResultCallback<NodeApi.GetConnectedNodesResult>() {
+            @Override
+            public void onResult(@NonNull NodeApi.GetConnectedNodesResult getConnectedNodesResult) {
+                for(Node node : getConnectedNodesResult.getNodes()) {
+                    if(!mNodes.contains(node)) {
+                        mNodes.add(node);
+                    }
+                }
+            }
+        });
 
     }
 
@@ -353,34 +377,33 @@ public class MainActivity extends AppCompatActivity {
 
     private synchronized void sendMessageToDevice(final byte[] message, final String path) {
 
-        final ArrayList<Node> nodes = new ArrayList<>();
+        Log.d(TAG, "Entered Send Message");
 
-        if(googleApiClient == null) {
-            googleApiClient = new GoogleApiClient.Builder(this)
-                    .addApi(Wearable.API)
-                    .build();
-        }
+
+
 
         if(!googleApiClient.isConnected()) {
             ConnectionResult connectionResult = googleApiClient.blockingConnect(30, TimeUnit.SECONDS);
-            if(!connectionResult.isSuccess() ) {
-                Log.d(TAG, "Failed to connect to GoogleApiClient");
+            if(!connectionResult.isSuccess()) {
+                Log.d(TAG, "FAILED TO CONNECT.");
             }
         }
 
-		/* Get the connected nodes */
+        /* Get the connected nodes */
         Wearable.NodeApi.getConnectedNodes(googleApiClient).setResultCallback(new ResultCallback<NodeApi.GetConnectedNodesResult>() {
             @Override
             public void onResult(@NonNull NodeApi.GetConnectedNodesResult getConnectedNodesResult) {
                 for(Node node : getConnectedNodesResult.getNodes()) {
-                    nodes.add(node);
+                    if(!mNodes.contains(node)) {
+                        mNodes.add(node);
+                    }
                 }
             }
         });
 
 		/* Send the message if the node is nearby */
-        for(Node node : nodes) {
-            if(googleApiClient.isConnected() && node.isNearby()) {
+        for(Node node : mNodes) {
+            if(node.isNearby()) {
                 Wearable.MessageApi.sendMessage(googleApiClient, node.getId(), WEAR_VIBRATE_PATH, message).setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
                     @Override
                     public void onResult(@NonNull MessageApi.SendMessageResult sendMessageResult) {
