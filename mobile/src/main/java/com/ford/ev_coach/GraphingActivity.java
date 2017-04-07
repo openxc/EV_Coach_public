@@ -210,8 +210,15 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
                 startActivity(intent);
             }
         });
-		
-		String text = "";//"Start Charge: " + listBatStateCharge.get(0) + "%\nEnd Charge: " + listBatStateCharge.get(listBatStateCharge.size() - 1) + " %\nFuel Consumed: " + formatter.format(fuelCon) + "gal\nMPGe: " + formatter.format(mpg) + " mpg";
+		double startCharge = 0;
+		double endCharge = 0;
+
+		if(listBatStateCharge.size() > 1) {
+			startCharge = listBatStateCharge.get(0);
+			endCharge = listBatStateCharge.get(listBatStateCharge.size() - 1);
+		}
+
+		String text = "Start Charge: " + startCharge + "%\nEnd Charge: " + endCharge + " %\nFuel Consumed: " + formatter.format(fuelCon) + "gal\nMPGe: " + formatter.format(mpg) + " mpg";
 		TextView battery;
 		battery = (TextView)findViewById(R.id.battery);
 		battery.setText(text);
@@ -268,6 +275,7 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
                                long id) {
 
 		graph.removeAllSeries();
+		graph.getGridLabelRenderer().setHorizontalAxisTitle("Time");
 
 		if(canSelect.getSelectedItem().toString().equals("Vehicle Speed")){
 			graph.getViewport().setXAxisBoundsManual(true);
@@ -275,8 +283,9 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
 			graph.getViewport().setMaxX(speedSeries.getHighestValueX() + 5);
 			graph.getViewport().setYAxisBoundsManual(true);
 			graph.getViewport().setMinY(0.0);
-			graph.getViewport().setMaxY(110.0);
+			graph.getViewport().setMaxY(speedSeries.getHighestValueY() + 10);
 			graph.addSeries(speedSeries);
+			graph.getGridLabelRenderer().setVerticalAxisTitle("Vehicle Speed");
 			graph.setTitle("Vehicle Speed");
 		}
 		else if(canSelect.getSelectedItem().toString().equals("Engine Speed")){
@@ -285,8 +294,9 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
 			graph.getViewport().setMaxX(rpmSeries.getHighestValueX() + 5);
 			graph.getViewport().setYAxisBoundsManual(true);
 			graph.getViewport().setMinY(0.0);
-			graph.getViewport().setMaxY(6000.0);
+			graph.getViewport().setMaxY(rpmSeries.getHighestValueY()+100);
 			graph.addSeries(rpmSeries);
+			graph.getGridLabelRenderer().setVerticalAxisTitle("Engine Speed (RPM)");
 			graph.setTitle("Engine Speed");
 		}
 		else if(canSelect.getSelectedItem().toString().equals("Battery State of Charge")){
@@ -295,8 +305,9 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
 			graph.getViewport().setMaxX(bSCSeries.getHighestValueX() + 5);
 			graph.getViewport().setYAxisBoundsManual(true);
 			graph.getViewport().setMinY(0.0);
-			graph.getViewport().setMaxY(100.0);
+			graph.getViewport().setMaxY(100);
 			graph.addSeries(bSCSeries);
+			graph.getGridLabelRenderer().setVerticalAxisTitle("Battery State of Charge %");
 			graph.setTitle("Battery Charge");
 		}
 		else if(canSelect.getSelectedItem().toString().equals("Acceleration")){
@@ -306,6 +317,7 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
 			graph.getViewport().setYAxisBoundsManual(true);
 			graph.getViewport().setMinY(0.0);
 			graph.getViewport().setMaxY(100.0);
+			graph.getGridLabelRenderer().setVerticalAxisTitle("Accelerator Pedal Position");
 			graph.addSeries(accSeries);
 			graph.setTitle("Accelerator Pedal Position");
 		}

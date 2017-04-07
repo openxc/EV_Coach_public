@@ -95,24 +95,32 @@ public class ScoreHistoryActivity extends AppCompatActivity implements LoaderMan
         graph.removeAllSeries();
         String spinnerSelect = mScoreSelectSpinner.getSelectedItem().toString();
         graph.getViewport().setXAxisBoundsManual(false);
-        graph.getViewport().setYAxisBoundsManual(false);
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(0);
+        graph.getGridLabelRenderer().setHorizontalAxisTitle("Run");
+        graph.getGridLabelRenderer().setVerticalAxisTitle("Points");
 
 
         if(spinnerSelect.equals("Total Score")) {
             graph.addSeries(mTotalScoreSeries);
             graph.setTitle("Total Score Over Time");
+            graph.getViewport().setMaxY(mTotalScoreSeries.getHighestValueY()+10);
         } else if(spinnerSelect.equals("Vehicle Speed Score")) {
             graph.addSeries(mVehicleSpeedScoreSeries);
             graph.setTitle("Vehicle Speed Score Over Time");
+            graph.getViewport().setMaxY(mVehicleSpeedScoreSeries.getHighestValueY()+10);
         } else if(spinnerSelect.equals("Engine Speed Score")) {
             graph.addSeries(mRpmScoreSeries);
             graph.setTitle("RPM Score Over Time");
+            graph.getViewport().setMaxY(mRpmScoreSeries.getHighestValueY()+10);
         } else if(spinnerSelect.equals("Acceleration Score")) {
             graph.addSeries(mAccelScoreSeries);
             graph.setTitle("Accel Score Over Time");
+            graph.getViewport().setMaxY(mAccelScoreSeries.getHighestValueY()+10);
         } else { // MPGe score
             graph.addSeries(mMpgScoreSeries);
             graph.setTitle("MPGe Score Over Time");
+            graph.getViewport().setMaxY(mMpgScoreSeries.getHighestValueY()+10);
         }
 
     }

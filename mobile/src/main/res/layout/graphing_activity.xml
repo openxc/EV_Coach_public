@@ -43,7 +43,7 @@
     <com.jjoe64.graphview.GraphView
         android:id="@+id/graph"
         android:layout_width="fill_parent"
-        android:layout_height="225dp"
+        android:layout_height="300dp"
         android:layout_below="@+id/fuel_level" />
 
     <Spinner
