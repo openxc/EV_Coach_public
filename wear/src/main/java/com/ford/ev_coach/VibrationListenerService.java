@@ -46,11 +46,6 @@ public class VibrationListenerService extends WearableListenerService {
 
     private synchronized void handleVibration(byte num) {
 
-        // Return if we are waiting on delays already
-        if(num == 0 && mRpmDelay) return;
-        else if(num == 1 && mSpeedDelay) return;
-        else if(num == 3 && mAccelDelay) return;
-
         // 10 second reentrant delay between messages
         while(!mReentrant);
 
@@ -73,6 +68,11 @@ public class VibrationListenerService extends WearableListenerService {
 
         // Vibration portion with delays
         if(vibrator.hasVibrator()) {
+
+            // Return if we are waiting on delays already
+            if(num == 0 && mRpmDelay) return;
+            else if(num == 1 && mSpeedDelay) return;
+            else if(num == 3 && mAccelDelay) return;
 
             // Different vibration pattern depending on the message contents
             switch(num) {
@@ -117,7 +117,7 @@ public class VibrationListenerService extends WearableListenerService {
                         public void run() {
                             mAccelDelay = !mAccelDelay;
                             Log.d(TAG, "Accel delayed: " + mAccelDelay);
-                            mToastMessage = "RPM Warning";
+                            mToastMessage = "Accel Warning";
                             if(mAccelDelay) {
                                 mAccelHandler.postDelayed(this, MINUTE_DELAY_TIME * 60000);
                             }
