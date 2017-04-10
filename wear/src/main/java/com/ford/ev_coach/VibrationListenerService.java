@@ -46,6 +46,10 @@ public class VibrationListenerService extends WearableListenerService {
 
     private synchronized void handleVibration(byte num) {
 
+        if((num == 0 && mRpmDelay) || (num == 1 && mSpeedDelay) || (num == 2 && mAccelDelay) ) {
+            return;
+        }
+
         // 10 second reentrant delay between messages
         while(!mReentrant);
 
@@ -58,7 +62,7 @@ public class VibrationListenerService extends WearableListenerService {
 
                 // If we can reenter after 10 seconds, return otherwise we want to delay 10 seconds
                 if(!mReentrant) {
-                    mReentrantHandler.postDelayed(this, 10000);
+                    mReentrantHandler.postDelayed(this, 5000);
                 }
             }
         }.run();
@@ -69,10 +73,6 @@ public class VibrationListenerService extends WearableListenerService {
         // Vibration portion with delays
         if(vibrator.hasVibrator()) {
 
-            // Return if we are waiting on delays already
-            if(num == 0 && mRpmDelay) return;
-            else if(num == 1 && mSpeedDelay) return;
-            else if(num == 3 && mAccelDelay) return;
 
             // Different vibration pattern depending on the message contents
             switch(num) {
@@ -80,51 +80,30 @@ public class VibrationListenerService extends WearableListenerService {
                 case 0:
                     Log.d(TAG, "RPM Message");
                     vibrator.vibrate(new long[] {0, 750, 500, 750}, -1);  // long[] {how long to wait before starting, how long to vibrate for, ...}
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            mRpmDelay = !mRpmDelay;
-                            Log.d(TAG, "Rpm delayed: " + mRpmDelay);
-                            mToastMessage = "RPM Warning";
-                            if(mRpmDelay) {
-                                mRpmHandler.postDelayed(this, MINUTE_DELAY_TIME * 60000);
-                            }
-                        }
-                    }.run();
+                    mRpmDelay = true;
+                    mToastMessage = "RPM Warning";
                     break;
 
                 case 1:
                     Log.d(TAG, "Speed Message");
                     vibrator.vibrate(new long[] {0, 2000}, -1);
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            mSpeedDelay = !mSpeedDelay;
-                            Log.d(TAG, "Speed delayed: " + mSpeedDelay);
-                            mToastMessage = "Speed Warning";
-                            if(mSpeedDelay) {
-                                mSpeedHandler.postDelayed(this, MINUTE_DELAY_TIME * 60000);
-                            }
-                        }
-                    }.run();
+                    mSpeedDelay = true;
+                    mToastMessage = "Speed Warning";
                     break;
 
                 case 2:
                     Log.d(TAG, "Accel Message");
                     vibrator.vibrate(new long[] {0, 750, 500, 750, 500, 750}, -1);
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            mAccelDelay = !mAccelDelay;
-                            Log.d(TAG, "Accel delayed: " + mAccelDelay);
-                            mToastMessage = "Accel Warning";
-                            if(mAccelDelay) {
-                                mAccelHandler.postDelayed(this, MINUTE_DELAY_TIME * 60000);
-                            }
-                        }
-                    }.run();
+                    mAccelDelay = true;
+                    mToastMessage = "Accel Warning";
                     break;
 
+                case 3:
+                    Log.d(TAG, "Reset message");
+                    mSpeedDelay = false;
+                    mAccelDelay = false;
+                    mRpmDelay = false;
+                    mToastMessage = "RESETTING";
                 default:
                     Log.d(TAG, "Invalid message id");
                     break;

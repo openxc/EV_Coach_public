@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -379,9 +381,6 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "Entered Send Message");
 
-
-
-
         if(!googleApiClient.isConnected()) {
             ConnectionResult connectionResult = googleApiClient.blockingConnect(30, TimeUnit.SECONDS);
             if(!connectionResult.isSuccess()) {
@@ -416,5 +415,9 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         }
+    }
+
+    public void sendReset(View v) {
+        sendMessageToDevice(new byte[] {3}, WEAR_VIBRATE_PATH);
     }
 }
