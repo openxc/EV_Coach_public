@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     private GoogleApiClient googleApiClient;
     private final String WEAR_VIBRATE_PATH = "/test";
 
+    //keeps track of all wearables
     private ArrayList<Node> mNodes = new ArrayList<Node>();
 
     /**
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        //connects wearable api
         if(googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(this)
                     .addApi(Wearable.API)
@@ -104,13 +106,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
+    //this creates setting menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
+    //this is what action will be take when an actual setting is selected
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -320,7 +323,6 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.main_activity);
             connection_status = (TextView) findViewById(R.id.connection_status);
             connection_status.setTextColor(Color.GREEN);
-            //TODO <BMV> - Use a string resource for this value
             connection_status.setText("Connected");
 
             /* Add all the listeners to the vehicle manager object when the service connects */

@@ -9,15 +9,17 @@ import android.widget.Toast;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
 
-
+/**
+ * wearableListenerService runs in the background as long as the app is running
+ */
 public class VibrationListenerService extends WearableListenerService {
 
     private static final String TAG = "VibrationService";
     private static final int MINUTE_DELAY_TIME = 10;
 
     /* Reentrant and delay booleans */
-    private boolean mReentrant = true;
-    private boolean mSpeedDelay = false;
+    private boolean mReentrant = true; /*am able to reenter*/
+    private boolean mSpeedDelay = false;/*these three are if im in a delay*/
     private boolean mRpmDelay = false;
     private boolean mAccelDelay = false;
 
@@ -29,6 +31,10 @@ public class VibrationListenerService extends WearableListenerService {
 
     private String mToastMessage = "";
 
+    /**
+     *
+     * this method runs whenever a message is recieved from the mobile application
+     */
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
 
@@ -47,6 +53,7 @@ public class VibrationListenerService extends WearableListenerService {
     private synchronized void handleVibration(byte num) {
 
         if((num == 0 && mRpmDelay) || (num == 1 && mSpeedDelay) || (num == 2 && mAccelDelay) ) {
+            /*ignores message if on any of the three delays */
             return;
         }
 
@@ -78,7 +85,7 @@ public class VibrationListenerService extends WearableListenerService {
             switch(num) {
 
                 case 0:
-                    Log.d(TAG, "RPM Message");
+                    Log.d(TAG, "RPM Message");  //delay 0 secs, vibrate 750 wait 500 vibrate 750 -1 = dont repeat
                     vibrator.vibrate(new long[] {0, 750, 500, 750}, -1);  // long[] {how long to wait before starting, how long to vibrate for, ...}
                     mRpmDelay = true;
                     mToastMessage = "RPM Warning";
@@ -86,7 +93,7 @@ public class VibrationListenerService extends WearableListenerService {
 
                 case 1:
                     Log.d(TAG, "Speed Message");
-                    vibrator.vibrate(new long[] {0, 2000}, -1);
+                    vibrator.vibrate(new long[] {0, 750}, -1);
                     mSpeedDelay = true;
                     mToastMessage = "Speed Warning";
                     break;
@@ -98,7 +105,7 @@ public class VibrationListenerService extends WearableListenerService {
                     mToastMessage = "Accel Warning";
                     break;
 
-                case 3:
+                case 3: //for demonstration puproses to reset, will be removed/ fixed in final version
                     Log.d(TAG, "Reset message");
                     mSpeedDelay = false;
                     mAccelDelay = false;
@@ -109,7 +116,7 @@ public class VibrationListenerService extends WearableListenerService {
                     break;
             }
 
-            // Send a toast message to the main ui thread
+            // Send a toast message to the main ui thread .getMainLooper puts it in main thread
             Handler h = new Handler(getApplicationContext().getMainLooper());
             h.post(new Runnable() {
                 @Override
