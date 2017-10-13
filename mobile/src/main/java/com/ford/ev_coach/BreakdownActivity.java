@@ -1,10 +1,15 @@
 package com.ford.ev_coach;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
-public class BreakdownActivity extends AppCompatActivity {
+public class BreakdownActivity extends AppCompatActivity implements View.OnClickListener {
 
+
+    private Button loginButton;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +23,7 @@ public class BreakdownActivity extends AppCompatActivity {
         String totalScore = extras.getString("totalScore");
         String MPGScore = extras.getString("MPGScore");
         String Grade = extras.getString("grade");
+        loginButton = (Button) findViewById(R.id.loginButton);
 
         //rest of the code
         TextView accelScoreText = (TextView) findViewById(R.id.acceleration);
@@ -37,5 +43,13 @@ public class BreakdownActivity extends AppCompatActivity {
 
         TextView score = (TextView) findViewById(R.id.score);
         score.setText(totalScore + " / 1000.00");
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == loginButton) {
+            Intent intent = new Intent(BreakdownActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 }

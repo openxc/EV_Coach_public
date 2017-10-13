@@ -11,4 +11,11 @@
         android:icon="@android:drawable/ic_menu_edit"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/login_Setting"
+        android:orderInCategory="90"
+        android:title="@string/action_settings"
+        android:icon="@android:drawable/ic_menu_edit"
+        app:showAsAction="ifRoom"/>
+
 </menu>

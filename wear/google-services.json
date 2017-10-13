@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "706856209979",
-    "firebase_url": "https://ford-ev-coach-2017.firebaseio.com",
-    "project_id": "ford-ev-coach-2017",
-    "storage_bucket": "ford-ev-coach-2017.appspot.com"
+    "project_number": "663383591916",
+    "firebase_url": "https://ford-ev-coach-test.firebaseio.com",
+    "project_id": "ford-ev-coach-test",
+    "storage_bucket": "ford-ev-coach-test.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:706856209979:android:1f7bb028c901a6ed",
+        "mobilesdk_app_id": "1:663383591916:android:1f7bb028c901a6ed",
         "android_client_info": {
           "package_name": "com.ford.ev_coach"
         }
       },
       "oauth_client": [
         {
-          "client_id": "706856209979-89nr92q4cit8ddbtsvestsaa16iaht3v.apps.googleusercontent.com",
+          "client_id": "663383591916-0c8lg6tf4cl96ml0p13ivp3fbmovgji6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCoxmrY_JHH4o6f5qXPhraWiySh1955dFE"
+          "current_key": "AIzaSyBbw1BNNbEglz_k0D_9ZYDIMjoOfoXJdXg"
         }
       ],
       "services": {

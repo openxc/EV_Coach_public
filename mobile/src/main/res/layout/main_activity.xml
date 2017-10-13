@@ -41,14 +41,7 @@
          android:layout_above="@+id/ford_logo"
          android:layout_centerHorizontal="true" />
 
-    <Button
-        android:id="@+id/reset_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/ford_logo"
-        android:layout_centerHorizontal="true"
-        android:onClick="sendReset"
-        android:text="Reset" />
+
 
 
 </RelativeLayout>

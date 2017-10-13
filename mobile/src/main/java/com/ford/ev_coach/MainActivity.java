@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -36,7 +37,7 @@ import com.openxc.measurements.VehicleSpeed;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = MainActivity.class.getSimpleName(); /* Logging tag for this class/activity */
 
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     private final int ACCELERATION_THRESHOLD = 23; // percent pedal position
     private final int SPEED_THRESHOLD = 50; //KM/hr ~31.06mph
     private final int RPM_THRESHOLD = 1600;
-
+    private Button loginButton;
     private GoogleApiClient googleApiClient;
     private final String WEAR_VIBRATE_PATH = "/test";
 
@@ -80,8 +81,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        //loginButton.setOnClickListener(this);
+        /**{
+            @Override
+            public void onClick(View view) {
+                if (view == loginButton) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+**/
 
+
+
+        setContentView(R.layout.main_activity);
+        loginButton = (Button) findViewById(R.id.loginButton);
         //connects wearable api
         if(googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(this)
@@ -106,6 +121,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onClick(View view) {
+     /**   if (view == loginButton) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }**/
+    }
+
     //this creates setting menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -123,6 +147,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        if(id == R.id.login_Setting) {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

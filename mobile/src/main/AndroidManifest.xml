@@ -3,6 +3,7 @@
     package="com.ford.ev_coach">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +23,7 @@
         <activity android:name=".CoachActivity" />
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".ScoreHistoryActivity"/>
+        <activity android:name=".LoginActivity"/>
 
         <provider
             android:authorities="com.ford.ev_coach"
