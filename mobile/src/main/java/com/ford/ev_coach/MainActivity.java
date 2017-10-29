@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(getApplicationContext(), DBSyncService.class);
                 intent.putExtra(DBTableContract.OverviewTableEntry.COLUMN_ACCELERATOR_SCORE, ((double)goodAccel / (double)totalAccel) * 250);
                 intent.putExtra(DBTableContract.OverviewTableEntry.COLUMN_ENGINE_SPEED_SCORE, ((double)goodRPM / (double)totalRPM) * 250);
-                intent.putExtra(DBTableContract.OverviewTableEntry.COLUMN_MPGE_SCORE, calcMPG(dist, fuelCon, .25));
+                intent.putExtra(DBTableContract.OverviewTableEntry.COLUMN_MPGE_SCORE, calcMPG(dist, batCon, fuelCon, .25));
                 intent.putExtra(DBTableContract.OverviewTableEntry.COLUMN_VEHICLE_SPEED_SCORE, ((double)goodSpeed / (double)totalSpeed) * 250);
 
 				/* Log out percentage information */
@@ -383,33 +383,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
 
 
-    public static double calcMPG(double dist,double fuelConsumption, double weight) {
+    public static double calcMPG(double dist,double batteryCosumption, double fuelConsumption, double weight) {
         double score = 100;
-        double mpg;
+        double mpgFinal;
+        double mpgBat;
+        double mpgFuel;
         //converts to gallons
         fuelConsumption = fuelConsumption * 0.264172;
         //give infinite if negative fuel consumed or zero
-        if (fuelConsumption <= 0){
-            mpg = 999;
+        if (fuelConsumption <= 0 && batteryCosumption <= 0){
+            mpgFinal = 999;
         }
         else {
             //km to miles
-            mpg = (dist * 0.621371) / fuelConsumption;
+            mpgFuel = (dist * 0.621371) / fuelConsumption;
+            mpgBat = (dist * 0.621371) / fuelConsumption;
+            mpgFinal = mpgBat + mpgFuel;
         }
 
-        if (mpg <= 5) {
+        if (mpgFinal <= 5) {
             score = 0;
-        } else if (mpg <= 10) {
+        } else if (mpgFinal <= 10) {
             score = 10;
-        } else if (mpg <= 15) {
+        } else if (mpgFinal <= 15) {
             score = 20;
-        } else if (mpg <= 20) {
+        } else if (mpgFinal <= 20) {
             score = 30;
-        } else if (mpg <= 25) {
+        } else if (mpgFinal <= 25) {
             score = 50;
-        } else if (mpg <= 30) {
+        } else if (mpgFinal <= 30) {
             score = 75;
-        } else if (mpg <= 35) {
+        } else if (mpgFinal <= 35) {
             score = 90;
         }
 
