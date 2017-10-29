@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = MainActivity.class.getSimpleName(); /* Logging tag for this class/activity */
 
     private VehicleManager mVehicleManager;              /* Vehicle manager object from OpenXC */
-    private TextView connection_status;                  /* Connection status TextView */
+    private TextView connection_status;   //You Suck               /* Connection status TextView */
 
     /* ArrayLists to store the values of each element */
     private ArrayList<Double> listRPM = new ArrayList<>();
@@ -51,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<Double> listAcc = new ArrayList<>();
 
     private double fuelCon = 0.0;       /* Keeps track of the total fuel consumed         */
+    private double batCon = 0.0;        /*keeps track of the total battery consumed       */
+    private double startBat = 0.0;      /*keeps track of initial battery charge           */
+    private boolean firstBat = true;
     private double startFuel = 0.0;     /* Keeps track of the initial fuel                */
     private boolean firstFuel = true;
     private double startDist = 0.0;     /* Keeps track of the starting odometer distance  */
@@ -302,6 +305,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     BatteryStateOfCharge.Listener mBatteryStateOfChargeListener = new BatteryStateOfCharge.Listener() {
         public void receive(Measurement measurement) {
             final BatteryStateOfCharge charge = (BatteryStateOfCharge) measurement;
+            if(firstBat){
+                firstBat = false;
+                startBat = charge.getValue().doubleValue();
+            }
+            else{
+                batCon = charge.getValue().doubleValue();
+            }
             listBatStateCharge.add(charge.getValue().doubleValue());
         }
     };
