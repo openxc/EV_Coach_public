@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_settings"
         android:enabled="true"
-        android:icon="@android:drawable/ic_menu_edit"
+        android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/action_settings"
         app:showAsAction="ifRoom" />
 
@@ -13,6 +13,13 @@
         android:enabled="true"
         android:title="login"
         android:icon="@android:drawable/ic_menu_info_details"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/history"
+        android:enabled="true"
+        android:title="history"
+        android:icon="@android:drawable/ic_media_rew"
         app:showAsAction="ifRoom"/>
 
 </menu>

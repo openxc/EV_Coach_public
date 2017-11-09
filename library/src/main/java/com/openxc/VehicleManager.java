@@ -133,6 +133,7 @@ public class VehicleManager extends Service implements DataPipeline.Operator {
         }
     }
 
+
     @Override
     public void onCreate() {
         super.onCreate();

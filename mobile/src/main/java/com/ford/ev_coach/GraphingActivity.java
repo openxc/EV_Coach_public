@@ -80,6 +80,7 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
 
 
 		double fuelCon = (double) getIntent().getSerializableExtra("fuelCon");
+		double batCon = (double)	getIntent().getSerializableExtra("batCon");
 		double dist = (double) getIntent().getSerializableExtra("dist");
 
 		//new doubles created for graphing
@@ -88,13 +89,13 @@ public class GraphingActivity extends AppCompatActivity implements OnItemSelecte
 		double percentAcc = (double) getIntent().getSerializableExtra("percentAcc");
 
 		fuelCon = fuelCon * 0.264172;
-		mpg = (dist * 0.621371) / fuelCon;
+		mpg = (dist * 0.621371) / (fuelCon + batCon);
 
 		RPMScore = 250 * percentRPM;
 		speedScore = 250 * percentSpeed;
 		accelScore = 250 * percentAcc;
 
-		MPGScore = MainActivity.calcMPG(dist, fuelCon, .25);
+		MPGScore = MainActivity.calcMPG(dist, fuelCon, batCon, .25);
 
 
 		//Calculate score here and put it into the text box

@@ -39,7 +39,7 @@ import com.openxc.measurements.VehicleSpeed;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity{
 
     private static final String TAG = MainActivity.class.getSimpleName(); /* Logging tag for this class/activity */
 
@@ -81,6 +81,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //keeps track of all wearables
     private ArrayList<Node> mNodes = new ArrayList<Node>();
 
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            int id = item.getItemId();
+            if(id == R.id.action_settings) {
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            if(id == R.id.login_Setting) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            if(id == R.id.history){
+                Intent intent = new Intent(getApplicationContext(), ScoreHistoryActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            return false;
+        }
+    };
     /**
      * OnCreate Android Activity Lifecycle.  Sets up the connection status and screen information.
      */
@@ -111,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .addApi(Wearable.API)
                     .build();
         }
+        //put in to setup bottomNav
 
         if(!googleApiClient.isConnected()) {
             googleApiClient.connect();
@@ -128,60 +152,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        navigationView = (BottomNavigationView)
-                findViewById(R.id.bottom_navigation);
-
-        navigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_settings:
-                                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-                                startActivity(intent);
-                                finish();
-                                return true;
-                            case R.id.login_Setting:
-                                Intent intent1 = new Intent(getApplicationContext(), LoginActivity.class);
-                                startActivity(intent1);
-                                finish();
-                                return true;
-                        }
-                        return false;
-                    }
-                });
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
-        menu = navigationView.getMenu();
-        getMenuInflater().inflate(R.menu.bottom_nav_items, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if(id == R.id.action_settings) {
-            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        if(id == R.id.login_Setting) {
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
+    /**    @Override
     public void onClick(View view) {
-     /**   if (view == loginButton) {
+     if (view == loginButton) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
-        }**/
-    }
+        }
+    }**/
 
     //this creates setting menu
 /*    @Override
@@ -220,12 +201,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onPause() {
         super.onPause();
-
-        /* Unbind all OpenXC listeners if they aren't already unbound */
+        /* Unbind all OpenXC listeners if they aren't already unbound*/
         if (mVehicleManager != null) {
             Log.i(TAG, "Unbinding from Vehicle Manager");
 
-            /* Remove all android listeners */
+            /* Remove all android listeners*/
             mVehicleManager.removeListener(EngineSpeed.class, mSpeedListener);
             mVehicleManager.removeListener(IgnitionStatus.class, mIgnitionListener);
             mVehicleManager.removeListener(FuelConsumed.class, mFuelListener);
@@ -239,19 +219,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * onResume android Activity LIfecycle.  Creates a new VehicleManager intent and binds
+     * onResume android Activity Lifecycle.  Creates a new VehicleManager intent and binds
      * the VehicleManager to this StarterActivity.
      *
      * Then connect all listener objects.
      */
+
     @Override
     public void onResume() {
         super.onResume();
-
-        /* Reconnect to the VehicleManager object */
+        /* Reconnect to the VehicleManager object*/
         if (mVehicleManager == null) {
             Intent intent = new Intent(this, VehicleManager.class);
-            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+            bindService(intent, mConnection, Context.BIND_ADJUST_WITH_ACTIVITY);
         }
     }
 
@@ -291,6 +271,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 i.putExtra("listBatStateCharge", listBatStateCharge);
                 i.putExtra("listAcc", listAcc);
                 i.putExtra("fuelCon", fuelCon);
+                i.putExtra("batCon", batCon);
                 i.putExtra("dist", dist);
                 i.putExtra("percentAcc", ((double)goodAccel)/((double)totalAccel));
                 i.putExtra("percentSpeed", ((double)goodSpeed)/((double)totalSpeed));
