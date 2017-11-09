@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 //apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.ford.ev_coach"
         minSdkVersion 20

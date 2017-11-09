@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button buttonRegister;
+    private Button buttonLogin;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private TextView textViewSignIn;
@@ -53,14 +54,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         };
         setContentView(R.layout.login_activity);
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
+        buttonLogin = (Button) findViewById(R.id.buttonLogin);
         progressDialog = new ProgressDialog(this);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
 
-        textViewSignIn = (TextView) findViewById(R.id.textViewSignIn);
 
         buttonRegister.setOnClickListener(this);
-        textViewSignIn.setOnClickListener(this);
+        buttonLogin.setOnClickListener(this);
 
 
     }
@@ -111,6 +112,47 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    private void loginUser(){
+        String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+
+        if(TextUtils.isEmpty(email)){
+            //email is empty
+            Toast.makeText(this, "Please enter your password", Toast.LENGTH_SHORT);
+            return;
+        }
+
+        if(TextUtils.isEmpty(password)){
+            //password is empty
+            Toast.makeText(this, "Please enter your password", Toast.LENGTH_SHORT);
+            return;
+        }
+
+        progressDialog.setMessage("Logging in...");
+        progressDialog.show();
+        progressDialog.dismiss();
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithEmail:failed", task.getException());
+                            Toast.makeText(LoginActivity.this, "Could not login user", Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
+
+
     @Override
     public void onClick(View view) {
         if(view == buttonRegister){
@@ -118,8 +160,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
 
-        if(view == textViewSignIn){
-            //loginactivity
+        if(view == buttonLogin){
+            loginUser();
 
         }
     }

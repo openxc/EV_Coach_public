@@ -34,17 +34,18 @@
 
         <Button
             android:id="@+id/buttonRegister"
-            android:layout_margin="40dp"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Register User" />
 
-        <TextView
-            android:text="Already Registered? Sign in here"
-            android:textAlignment="center"
-            android:id="@+id/textViewSignIn"
+        <Button
+            android:id="@+id/buttonLogin"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:hint="Login User"
+            />
 
     </LinearLayout>
 </RelativeLayout>

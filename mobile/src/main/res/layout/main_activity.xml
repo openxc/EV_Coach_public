@@ -1,25 +1,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:design="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/black"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
-    
+    tools:context=".MainActivity">
+
     <ImageView
         android:id="@+id/ford_logo"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ev_logo"
+        android:layout_marginTop="60dp"
         android:gravity="center_horizontal"
-        android:layout_above="@+id/mtu_logo"
-        android:src="@mipmap/ford_logo"
-        />
+        android:src="@mipmap/ford_logo" />
 
     <ImageView
         android:id="@+id/mtu_logo"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:layout_alignStart="@+id/ev_logo"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ford_logo"
         android:src="@mipmap/mtu_logo" />
 
     <ImageView
@@ -27,7 +30,6 @@
         android:layout_width="fill_parent"
         android:layout_height="250dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:gravity="center_horizontal"
         android:src="@mipmap/ic_launcher" />
@@ -41,6 +43,14 @@
          android:layout_above="@+id/ford_logo"
          android:layout_centerHorizontal="true" />
 
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible"
+        app:menu="@menu/bottom_nav_items" />
 
 
 

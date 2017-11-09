@@ -7,6 +7,7 @@ import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,10 +35,11 @@ import com.openxc.measurements.Measurement;
 import com.openxc.measurements.Odometer;
 import com.openxc.measurements.VehicleSpeed;
 
+
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName(); /* Logging tag for this class/activity */
 
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button loginButton;
     private GoogleApiClient googleApiClient;
     private final String WEAR_VIBRATE_PATH = "/test";
+    BottomNavigationView navigationView;
 
     //keeps track of all wearables
     private ArrayList<Node> mNodes = new ArrayList<Node>();
@@ -95,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 **/
+
+
 
 
 
@@ -123,6 +128,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        navigationView = (BottomNavigationView)
+                findViewById(R.id.bottom_navigation);
+
+        navigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_settings:
+                                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                                startActivity(intent);
+                                finish();
+                                return true;
+                            case R.id.login_Setting:
+                                Intent intent1 = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(intent1);
+                                finish();
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        menu = navigationView.getMenu();
+        getMenuInflater().inflate(R.menu.bottom_nav_items, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.action_settings) {
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        if(id == R.id.login_Setting) {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -134,11 +184,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //this creates setting menu
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
+
 
     //this is what action will be take when an actual setting is selected
     @Override
@@ -158,6 +209,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         return super.onOptionsItemSelected(item);
     }
+*/
+
 
     /**
      * OnPause Android Activity Lifecycle.  Removes listeners and unbinds the OpenXC service
