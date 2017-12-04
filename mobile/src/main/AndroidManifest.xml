@@ -24,6 +24,7 @@
         <activity android:name=".SettingsActivity"/>
         <activity android:name=".ScoreHistoryActivity"/>
         <activity android:name=".LoginActivity"/>
+        <activity android:name=".VibrationInfo"/>
 
         <provider
             android:authorities="com.ford.ev_coach"

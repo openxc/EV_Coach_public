@@ -127,7 +127,6 @@ public class MainActivity extends AppCompatActivity{
 
 
         setContentView(R.layout.main_activity);
-        loginButton = (Button) findViewById(R.id.loginButton);
         //connects wearable api
         if(googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(this)
@@ -165,7 +164,7 @@ public class MainActivity extends AppCompatActivity{
     }**/
 
     //this creates setting menu
-/*    @Override
+   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
@@ -178,7 +177,7 @@ public class MainActivity extends AppCompatActivity{
         int id = item.getItemId();
 
         if(id == R.id.action_settings) {
-            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            Intent intent = new Intent(getApplicationContext(), VibrationInfo.class);
             startActivity(intent);
             return true;
         }
@@ -190,7 +189,7 @@ public class MainActivity extends AppCompatActivity{
 
         return super.onOptionsItemSelected(item);
     }
-*/
+
 
 
     /**

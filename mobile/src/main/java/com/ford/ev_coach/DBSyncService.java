@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -15,12 +18,15 @@ import java.util.Locale;
  * to the local database.
  */
 public class DBSyncService extends IntentService {
+    // Write a message to the database
+
 
     private static final String TAG = DBSyncService.class.getSimpleName();
 
     public DBSyncService() {
         super("DBSyncService");
     }
+
 
     /**
      * Processes database information.
@@ -54,6 +60,8 @@ public class DBSyncService extends IntentService {
         values.put(DBTableContract.OverviewTableEntry.COLUMN_TIMESTAMP, date);
         values.put(DBTableContract.OverviewTableEntry.COLUMN_TOTAL_SCORE, totalScore);
         values.put(DBTableContract.OverviewTableEntry.COLUMN_VEHICLE_SPEED_SCORE, speedScore);
+
+        //TODO do the firebase stuff here
 
         /* Insert the values within the database */
         Log.d(TAG, "Inserting values vehicle_speed = " + speedScore + "  mpge = " + mpgeScore +  " engine = " + engineScore + " accel = " + accelScore);

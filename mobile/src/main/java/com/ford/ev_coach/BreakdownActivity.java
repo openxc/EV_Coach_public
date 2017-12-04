@@ -23,7 +23,6 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
         String totalScore = extras.getString("totalScore");
         String MPGScore = extras.getString("MPGScore");
         String Grade = extras.getString("grade");
-        loginButton = (Button) findViewById(R.id.loginButton);
 
         //rest of the code
         TextView accelScoreText = (TextView) findViewById(R.id.acceleration);

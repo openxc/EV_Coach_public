@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "663383591916-tnabmhndoldmai5cjvgooagp9ervk8d9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ford.ev_coach",
+            "certificate_hash": "b51c75886b8598659f58dccf3cb65e6e092700d1"
+          }
+        },
+        {
           "client_id": "663383591916-fhm04228tkfj5i0m16qtn34gtome0i9l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
