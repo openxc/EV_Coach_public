@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity{
     //keeps track of all wearables
     private ArrayList<Node> mNodes = new ArrayList<Node>();
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+   /* private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity{
             return false;
         }
     };
+    */
     /**
      * OnCreate Android Activity Lifecycle.  Sets up the connection status and screen information.
      */
@@ -151,8 +152,8 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+      //  BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+      //  navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     /**    @Override
@@ -176,13 +177,23 @@ public class MainActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.action_settings) {
+        if(id == R.id.Login) {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        if(id == R.id.vibrationHelp) {
             Intent intent = new Intent(getApplicationContext(), VibrationInfo.class);
             startActivity(intent);
             return true;
         }
-        if(id == R.id.login_Setting) {
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        if(id == R.id.history){
+            Intent intent = new Intent(getApplicationContext(), ScoreHistoryActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        if(id == R.id.setting_settings){
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
             return true;
         }
@@ -230,7 +241,7 @@ public class MainActivity extends AppCompatActivity{
         /* Reconnect to the VehicleManager object*/
         if (mVehicleManager == null) {
             Intent intent = new Intent(this, VehicleManager.class);
-            bindService(intent, mConnection, Context.BIND_ADJUST_WITH_ACTIVITY);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
     }
 
@@ -425,28 +436,26 @@ public class MainActivity extends AppCompatActivity{
         fuelConsumption = fuelConsumption * 0.264172;
         //give infinite if negative fuel consumed or zero
         if (fuelConsumption <= 0 && batteryCosumption <= 0){
-            mpgFinal = 999;
+            mpgFuel = 999;
         }
         else {
             //km to miles
             mpgFuel = (dist * 0.621371) / fuelConsumption;
-            mpgBat = (dist * 0.621371) / fuelConsumption;
-            mpgFinal = mpgBat + mpgFuel;
         }
 
-        if (mpgFinal <= 5) {
+        if (mpgFuel <= 5) {
             score = 0;
-        } else if (mpgFinal <= 10) {
+        } else if (mpgFuel <= 10) {
             score = 10;
-        } else if (mpgFinal <= 15) {
+        } else if (mpgFuel <= 15) {
             score = 20;
-        } else if (mpgFinal <= 20) {
+        } else if (mpgFuel <= 20) {
             score = 30;
-        } else if (mpgFinal <= 25) {
+        } else if (mpgFuel <= 25) {
             score = 50;
-        } else if (mpgFinal <= 30) {
+        } else if (mpgFuel <= 30) {
             score = 75;
-        } else if (mpgFinal <= 35) {
+        } else if (mpgFuel <= 35) {
             score = 90;
         }
 

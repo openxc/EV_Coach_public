@@ -5,10 +5,28 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/vibrationHelp"
+        android:orderInCategory="100"
+        android:title="Info"
+        android:icon="@android:drawable/ic_dialog_info"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/Login"
+        android:orderInCategory="100"
+        android:title="Login"
+        android:icon="@android:drawable/ic_dialog_email"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/setting_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
-        android:icon="@android:drawable/ic_dialog_info"
-        app:showAsAction="ifRoom"/>
+        android:icon="@android:drawable/ic_menu_preferences"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/history"
+        android:orderInCategory="100"
+        android:title="History"
+        android:icon="@android:drawable/ic_menu_preferences"
+        app:showAsAction="collapseActionView"/>
 
 </menu>
