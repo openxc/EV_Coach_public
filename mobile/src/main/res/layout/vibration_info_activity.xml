@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Accel Warning Pattern: 5 vibrations"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/textView1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:text="Rpm Warning Pattern: 3 vibrations "
+        android:id="@+id/textView2"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:text="Speed Warining Pattern: 1 vibration"
+        android:id="@+id/textView3"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/ford_logo"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="250dp"
+        android:gravity="center_horizontal"
+        android:src="@mipmap/ford_logo" />
+
+    <ImageView
+        android:id="@+id/mtu_logo"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignEnd="@+id/ford_logo"
+        android:layout_below="@+id/ford_logo"
+        android:src="@mipmap/mtu_logo" />
+</RelativeLayout>
