@@ -186,7 +186,7 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
 
 
         FBMPGScore.setValue(MPGScore);
-        fbScoreObject.setValue(myScoreObject);
+        fbScoreObject.push().setValue(myScoreObject);
         FBaccelScore.setValue(accelScore);
         FBRPMScore.setValue(RPMscore);
         FBspeedScore.setValue(speedScore);
