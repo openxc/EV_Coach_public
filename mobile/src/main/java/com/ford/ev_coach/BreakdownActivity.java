@@ -44,22 +44,22 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
     String totalScore;
     String MPGScore;
     String Grade;
-    int fbSpeedScore;
-    int fbRPMScore;
-    int fbAccelScore;
-    int fbTotalScore;
-    int fbMPGScore;
+    double fbSpeedScore;
+    double fbRPMScore;
+    double fbAccelScore;
+    double fbTotalScore;
+    double fbMPGScore;
 
     // Create Object class for storage
     public class ScoreObject {
-        int fbSpeedScore;
-        int fbRPMScore;
-        int fbAccelScore;
-        int fbTotalScore;
-        int fbMPGScore;
+        double fbSpeedScore;
+        double fbRPMScore;
+        double fbAccelScore;
+        double fbTotalScore;
+        double fbMPGScore;
         String Grade;
 
-        public ScoreObject(int fbSpeedScore, int fbRPMScore, int fbAccelScore, int fbTotalScore, int fbMPGScore, String Grade) {
+        public ScoreObject(double fbSpeedScore, double fbRPMScore, double fbAccelScore, double fbTotalScore, double fbMPGScore, String Grade) {
             this.fbSpeedScore = fbSpeedScore;
             this.fbRPMScore = fbRPMScore;
             this.fbAccelScore = fbAccelScore;
@@ -84,11 +84,11 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
         Grade = extras.getString("grade");
 
 
-        fbSpeedScore = Integer.parseInt(speedScore) / 250;
-        fbRPMScore = Integer.parseInt(RPMscore) / 250;
-        fbAccelScore = Integer.parseInt(accelScore) / 250;
-        fbTotalScore = Integer.parseInt(totalScore) / 1000;
-        fbMPGScore = Integer.parseInt(MPGScore) / 250;
+        fbSpeedScore = Double.parseDouble(speedScore) / 250.00;
+        fbRPMScore = Double.parseDouble(RPMscore) / 250.00;
+        fbAccelScore = Double.parseDouble(accelScore) / 250.00;
+        fbTotalScore = Double.parseDouble(totalScore) / 1000.00;
+        fbMPGScore = Double.parseDouble(MPGScore) / 250.00;
 
 
 
