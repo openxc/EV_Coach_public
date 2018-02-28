@@ -23,6 +23,7 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
     //previous drive database info
     static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     static DatabaseReference ref = database.getReference("users/" + user.getUid() + "/");
+    static DatabaseReference fbScoreObject = ref.child("Score");
     static DatabaseReference FBspeedScore = ref.child("speedScore");
     static DatabaseReference FBRPMScore = ref.child("RPMScore");
     static DatabaseReference FBaccelScore = ref.child("accelScore");
@@ -52,6 +53,30 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
     String totalScore;
     String MPGScore;
     String Grade;
+    double fbSpeedScore;
+    double fbRPMScore;
+    double fbAccelScore;
+    double fbTotalScore;
+    double fbMPGScore;
+
+    // Create Object class for storage
+    public class ScoreObject {
+        double fbSpeedScore;
+        double fbRPMScore;
+        double fbAccelScore;
+        double fbTotalScore;
+        double fbMPGScore;
+        String Grade;
+
+        public ScoreObject(double fbSpeedScore, double fbRPMScore, double fbAccelScore, double fbTotalScore, double fbMPGScore, String Grade) {
+            this.fbSpeedScore = fbSpeedScore;
+            this.fbRPMScore = fbRPMScore;
+            this.fbAccelScore = fbAccelScore;
+            this.fbTotalScore = fbTotalScore;
+            this.fbMPGScore = fbMPGScore;
+            this.Grade = Grade;
+        }
+    } // End object class
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +91,14 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
         totalScore = extras.getString("totalScore");
         MPGScore = extras.getString("MPGScore");
         Grade = extras.getString("grade");
+
+
+        fbSpeedScore = Double.parseDouble(speedScore) / 250.00;
+        fbRPMScore = Double.parseDouble(RPMscore) / 250.00;
+        fbAccelScore = Double.parseDouble(accelScore) / 250.00;
+        fbTotalScore = Double.parseDouble(totalScore) / 1000.00;
+        fbMPGScore = Double.parseDouble(MPGScore) / 250.00;
+
 
 
         initialize();
@@ -157,7 +190,12 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onPause() {
         super.onPause();
+
+        ScoreObject myScoreObject = new ScoreObject(fbSpeedScore, fbRPMScore,fbAccelScore,fbTotalScore,fbMPGScore,Grade);
+
+
         FBMPGScore.setValue(MPGScore);
+        fbScoreObject.push().setValue(myScoreObject);
         FBaccelScore.setValue(accelScore);
         FBRPMScore.setValue(RPMscore);
         FBspeedScore.setValue(speedScore);
@@ -174,3 +212,4 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
     }
 
 }
+
