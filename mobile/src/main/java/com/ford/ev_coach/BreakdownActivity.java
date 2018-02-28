@@ -20,6 +20,7 @@ import java.util.Map;
 public class BreakdownActivity extends AppCompatActivity implements View.OnClickListener {
 
     static FirebaseDatabase database = FirebaseDatabase.getInstance();
+    //previous drive database info
     static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     static DatabaseReference ref = database.getReference("users/" + user.getUid() + "/");
     static DatabaseReference FBspeedScore = ref.child("speedScore");
@@ -28,6 +29,14 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
     static DatabaseReference FBtotalScore = ref.child("totalScore");
     static DatabaseReference FBMPGScore = ref.child("MPGScore");
     static DatabaseReference FBGrade = ref.child("Grade");
+    //leaderboard database info
+    static DatabaseReference Lref = database.getReference("leaderboard");
+    static DatabaseReference HighSpeed = Lref.child("HighSpeed");
+    static DatabaseReference HighRPM = Lref.child("HighRPM");
+    static DatabaseReference HighAccel = Lref.child("HighAccel");
+    static DatabaseReference HighTotal = Lref.child("HighTotal");
+    static DatabaseReference HighMPG = Lref.child("HighMPG");
+    
 
     private Button loginButton;
 
