@@ -23,7 +23,7 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
     //previous drive database info
     static FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     static DatabaseReference ref = database.getReference("users/" + user.getUid() + "/");
-    static DatabaseReference fbScoreObject = ref.child("Score");
+    static DatabaseReference fbScoreObject = ref.child("ScoreObject");
     static DatabaseReference FBspeedScore = ref.child("speedScore");
     static DatabaseReference FBRPMScore = ref.child("RPMScore");
     static DatabaseReference FBaccelScore = ref.child("accelScore");
@@ -31,12 +31,12 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
     static DatabaseReference FBMPGScore = ref.child("MPGScore");
     static DatabaseReference FBGrade = ref.child("Grade");
     //leaderboard database info
-    static DatabaseReference Lref = database.getReference("leaderboard");
-    static DatabaseReference HighSpeed = Lref.child("HighSpeed");
-    static DatabaseReference HighRPM = Lref.child("HighRPM");
-    static DatabaseReference HighAccel = Lref.child("HighAccel");
-    static DatabaseReference HighTotal = Lref.child("HighTotal");
-    static DatabaseReference HighMPG = Lref.child("HighMPG");
+   // static DatabaseReference Lref = database.getReference("leaderboard");
+  //  static DatabaseReference HighSpeed = Lref.child("HighSpeed");
+   // static DatabaseReference HighRPM = Lref.child("HighRPM");
+   // static DatabaseReference HighAccel = Lref.child("HighAccel");
+   // static DatabaseReference HighTotal = Lref.child("HighTotal");
+   // static DatabaseReference HighMPG = Lref.child("HighMPG");
     
 
     private Button loginButton;
@@ -60,13 +60,14 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
     double fbMPGScore;
 
     // Create Object class for storage
-    public class ScoreObject {
+    public static class ScoreObject {
         double fbSpeedScore;
         double fbRPMScore;
         double fbAccelScore;
         double fbTotalScore;
         double fbMPGScore;
         String Grade;
+
 
         public ScoreObject(double fbSpeedScore, double fbRPMScore, double fbAccelScore, double fbTotalScore, double fbMPGScore, String Grade) {
             this.fbSpeedScore = fbSpeedScore;
@@ -93,11 +94,11 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
         Grade = extras.getString("grade");
 
 
-        fbSpeedScore = Double.parseDouble(speedScore) / 250.00;
-        fbRPMScore = Double.parseDouble(RPMscore) / 250.00;
-        fbAccelScore = Double.parseDouble(accelScore) / 250.00;
-        fbTotalScore = Double.parseDouble(totalScore) / 1000.00;
-        fbMPGScore = Double.parseDouble(MPGScore) / 250.00;
+        fbSpeedScore = Double.parseDouble(speedScore);
+        fbRPMScore = Double.parseDouble(RPMscore);
+        fbAccelScore = Double.parseDouble(accelScore);
+        fbTotalScore = Double.parseDouble(totalScore);
+        fbMPGScore = Double.parseDouble(MPGScore);
 
 
 
@@ -192,15 +193,20 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
         super.onPause();
 
         ScoreObject myScoreObject = new ScoreObject(fbSpeedScore, fbRPMScore,fbAccelScore,fbTotalScore,fbMPGScore,Grade);
+        //String key = ref.push().getKey();
+        fbScoreObject.push().setValue(myScoreObject);
 
+
+
+     //   ref.child(key).child("Score Object").setValue(myScoreObject);
 
         FBMPGScore.setValue(MPGScore);
-        fbScoreObject.push().setValue(myScoreObject);
         FBaccelScore.setValue(accelScore);
         FBRPMScore.setValue(RPMscore);
         FBspeedScore.setValue(speedScore);
         FBGrade.setValue(Grade);
         FBtotalScore.setValue(totalScore);
+
     }
 
     @Override
