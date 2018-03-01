@@ -1,6 +1,7 @@
 package com.ford.ev_coach;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -31,12 +32,37 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
     static DatabaseReference FBMPGScore = ref.child("MPGScore");
     static DatabaseReference FBGrade = ref.child("Grade");
     //leaderboard database info
-   // static DatabaseReference Lref = database.getReference("leaderboard");
-  //  static DatabaseReference HighSpeed = Lref.child("HighSpeed");
-   // static DatabaseReference HighRPM = Lref.child("HighRPM");
-   // static DatabaseReference HighAccel = Lref.child("HighAccel");
-   // static DatabaseReference HighTotal = Lref.child("HighTotal");
-   // static DatabaseReference HighMPG = Lref.child("HighMPG");
+    static DatabaseReference Lref = database.getReference("leaderboard");
+    static DatabaseReference HighSpeed = Lref.child("HighSpeed");
+    static DatabaseReference HighSpeed1 = Lref.child("HighSpeed1");
+    static DatabaseReference HighSpeed2 = Lref.child("HighSpeed2");
+    static DatabaseReference SpeedName = Lref.child("SpeedName");
+    static DatabaseReference SpeedName1 = Lref.child("SpeedName1");
+    static DatabaseReference SpeedName2 = Lref.child("SpeedName2");
+    static DatabaseReference HighRPM = Lref.child("HighRPM");
+    static DatabaseReference HighRPM1 = Lref.child("HighRPM1");
+    static DatabaseReference HighRPM2 = Lref.child("HighRPM2");
+    static DatabaseReference RPMName = Lref.child("RPMName");
+    static DatabaseReference RPMName1 = Lref.child("RPMName1");
+    static DatabaseReference RPMName2 = Lref.child("RPMName2");
+    static DatabaseReference HighAccel = Lref.child("HighAccel");
+    static DatabaseReference HighAccel1 = Lref.child("HighAccel1");
+    static DatabaseReference HighAccel2 = Lref.child("HighAccel2");
+    static DatabaseReference AccelName = Lref.child("AccelName");
+    static DatabaseReference AccelName1 = Lref.child("AccelName1");
+    static DatabaseReference AccelName2 = Lref.child("AccelName2");
+    static DatabaseReference HighTotal = Lref.child("HighTotal");
+    static DatabaseReference HighTotal1 = Lref.child("HighTotal1");
+    static DatabaseReference HighTotal2 = Lref.child("HighTotal2");
+    static DatabaseReference TotalName = Lref.child("TotalName");
+    static DatabaseReference TotalName1 = Lref.child("TotalName1");
+    static DatabaseReference TotalName2 = Lref.child("TotalName2");
+    static DatabaseReference HighMPG = Lref.child("HighMPG");
+    static DatabaseReference HighMPG1 = Lref.child("HighMPG1");
+    static DatabaseReference HighMPG2 = Lref.child("HighMPG2");
+    static DatabaseReference MPGName = Lref.child("MPGName");
+    static DatabaseReference MPGName1 = Lref.child("MPGName1");
+    static DatabaseReference MPGName2 = Lref.child("MPGName2");
     
 
     private Button loginButton;
@@ -47,6 +73,9 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
     private static String prevTotalScore;
     private static String prevMPGScore;
     private static String prevGrade;
+    private static double LSpeed;
+    private static double LRPM;
+    private static
     String speedScore;
     String RPMscore;
     String accelScore;
@@ -78,6 +107,8 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
             this.Grade = Grade;
         }
     } // End object class
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
