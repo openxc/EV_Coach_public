@@ -73,9 +73,39 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
     private static String prevTotalScore;
     private static String prevMPGScore;
     private static String prevGrade;
+
+    //leaderboard values
     private static double LSpeed;
+    private static double LSpeed1;
+    private static double LSpeed2;
+    private static String LSpeedName;
+    private static String LSpeedName1;
+    private static String LSpeedName2;
     private static double LRPM;
-    private static
+    private static double LRPM1;
+    private static double LRPM2;
+    private static String LRPMName;
+    private static String LRPMName1;
+    private static String LRPMName2;
+    private static double LAccel;
+    private static double LAccel1;
+    private static double LAccel2;
+    private static String LAccelName;
+    private static String LAccelName1;
+    private static String LAccelName2;
+    private static double LTotal;
+    private static double LTotal1;
+    private static double LTotal2;
+    private static String LTotalName;
+    private static String LTotalName1;
+    private static String LTotalName2;
+    private static double LMPG;
+    private static double LMPG1;
+    private static double LMPG2;
+    private static String LMPGName;
+    private static String LMPGName1;
+    private static String LMPGName2;
+
     String speedScore;
     String RPMscore;
     String accelScore;
@@ -87,6 +117,7 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
     double fbAccelScore;
     double fbTotalScore;
     double fbMPGScore;
+    String fbName = user.getEmail().substring(0, user.getEmail().indexOf('@')-1);
 
     // Create Object class for storage
     public static class ScoreObject {
@@ -132,6 +163,84 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
         fbMPGScore = Double.parseDouble(MPGScore);
 
 
+
+      Lref.addValueEventListener(new ValueEventListener() {
+          @Override
+          public void onDataChange(DataSnapshot dataSnapshot) {
+              for(DataSnapshot child: dataSnapshot.getChildren()){
+                  switch (child.getKey()){
+                      case "HighSpeed":
+                          LSpeed = child.getValue(Double.class);
+                          LSpeedName = child.getValue(String.class);
+                          break;
+                      case "HighSpeed1":
+                          LSpeed1 = child.getValue(Double.class);
+                          LSpeedName1 = child.getValue(String.class);
+                          break;
+                      case "HighSpeed2":
+                          LSpeed2 = child.getValue(Double.class);
+                          LSpeedName2 = child.getValue(String.class);
+                          break;
+                      case "HighRPM":
+                          LRPM = child.getValue(Double.class);
+                          LRPMName = child.getValue(String.class);
+                          break;
+                      case "HighRPM1":
+                          LRPM1 = child.getValue(Double.class);
+                          LRPMName1 = child.getValue(String.class);
+                          break;
+                      case "HighRPM2":
+                          LRPM2 = child.getValue(Double.class);
+                          LRPMName2 = child.getValue(String.class);
+                          break;
+                      case "HighAccel":
+                          LAccel = child.getValue(Double.class);
+                          LAccelName = child.getValue(String.class);
+                          break;
+                      case "HighAccel1":
+                          LAccel1 = child.getValue(Double.class);
+                          LAccelName1 = child.getValue(String.class);
+                          break;
+                      case "HighAccel2":
+                          LAccel2 = child.getValue(Double.class);
+                          LAccelName2 = child.getValue(String.class);
+                          break;
+                      case "HighTotal":
+                          LTotal = child.getValue(Double.class);
+                          LTotalName = child.getValue(String.class);
+                          break;
+                      case "HighTotal1":
+                          LTotal1 = child.getValue(Double.class);
+                          LTotalName1 = child.getValue(String.class);
+                          break;
+                      case "HighTotal2":
+                          LTotal2 = child.getValue(Double.class);
+                          LTotalName2 = child.getValue(String.class);
+                          break;
+                      case "HighMPG":
+                          LMPG = child.getValue(Double.class);
+                          LMPGName = child.getValue(String.class);
+                          break;
+                      case "HighMPG1":
+                          LMPG1 = child.getValue(Double.class);
+                          LMPGName1 = child.getValue(String.class);
+                          break;
+                      case "HighMPG2":
+                          LMPG2 = child.getValue(Double.class);
+                          LMPGName2 = child.getValue(String.class);
+                          break;
+                  }
+              }
+          }
+
+          @Override
+          public void onCancelled(DatabaseError databaseError) {
+
+          }
+      });
+
+
+      //put leaderboard if statement here
 
         initialize();
 
@@ -237,7 +346,7 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
         FBspeedScore.setValue(speedScore);
         FBGrade.setValue(Grade);
         FBtotalScore.setValue(totalScore);
-
+        
     }
 
     @Override
