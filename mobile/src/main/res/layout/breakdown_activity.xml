@@ -295,6 +295,12 @@
         </TableRow>
 
     </TableLayout>
-
+    <Button
+        android:id="@+id/LeadB_button"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="Leaderboard"
+        />
 
 </LinearLayout>

@@ -21,7 +21,6 @@
         <item>MPGe Score</item>
     </string-array>
 
-
     <!-- Units Settings -->
     <string name="pref_unit_key">unit</string>
     <string name="pref_unit_info">Units</string>

@@ -65,14 +65,20 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
     static DatabaseReference MPGName2 = Lref.child("MPGName2");
     
 
-    private Button loginButton;
+    private Button lbButton;
 
     private static String prevSpeedScore;
+    int speedCount = 0;
     private static String prevRPMscore;
+    int RPMCount = 0;
     private static String prevAccelScore;
+    int AccelCount = 0;
     private static String prevTotalScore;
+    int TotalCount = 0;
     private static String prevMPGScore;
+    int MPGCount = 0;
     private static String prevGrade;
+    int GradeCount = 0;
 
     //leaderboard values
     private static double LSpeed;
@@ -162,6 +168,8 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
         fbTotalScore = Double.parseDouble(totalScore);
         fbMPGScore = Double.parseDouble(MPGScore);
 
+        lbButton = (Button) findViewById(R.id.LeadB_button);
+        lbButton.setOnClickListener(this);
 
 
       Lref.addValueEventListener(new ValueEventListener() {
@@ -240,7 +248,108 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
       });
 
 
-      //put leaderboard if statement here
+      //check to see what place the scores are in the leaderboard
+        if(fbSpeedScore > LSpeed){
+            HighSpeed2.setValue(LSpeed1);
+            SpeedName2.setValue(LSpeedName1);
+            HighSpeed1.setValue(LSpeed);
+            SpeedName1.setValue(LSpeedName);
+            HighSpeed.setValue(fbSpeedScore);
+            SpeedName.setValue(fbName);
+        }else{
+            if(fbSpeedScore > LSpeed1){
+                HighSpeed2.setValue(LSpeed1);
+                SpeedName2.setValue(LSpeedName1);
+                HighSpeed1.setValue(fbSpeedScore);
+                SpeedName1.setValue(fbName);
+            }else{
+                if(fbSpeedScore > LSpeed2){
+                    HighSpeed2.setValue(fbSpeedScore);
+                    SpeedName2.setValue(fbName);
+                }
+            }
+        }
+        if(fbAccelScore > LAccel){
+            HighAccel2.setValue(LAccel1);
+            AccelName2.setValue(LAccelName1);
+            HighAccel1.setValue(LAccel);
+            AccelName1.setValue(LAccelName);
+            HighAccel.setValue(FBaccelScore);
+            AccelName.setValue(fbName);
+
+        }else{
+            if(fbAccelScore > LAccel1){
+                HighAccel2.setValue(LAccel1);
+                AccelName2.setValue(LAccelName1);
+                HighAccel1.setValue(fbAccelScore);
+                AccelName1.setValue(fbName);
+            }else{
+                if(fbAccelScore > LAccel2){
+                    HighAccel2.setValue(fbAccelScore);
+                    AccelName1.setValue(fbName);
+                }
+            }
+        }
+        if(fbMPGScore > LMPG){
+            HighMPG2.setValue(LMPG1);
+            MPGName2.setValue(LMPGName1);
+            HighMPG1.setValue(LMPG);
+            MPGName1.setValue(LMPGName);
+            HighMPG.setValue(fbMPGScore);
+            MPGName.setValue(fbName);
+        }else{
+            if(fbMPGScore > LMPG1){
+                HighMPG2.setValue(LMPG1);
+                MPGName2.setValue(LMPGName1);
+                HighMPG1.setValue(fbMPGScore);
+                MPGName1.setValue(fbName);
+            }else{
+                if(fbMPGScore > LMPG2){
+                    HighMPG2.setValue(fbMPGScore);
+                    MPGName.setValue(fbName);
+                }
+            }
+        }
+        if(fbRPMScore > LRPM){
+            HighRPM2.setValue(LRPM1);
+            RPMName2.setValue(LRPMName1);
+            HighRPM1.setValue(LRPM);
+            RPMName1.setValue(LRPMName);
+            HighRPM.setValue(fbRPMScore);
+            RPMName.setValue(fbName);
+        }else{
+            if(fbRPMScore > LRPM1){
+                HighRPM2.setValue(LRPM1);
+                RPMName2.setValue(LRPMName1);
+                HighRPM1.setValue(fbRPMScore);
+                RPMName1.setValue(fbName);
+            }else{
+                if(fbRPMScore > LRPM2){
+                    HighRPM2.setValue(fbRPMScore);
+                    RPMName2.setValue(fbName);
+                }
+            }
+        }
+        if(fbTotalScore > LTotal){
+            HighTotal2.setValue(LTotal1);
+            TotalName2.setValue(LTotalName1);
+            HighTotal1.setValue(LTotal);
+            TotalName1.setValue(LTotalName);
+            HighTotal.setValue(fbTotalScore);
+            TotalName.setValue(fbName);
+        }else{
+            if(fbTotalScore > LTotal1){
+                HighTotal2.setValue(LTotal1);
+                TotalName2.setValue(LTotalName1);
+                HighTotal1.setValue(fbTotalScore);
+                TotalName1.setValue(fbName);
+            }else{
+                if(fbTotalScore > LTotal2){
+                    HighTotal2.setValue(fbTotalScore);
+                    TotalName2.setValue(fbName);
+                }
+            }
+        }
 
         initialize();
 
@@ -283,32 +392,50 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                     switch (child.getKey()){
                         case "speedScore":
-                            prevSpeedScore = child.getValue(String.class);
+                            if(speedCount == 0){
+                                prevSpeedScore = child.getValue(String.class);
+                            }
+                            speedCount = 1;
                             TextView prevSpeedText = (TextView) findViewById(R.id.prevSpeed);
                             prevSpeedText.setText(prevSpeedScore + " / 250.00");
                             break;
                         case "RPMScore":
-                            prevRPMscore = child.getValue(String.class);
+                            if(RPMCount == 0){
+                                prevRPMscore = child.getValue(String.class);
+                            }
+                            RPMCount = 1;
                             TextView prevRPMScoreText = (TextView) findViewById(R.id.prevRpm);
                             prevRPMScoreText.setText(prevRPMscore +" / 250.00");
                             break;
                         case "accelScore":
-                            prevAccelScore = child.getValue(String.class);
+                            if(AccelCount == 0){
+                                prevAccelScore = child.getValue(String.class);
+                            }
+                            AccelCount = 1;
                             TextView prevAccelScoreText = (TextView) findViewById(R.id.prevAcceleration);
                             prevAccelScoreText.setText(prevAccelScore + " / 250.00");
                             break;
                         case "totalScore":
-                            prevTotalScore = child.getValue(String.class);
+                            if(TotalCount == 0){
+                                prevTotalScore = child.getValue(String.class);
+                            }
+                            TotalCount = 1;
                             TextView prevScore = (TextView) findViewById(R.id.Prevscore);
                             prevScore.setText(prevTotalScore + " / 1000.00");
                             break;
                         case "MPGScore":
-                            prevMPGScore = child.getValue(String.class);
+                            if(MPGCount == 0){
+                                prevMPGScore = child.getValue(String.class);
+                            }
+                            MPGCount = 1;
                             TextView prevMpgText = (TextView) findViewById(R.id.prevMpg);
                             prevMpgText.setText(prevMPGScore + " / 250.00");
                             break;
                         case "Grade":
-                            prevGrade = child.getValue(String.class);
+                            if(GradeCount == 0){
+                                prevGrade = child.getValue(String.class);
+                            }
+                            GradeCount = 1;
                             TextView prevGradeText = (TextView) findViewById(R.id.prevGrade);
                             prevGradeText.setText(prevGrade);
                             break;
@@ -346,13 +473,14 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
         FBspeedScore.setValue(speedScore);
         FBGrade.setValue(Grade);
         FBtotalScore.setValue(totalScore);
-        
+
+
     }
 
     @Override
     public void onClick(View view) {
-        if (view == loginButton) {
-            Intent intent = new Intent(BreakdownActivity.this, LoginActivity.class);
+        if (view == lbButton) {
+            Intent intent = new Intent(BreakdownActivity.this, LeaderBoardActivity.class);
             startActivity(intent);
         }
     }
