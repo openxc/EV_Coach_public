@@ -125,7 +125,7 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
     double fbAccelScore;
     double fbTotalScore;
     double fbMPGScore;
-    String fbName = user.getEmail().substring(0, user.getEmail().indexOf('@')-1);
+    String fbName = user.getEmail().substring(0, user.getEmail().indexOf('@'));
 
     // Create Object class for storage
     public static class ScoreObject {
