@@ -9,22 +9,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+
         android:layout_alignParentTop="true" />
 
     <TableLayout
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/Ltitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:gravity="center_horizontal"
             android:text="title here"
             android:textSize="30sp" />
 
         <TableRow
             android:layout_width="wrap_content"
+            android:gravity="center_horizontal"
             android:layout_height="match_parent">
 
             <TextView
@@ -33,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_column="0"
                 android:text="Name"
+                android:paddingLeft="60dp"
                 android:textSize="20sp" />
 
             <TextView
@@ -41,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_column="2"
                 android:text="Score"
+                android:paddingLeft="60dp"
                 android:textSize="20sp" />
 
         </TableRow>
@@ -54,7 +59,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="0"
+                android:paddingRight="50dp"
                 android:text="Name_here"
+                android:paddingLeft="50dp"
                 android:textSize="20sp" />
 
             <TextView
@@ -63,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_column="2"
                 android:text="Score_here"
+                android:paddingLeft="50dp"
                 android:textSize="20sp" />
         </TableRow>
 
@@ -76,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_column="0"
                 android:text="Name1_here"
+                android:paddingLeft="50dp"
                 android:textSize="20sp" />
 
             <TextView
@@ -84,6 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_column="2"
                 android:text="Score1_here"
+                android:paddingLeft="50dp"
                 android:textSize="20sp" />
         </TableRow>
 
@@ -97,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_column="0"
                 android:text="Name2_here"
+                android:paddingLeft="50dp"
                 android:textSize="20sp" />
 
             <TextView
@@ -105,6 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_column="2"
                 android:text="Score2_here"
+                android:paddingLeft="50dp"
                 android:textSize="20sp" />
         </TableRow>
     </TableLayout>
