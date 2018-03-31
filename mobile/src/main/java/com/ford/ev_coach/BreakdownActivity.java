@@ -18,6 +18,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.lang.Double.NaN;
+
 public class BreakdownActivity extends AppCompatActivity implements View.OnClickListener {
 
     static FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -111,7 +113,7 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
     private static String LMPGName;
     private static String LMPGName1;
     private static String LMPGName2;
-
+    int leaderCount = 0;
     String speedScore;
     String RPMscore;
     String accelScore;
@@ -179,62 +181,107 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
                   switch (child.getKey()){
                       case "HighSpeed":
                           LSpeed = child.getValue(Double.class);
+
+                          break;
+                      case "SpeedName":
                           LSpeedName = child.getValue(String.class);
                           break;
                       case "HighSpeed1":
                           LSpeed1 = child.getValue(Double.class);
+
+                          break;
+                      case "SpeedName1":
                           LSpeedName1 = child.getValue(String.class);
                           break;
                       case "HighSpeed2":
                           LSpeed2 = child.getValue(Double.class);
+
+                          break;
+                      case "SpeedName2":
                           LSpeedName2 = child.getValue(String.class);
                           break;
                       case "HighRPM":
                           LRPM = child.getValue(Double.class);
+
+                          break;
+                      case "RPMName":
                           LRPMName = child.getValue(String.class);
                           break;
                       case "HighRPM1":
                           LRPM1 = child.getValue(Double.class);
+
+                          break;
+                      case "RPMName1":
                           LRPMName1 = child.getValue(String.class);
                           break;
                       case "HighRPM2":
                           LRPM2 = child.getValue(Double.class);
+
+                          break;
+                      case "RPMName2":
                           LRPMName2 = child.getValue(String.class);
                           break;
                       case "HighAccel":
-                          LAccel = child.getValue(Double.class);
+                          LAccel = (double) child.getValue();
+
+                          break;
+                      case "AccelName":
                           LAccelName = child.getValue(String.class);
                           break;
                       case "HighAccel1":
                           LAccel1 = child.getValue(Double.class);
+
+                          break;
+                      case "AccelName1":
                           LAccelName1 = child.getValue(String.class);
                           break;
                       case "HighAccel2":
                           LAccel2 = child.getValue(Double.class);
+
+                          break;
+                      case "AccelName2":
                           LAccelName2 = child.getValue(String.class);
                           break;
                       case "HighTotal":
                           LTotal = child.getValue(Double.class);
+
+                          break;
+                      case "TotalName":
                           LTotalName = child.getValue(String.class);
                           break;
                       case "HighTotal1":
                           LTotal1 = child.getValue(Double.class);
+
+                          break;
+                      case "TotalName1":
                           LTotalName1 = child.getValue(String.class);
                           break;
                       case "HighTotal2":
                           LTotal2 = child.getValue(Double.class);
-                          LTotalName2 = child.getValue(String.class);
+
                           break;
+                      case "TotalName2":
+                          LTotalName2 = child.getValue(String.class);
+                      break;
                       case "HighMPG":
                           LMPG = child.getValue(Double.class);
-                          LMPGName = child.getValue(String.class);
+
                           break;
+                      case "MPGName":
+                          LMPGName = child.getValue(String.class);
+                      break;
                       case "HighMPG1":
                           LMPG1 = child.getValue(Double.class);
+
+                          break;
+                      case "MPGName1":
                           LMPGName1 = child.getValue(String.class);
                           break;
                       case "HighMPG2":
                           LMPG2 = child.getValue(Double.class);
+
+                          break;
+                      case "MPGName2":
                           LMPGName2 = child.getValue(String.class);
                           break;
                   }
@@ -249,107 +296,111 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
 
 
       //check to see what place the scores are in the leaderboard
-        if(fbSpeedScore > LSpeed){
-            HighSpeed2.setValue(LSpeed1);
-            SpeedName2.setValue(LSpeedName1);
-            HighSpeed1.setValue(LSpeed);
-            SpeedName1.setValue(LSpeedName);
-            HighSpeed.setValue(fbSpeedScore);
-            SpeedName.setValue(fbName);
-        }else{
-            if(fbSpeedScore > LSpeed1){
+        if(leaderCount == 0){
+            if(fbSpeedScore > LSpeed || LSpeed == NaN){
                 HighSpeed2.setValue(LSpeed1);
                 SpeedName2.setValue(LSpeedName1);
-                HighSpeed1.setValue(fbSpeedScore);
-                SpeedName1.setValue(fbName);
+                HighSpeed1.setValue(LSpeed);
+                SpeedName1.setValue(LSpeedName);
+                HighSpeed.setValue(fbSpeedScore);
+                SpeedName.setValue(fbName);
             }else{
-                if(fbSpeedScore > LSpeed2){
-                    HighSpeed2.setValue(fbSpeedScore);
-                    SpeedName2.setValue(fbName);
+                if(fbSpeedScore > LSpeed1 || LSpeed1 == NaN){
+                    HighSpeed2.setValue(LSpeed1);
+                    SpeedName2.setValue(LSpeedName1);
+                    HighSpeed1.setValue(fbSpeedScore);
+                    SpeedName1.setValue(fbName);
+                }else{
+                    if(fbSpeedScore > LSpeed2 || LSpeed2 == NaN){
+                        HighSpeed2.setValue(fbSpeedScore);
+                        SpeedName2.setValue(fbName);
+                    }
                 }
             }
-        }
-        if(fbAccelScore > LAccel){
-            HighAccel2.setValue(LAccel1);
-            AccelName2.setValue(LAccelName1);
-            HighAccel1.setValue(LAccel);
-            AccelName1.setValue(LAccelName);
-            HighAccel.setValue(FBaccelScore);
-            AccelName.setValue(fbName);
-
-        }else{
-            if(fbAccelScore > LAccel1){
+            if(fbAccelScore > LAccel || LAccel == NaN){
                 HighAccel2.setValue(LAccel1);
                 AccelName2.setValue(LAccelName1);
-                HighAccel1.setValue(fbAccelScore);
-                AccelName1.setValue(fbName);
+                HighAccel1.setValue(LAccel);
+                AccelName1.setValue(LAccelName);
+                HighAccel.setValue(fbAccelScore);
+                AccelName.setValue(fbName);
+
             }else{
-                if(fbAccelScore > LAccel2){
-                    HighAccel2.setValue(fbAccelScore);
+                if(fbAccelScore > LAccel1 || LAccel1 == NaN){
+                    HighAccel2.setValue(LAccel1);
+                    AccelName2.setValue(LAccelName1);
+                    HighAccel1.setValue(fbAccelScore);
                     AccelName1.setValue(fbName);
+                }else{
+                    if(fbAccelScore > LAccel2 || LAccel2 == NaN){
+                        HighAccel2.setValue(fbAccelScore);
+                        AccelName1.setValue(fbName);
+                    }
                 }
             }
-        }
-        if(fbMPGScore > LMPG){
-            HighMPG2.setValue(LMPG1);
-            MPGName2.setValue(LMPGName1);
-            HighMPG1.setValue(LMPG);
-            MPGName1.setValue(LMPGName);
-            HighMPG.setValue(fbMPGScore);
-            MPGName.setValue(fbName);
-        }else{
-            if(fbMPGScore > LMPG1){
+            if(fbMPGScore > LMPG || LMPG == NaN){
                 HighMPG2.setValue(LMPG1);
                 MPGName2.setValue(LMPGName1);
-                HighMPG1.setValue(fbMPGScore);
-                MPGName1.setValue(fbName);
+                HighMPG1.setValue(LMPG);
+                MPGName1.setValue(LMPGName);
+                HighMPG.setValue(fbMPGScore);
+                MPGName.setValue(fbName);
             }else{
-                if(fbMPGScore > LMPG2){
-                    HighMPG2.setValue(fbMPGScore);
-                    MPGName.setValue(fbName);
+                if(fbMPGScore > LMPG1 || LMPG1 == NaN){
+                    HighMPG2.setValue(LMPG1);
+                    MPGName2.setValue(LMPGName1);
+                    HighMPG1.setValue(fbMPGScore);
+                    MPGName1.setValue(fbName);
+                }else{
+                    if(fbMPGScore > LMPG2 || LMPG2 == NaN){
+                        HighMPG2.setValue(fbMPGScore);
+                        MPGName.setValue(fbName);
+                    }
                 }
             }
-        }
-        if(fbRPMScore > LRPM){
-            HighRPM2.setValue(LRPM1);
-            RPMName2.setValue(LRPMName1);
-            HighRPM1.setValue(LRPM);
-            RPMName1.setValue(LRPMName);
-            HighRPM.setValue(fbRPMScore);
-            RPMName.setValue(fbName);
-        }else{
-            if(fbRPMScore > LRPM1){
+            if(fbRPMScore > LRPM || LRPM == NaN){
                 HighRPM2.setValue(LRPM1);
                 RPMName2.setValue(LRPMName1);
-                HighRPM1.setValue(fbRPMScore);
-                RPMName1.setValue(fbName);
+                HighRPM1.setValue(LRPM);
+                RPMName1.setValue(LRPMName);
+                HighRPM.setValue(fbRPMScore);
+                RPMName.setValue(fbName);
             }else{
-                if(fbRPMScore > LRPM2){
-                    HighRPM2.setValue(fbRPMScore);
-                    RPMName2.setValue(fbName);
+                if(fbRPMScore > LRPM1 || LRPM1 == NaN){
+                    HighRPM2.setValue(LRPM1);
+                    RPMName2.setValue(LRPMName1);
+                    HighRPM1.setValue(fbRPMScore);
+                    RPMName1.setValue(fbName);
+                }else{
+                    if(fbRPMScore > LRPM2 || LRPM2 == NaN){
+                        HighRPM2.setValue(fbRPMScore);
+                        RPMName2.setValue(fbName);
+                    }
                 }
             }
-        }
-        if(fbTotalScore > LTotal){
-            HighTotal2.setValue(LTotal1);
-            TotalName2.setValue(LTotalName1);
-            HighTotal1.setValue(LTotal);
-            TotalName1.setValue(LTotalName);
-            HighTotal.setValue(fbTotalScore);
-            TotalName.setValue(fbName);
-        }else{
-            if(fbTotalScore > LTotal1){
+            if(fbTotalScore > LTotal || LTotal == NaN){
                 HighTotal2.setValue(LTotal1);
                 TotalName2.setValue(LTotalName1);
-                HighTotal1.setValue(fbTotalScore);
-                TotalName1.setValue(fbName);
+                HighTotal1.setValue(LTotal);
+                TotalName1.setValue(LTotalName);
+                HighTotal.setValue(fbTotalScore);
+                TotalName.setValue(fbName);
             }else{
-                if(fbTotalScore > LTotal2){
-                    HighTotal2.setValue(fbTotalScore);
-                    TotalName2.setValue(fbName);
+                if(fbTotalScore > LTotal1 || LTotal1 == NaN){
+                    HighTotal2.setValue(LTotal1);
+                    TotalName2.setValue(LTotalName1);
+                    HighTotal1.setValue(fbTotalScore);
+                    TotalName1.setValue(fbName);
+                }else{
+                    if(fbTotalScore > LTotal2 || LTotal2 == NaN){
+                        HighTotal2.setValue(fbTotalScore);
+                        TotalName2.setValue(fbName);
+                    }
                 }
             }
+            leaderCount = 1;
         }
+
 
         initialize();
 
@@ -460,12 +511,9 @@ public class BreakdownActivity extends AppCompatActivity implements View.OnClick
         super.onPause();
 
         ScoreObject myScoreObject = new ScoreObject(fbSpeedScore, fbRPMScore,fbAccelScore,fbTotalScore,fbMPGScore,Grade);
-        //String key = ref.push().getKey();
         fbScoreObject.push().setValue(myScoreObject);
 
 
-
-     //   ref.child(key).child("Score Object").setValue(myScoreObject);
 
         FBMPGScore.setValue(MPGScore);
         FBaccelScore.setValue(accelScore);
