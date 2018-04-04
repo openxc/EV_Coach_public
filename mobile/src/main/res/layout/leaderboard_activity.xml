@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_column="0"
                 android:text="Name"
-                android:paddingLeft="60dp"
+                android:paddingLeft="40dp"
                 android:textSize="20sp" />
 
             <TextView
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_column="2"
                 android:text="Score"
-                android:paddingLeft="60dp"
+                android:paddingLeft="40dp"
                 android:textSize="20sp" />
 
         </TableRow>
@@ -59,9 +59,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="0"
-                android:paddingRight="50dp"
-                android:text="Name_here"
                 android:paddingLeft="50dp"
+                android:text="Name_here"
+
                 android:textSize="20sp" />
 
             <TextView
